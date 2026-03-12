@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.tools/
+playwright-report/
+test-results/
+__pycache__/
 
 # Editor directories and files
 .vscode/*
