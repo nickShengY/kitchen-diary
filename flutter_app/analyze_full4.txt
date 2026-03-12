@@ -1,0 +1,741 @@
+﻿Analyzing flutter_app...                                        
+
+   info - Use 'const' with the constructor to improve performance - lib\core\theme\app_theme.dart:74:20 - prefer_const_constructors
+   info - Use 'const' with the constructor to improve performance - lib\core\theme\app_theme.dart:314:20 - prefer_const_constructors
+   info - The import of 'dart:ui' is unnecessary because all of the used elements are also provided by the import of 'package:flutter/animation.dart' - lib\models\animation_model.dart:7:8 - unnecessary_import
+   info - Don't invoke 'print' in production code - lib\providers\recipe_provider.dart:116:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\providers\recipe_provider.dart:183:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\providers\recipe_provider.dart:202:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\providers\recipe_provider.dart:238:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\providers\recipe_provider.dart:260:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\providers\user_provider.dart:115:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\providers\user_provider.dart:137:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\providers\user_provider.dart:204:7 - avoid_print
+   info - Don't invoke 'print' in production code - lib\providers\user_provider.dart:253:7 - avoid_print
+  error - Unterminated string literal - lib\screens\animation\animation_composer_screen.dart:114:52 - unterminated_string_literal
+  error - Unterminated string literal - lib\screens\animation\animation_composer_screen.dart:373:47 - unterminated_string_literal
+  error - Expected to find ',' - lib\screens\animation\animation_composer_screen.dart:374:15 - expected_token
+  error - Unterminated string literal - lib\screens\animation\animation_composer_screen.dart:601:51 - unterminated_string_literal
+  error - Expected to find ',' - lib\screens\animation\animation_composer_screen.dart:602:15 - expected_token
+  error - Unterminated string literal - lib\screens\animation\animation_composer_screen.dart:947:28 - unterminated_string_literal
+  error - Expected to find '}' - lib\screens\animation\animation_composer_screen.dart:948:23 - expected_token
+  error - Unterminated string literal - lib\screens\animation\animation_composer_screen.dart:1128:59 - unterminated_string_literal
+  error - Expected to find ',' - lib\screens\animation\animation_composer_screen.dart:1129:27 - expected_token
+  error - The named parameter 'label' is required, but there's no corresponding argument - lib\screens\auth\login_screen.dart:348:38 - missing_required_argument
+  error - Unterminated string literal - lib\screens\auth\login_screen.dart:350:90 - unterminated_string_literal
+  error - Expected to find ',' - lib\screens\auth\login_screen.dart:351:33 - expected_token
+  error - The named parameter 'label' isn't defined - lib\screens\auth\login_screen.dart:351:33 - undefined_named_parameter
+   info - Unnecessary 'const' keyword - lib\screens\auth\login_screen.dart:351:40 - unnecessary_const
+  error - Methods can't be invoked in constant expressions - lib\screens\auth\login_screen.dart:352:40 - const_eval_method_invocation
+  error - The argument type 'ButtonStyle' can't be assigned to the parameter type 'TextStyle?'.  - lib\screens\auth\login_screen.dart:352:40 - argument_type_not_assignable
+   info - Unnecessary 'const' keyword - lib\screens\auth\login_screen.dart:355:44 - unnecessary_const
+  error - Expected to find ')' - lib\screens\auth\login_screen.dart:358:30 - expected_token
+  error - Invalid constant value - lib\screens\auth\register_screen.dart:98:34 - invalid_constant
+  error - Unterminated string literal - lib\screens\auth\register_screen.dart:98:73 - unterminated_string_literal
+  error - The method 'animate' isn't defined for the type 'String' - lib\screens\auth\register_screen.dart:99:28 - undefined_method
+   info - Unnecessary 'const' keyword - lib\screens\auth\register_screen.dart:102:23 - unnecessary_const
+  error - Too many positional arguments: 1 expected, but 5 found - lib\screens\auth\register_screen.dart:102:23 - extra_positional_arguments_could_be_named
+  error - Methods can't be invoked in constant expressions - lib\screens\auth\register_screen.dart:104:23 - const_eval_method_invocation
+   info - Unnecessary 'const' keyword - lib\screens\auth\register_screen.dart:111:23 - unnecessary_const
+  error - Expected to find ')' - lib\screens\auth\register_screen.dart:119:21 - expected_token
+  error - Unterminated string literal - lib\screens\community\notifications_screen.dart:132:62 - unterminated_string_literal
+   info - Unnecessary 'const' keyword - lib\screens\community\notifications_screen.dart:133:13 - unnecessary_const
+  error - Expected to find ',' - lib\screens\community\notifications_screen.dart:133:13 - expected_token
+  error - Too many positional arguments: 1 expected, but 5 found - lib\screens\community\notifications_screen.dart:133:13 - extra_positional_arguments_could_be_named
+  error - Methods can't be invoked in constant expressions - lib\screens\community\notifications_screen.dart:136:22 - const_eval_method_invocation
+   info - Unnecessary 'const' keyword - lib\screens\community\notifications_screen.dart:139:13 - unnecessary_const
+  error - Expected to find ')' - lib\screens\community\notifications_screen.dart:147:11 - expected_token
+  error - The method '_buildScanMode' isn't defined for the type '_DeciderScreenState' - lib\screens\main\decider_screen.dart:149:25 - undefined_method
+  error - The method '_buildFinalResult' isn't defined for the type '_DeciderScreenState' - lib\screens\main\decider_screen.dart:284:17 - undefined_method
+  error - The method '_buildCuisineSelected' isn't defined for the type '_DeciderScreenState' - lib\screens\main\decider_screen.dart:286:21 - undefined_method
+  error - The method '_buildControls' isn't defined for the type '_DeciderScreenState' - lib\screens\main\decider_screen.dart:291:9 - undefined_method
+  error - The body might complete normally, causing 'null' to be returned, but the return type, 'Widget', is a potentially non-nullable type - lib\screens\main\decider_screen.dart:325:10 - body_might_complete_normally
+warning - The value of the local variable 'items' isn't used - lib\screens\main\decider_screen.dart:327:11 - unused_local_variable
+  error - Unterminated string literal - lib\screens\main\decider_screen.dart:330:55 - unterminated_string_literal
+  error - The method 'toList' isn't defined for the type 'String' - lib\screens\main\decider_screen.dart:331:18 - undefined_method
+  error - Expected to find '}' - lib\screens\main\decider_screen.dart:332:15 - expected_token
+  error - Expected to find ',' - lib\screens\main\decider_screen.dart:434:3 - expected_token
+  error - Function expressions can't be named - lib\screens\main\decider_screen.dart:434:10 - named_function_expression
+  error - Too many positional arguments: 1 expected, but 5 found - lib\screens\main\decider_screen.dart:434:31 - extra_positional_arguments
+  error - Expected to find ',' - lib\screens\main\decider_screen.dart:475:3 - expected_token
+  error - Function expressions can't be named - lib\screens\main\decider_screen.dart:475:10 - named_function_expression
+  error - Expected to find ',' - lib\screens\main\decider_screen.dart:536:3 - expected_token
+  error - Function expressions can't be named - lib\screens\main\decider_screen.dart:536:10 - named_function_expression
+  error - Expected to find ',' - lib\screens\main\decider_screen.dart:621:3 - expected_token
+  error - Function expressions can't be named - lib\screens\main\decider_screen.dart:621:10 - named_function_expression
+  error - Expected to find ';' - lib\screens\main\decider_screen.dart:745:3 - expected_token
+  error - Expected to find ')' - lib\screens\main\decider_screen.dart:746:1 - expected_token
+  error - Classes can't be declared inside other classes - lib\screens\main\decider_screen.dart:748:1 - class_in_class
+  error - Expected a class member - lib\screens\main\decider_screen.dart:748:20 - expected_class_member
+   info - The variable name 'CustomPainter' isn't a lowerCamelCase identifier - lib\screens\main\decider_screen.dart:748:28 - non_constant_identifier_names
+  error - Methods must have an explicit list of parameters - lib\screens\main\decider_screen.dart:748:28 - missing_method_parameters
+  error - The method 'WheelPainter' isn't defined for the type '_DeciderScreenState' - lib\screens\main\decider_screen.dart:752:3 - undefined_method
+  error - Expected to find ',' - lib\screens\main\decider_screen.dart:752:26 - expected_token
+  error - The getter 'items' isn't defined for the type '_DeciderScreenState' - lib\screens\main\decider_screen.dart:752:31 - undefined_getter
+warning - Two elements in a set literal shouldn't be equal - lib\screens\main\decider_screen.dart:752:38 - equal_elements_in_set
+  error - Expected to find ',' - lib\screens\main\decider_screen.dart:752:47 - expected_token
+  error - The getter 'colors' isn't defined for the type '_DeciderScreenState' - lib\screens\main\decider_screen.dart:752:52 - undefined_getter
+warning - The declaration 'paint' isn't referenced - lib\screens\main\decider_screen.dart:755:8 - unused_element
+  error - The final variable 'items' can't be read because it's potentially unassigned at this point - lib\screens\main\decider_screen.dart:758:33 - read_potentially_unassigned_final
+  error - The final variable 'items' can't be read because it's potentially unassigned at this point - lib\screens\main\decider_screen.dart:760:25 - read_potentially_unassigned_final
+  error - The final variable 'colors' can't be read because it's potentially unassigned at this point - lib\screens\main\decider_screen.dart:763:19 - read_potentially_unassigned_final
+  error - The final variable 'colors' can't be read because it's potentially unassigned at this point - lib\screens\main\decider_screen.dart:763:30 - read_potentially_unassigned_final
+  error - The final variable 'items' can't be read because it's potentially unassigned at this point - lib\screens\main\decider_screen.dart:781:17 - read_potentially_unassigned_final
+warning - The declaration 'shouldRepaint' isn't referenced - lib\screens\main\decider_screen.dart:797:8 - unused_element
+  error - The 'covariant' keyword can only be used for parameters in instance methods or before non-final instance fields - lib\screens\main\decider_screen.dart:797:22 - invalid_use_of_covariant
+  error - CustomPainter isn't a type - lib\screens\main\decider_screen.dart:797:32 - not_a_type
+  error - Expected to find '}' - lib\screens\main\decider_screen.dart:800:1 - expected_token
+   info - Don't use 'BuildContext's across async gaps - lib\screens\main\explore_screen.dart:97:11 - use_build_context_synchronously
+  error - Unterminated string literal - lib\screens\main\explore_screen.dart:703:65 - unterminated_string_literal
+  error - Too many positional arguments: 0 expected, but 3 found - lib\screens\main\explore_screen.dart:706:13 - extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\screens\main\explore_screen.dart:757:11 - expected_token
+warning - The value of the local variable 'isVip' isn't used - lib\screens\main\recipe_builder_screen.dart:187:11 - unused_local_variable
+  error - Invalid constant value - lib\screens\main\recipe_builder_screen.dart:282:22 - invalid_constant
+  error - Unterminated string literal - lib\screens\main\recipe_builder_screen.dart:282:61 - unterminated_string_literal
+  error - The method 'animate' isn't defined for the type 'String' - lib\screens\main\recipe_builder_screen.dart:283:16 - undefined_method
+   info - Unnecessary 'const' keyword - lib\screens\main\recipe_builder_screen.dart:284:29 - unnecessary_const
+   info - Unnecessary 'const' keyword - lib\screens\main\recipe_builder_screen.dart:284:54 - unnecessary_const
+   info - Unnecessary 'const' keyword - lib\screens\main\recipe_builder_screen.dart:285:11 - unnecessary_const
+  error - Too many positional arguments: 1 expected, but 5 found - lib\screens\main\recipe_builder_screen.dart:285:11 - extra_positional_arguments_could_be_named
+  error - Methods can't be invoked in constant expressions - lib\screens\main\recipe_builder_screen.dart:288:20 - const_eval_method_invocation
+   info - Unnecessary 'const' keyword - lib\screens\main\recipe_builder_screen.dart:290:11 - unnecessary_const
+  error - Expected to find ')' - lib\screens\main\recipe_builder_screen.dart:297:9 - expected_token
+warning - The value of the local variable 'isVip' isn't used - lib\screens\main\recipe_builder_screen.dart:303:11 - unused_local_variable
+  error - The literal can't be either a map or a set because it contains at least one literal map entry or a spread operator spreading a 'Map', and at least one element which is neither of these - lib\screens\main\recipe_builder_screen.dart:569:7 - ambiguous_set_or_map_literal_both
+  error - Expected to find ',' - lib\screens\main\recipe_builder_screen.dart:569:86 - expected_token
+  error - Undefined name 'color' - lib\screens\main\recipe_builder_screen.dart:569:86 - undefined_identifier
+  error - Expected to find ',' - lib\screens\main\recipe_builder_screen.dart:569:91 - expected_token
+  error - Unterminated string literal - lib\screens\main\recipe_builder_screen.dart:569:107 - unterminated_string_literal
+  error - Expected to find '}' - lib\screens\main\recipe_builder_screen.dart:570:5 - expected_token
+warning - The value of the local variable 'auth' isn't used - lib\screens\settings\settings_screen.dart:17:11 - unused_local_variable
+   info - Local variables should be final - lib\screens\settings\wheel_settings_screen.dart:550:5 - prefer_final_locals
+  error - Expected to find ';' - lib\screens\settings\wheel_settings_screen.dart:550:28 - expected_token
+  error - Unterminated string literal - lib\screens\settings\wheel_settings_screen.dart:550:33 - unterminated_string_literal
+  error - The element type 'String' can't be assigned to the list type 'Widget' - lib\screens\settings\wheel_settings_screen.dart:564:28 - list_element_type_not_assignable
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:36 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:564:36 - illegal_character
+  error - Undefined name '棣冨礋' - lib\screens\settings\wheel_settings_screen.dart:564:36 - undefined_identifier
+  error - Illegal character '23839' - lib\screens\settings\wheel_settings_screen.dart:564:37 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:38 - expected_token
+  error - The element type 'String' can't be assigned to the list type 'Widget' - lib\screens\settings\wheel_settings_screen.dart:564:38 - list_element_type_not_assignable
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:42 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:564:42 - illegal_character
+  error - Undefined name '棣冨盁' - lib\screens\settings\wheel_settings_screen.dart:564:42 - undefined_identifier
+  error - Illegal character '23583' - lib\screens\settings\wheel_settings_screen.dart:564:43 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:44 - expected_token
+  error - The element type 'String' can't be assigned to the list type 'Widget' - lib\screens\settings\wheel_settings_screen.dart:564:44 - list_element_type_not_assignable
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:48 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:564:48 - illegal_character
+  error - Undefined name '棣冾殰' - lib\screens\settings\wheel_settings_screen.dart:564:48 - undefined_identifier
+  error - Illegal character '59036' - lib\screens\settings\wheel_settings_screen.dart:564:49 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:50 - expected_token
+  error - The element type 'String' can't be assigned to the list type 'Widget' - lib\screens\settings\wheel_settings_screen.dart:564:50 - list_element_type_not_assignable
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:54 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:564:54 - illegal_character
+  error - Undefined name '棣冨椽' - lib\screens\settings\wheel_settings_screen.dart:564:54 - undefined_identifier
+  error - Illegal character '23850' - lib\screens\settings\wheel_settings_screen.dart:564:55 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:56 - expected_token
+  error - The element type 'String' can't be assigned to the list type 'Widget' - lib\screens\settings\wheel_settings_screen.dart:564:56 - list_element_type_not_assignable
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:60 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:564:60 - illegal_character
+  error - Undefined name '棣冾殱' - lib\screens\settings\wheel_settings_screen.dart:564:60 - undefined_identifier
+  error - Illegal character '59037' - lib\screens\settings\wheel_settings_screen.dart:564:61 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:62 - expected_token
+  error - The element type 'String' can't be assigned to the list type 'Widget' - lib\screens\settings\wheel_settings_screen.dart:564:62 - list_element_type_not_assignable
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:66 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:564:66 - illegal_character
+  error - Undefined name '棣冨祫' - lib\screens\settings\wheel_settings_screen.dart:564:66 - undefined_identifier
+  error - Illegal character '23876' - lib\screens\settings\wheel_settings_screen.dart:564:67 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:68 - expected_token
+  error - The element type 'String' can't be assigned to the list type 'Widget' - lib\screens\settings\wheel_settings_screen.dart:564:68 - list_element_type_not_assignable
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:72 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:564:72 - illegal_character
+  error - Undefined name '棣冨盀' - lib\screens\settings\wheel_settings_screen.dart:564:72 - undefined_identifier
+  error - Illegal character '23582' - lib\screens\settings\wheel_settings_screen.dart:564:73 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:74 - expected_token
+  error - The element type 'String' can't be assigned to the list type 'Widget' - lib\screens\settings\wheel_settings_screen.dart:564:74 - list_element_type_not_assignable
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:78 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:564:78 - illegal_character
+  error - Undefined name '棣冾殨' - lib\screens\settings\wheel_settings_screen.dart:564:78 - undefined_identifier
+  error - Illegal character '59029' - lib\screens\settings\wheel_settings_screen.dart:564:79 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:80 - expected_token
+  error - The element type 'String' can't be assigned to the list type 'Widget' - lib\screens\settings\wheel_settings_screen.dart:564:80 - list_element_type_not_assignable
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:84 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:564:84 - illegal_character
+  error - Undefined name '棣冨川' - lib\screens\settings\wheel_settings_screen.dart:564:84 - undefined_identifier
+  error - Illegal character '23848' - lib\screens\settings\wheel_settings_screen.dart:564:85 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:564:86 - expected_token
+  error - The element type 'String' can't be assigned to the list type 'Widget' - lib\screens\settings\wheel_settings_screen.dart:564:86 - list_element_type_not_assignable
+  error - Unterminated string literal - lib\screens\settings\wheel_settings_screen.dart:564:101 - unterminated_string_literal
+  error - Expected to find ')' - lib\screens\settings\wheel_settings_screen.dart:565:19 - expected_token
+  error - Expected to find ']' - lib\screens\settings\wheel_settings_screen.dart:565:19 - expected_token
+  error - The method 'toList' isn't defined for the type 'Wrap' - lib\screens\settings\wheel_settings_screen.dart:582:20 - undefined_method
+  error - Expected to find ']' - lib\screens\settings\wheel_settings_screen.dart:583:15 - expected_token
+  error - Expected an identifier - lib\screens\settings\wheel_settings_screen.dart:593:13 - missing_identifier
+  error - Expected to find ')' - lib\screens\settings\wheel_settings_screen.dart:593:13 - expected_token
+  error - The named parameter 'actions' isn't defined - lib\screens\settings\wheel_settings_screen.dart:595:11 - undefined_named_parameter
+  error - Expected to find ';' - lib\screens\settings\wheel_settings_screen.dart:614:7 - expected_token
+  error - Expected an identifier - lib\screens\settings\wheel_settings_screen.dart:614:8 - missing_identifier
+  error - Expected to find ';' - lib\screens\settings\wheel_settings_screen.dart:614:8 - expected_token
+  error - Unexpected text ';' - lib\screens\settings\wheel_settings_screen.dart:614:8 - unexpected_token
+  error - Expected an identifier - lib\screens\settings\wheel_settings_screen.dart:615:5 - missing_identifier
+  error - Unexpected text ';' - lib\screens\settings\wheel_settings_screen.dart:615:5 - unexpected_token
+   info - Unnecessary empty statement - lib\screens\settings\wheel_settings_screen.dart:615:6 - empty_statements
+   info - Local variables should be final - lib\screens\settings\wheel_settings_screen.dart:620:5 - prefer_final_locals
+  error - The argument type 'Set<InvalidType>' can't be assigned to the parameter type 'List<Widget>'.  - lib\screens\settings\wheel_settings_screen.dart:633:27 - argument_type_not_assignable
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:36 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:633:36 - illegal_character
+  error - Undefined name '棣冨礋' - lib\screens\settings\wheel_settings_screen.dart:633:36 - undefined_identifier
+  error - Illegal character '23839' - lib\screens\settings\wheel_settings_screen.dart:633:37 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:38 - expected_token
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:42 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:633:42 - illegal_character
+  error - Undefined name '棣冨盁' - lib\screens\settings\wheel_settings_screen.dart:633:42 - undefined_identifier
+  error - Illegal character '23583' - lib\screens\settings\wheel_settings_screen.dart:633:43 - illegal_character
+warning - Two elements in a set literal shouldn't be equal - lib\screens\settings\wheel_settings_screen.dart:633:44 - equal_elements_in_set
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:44 - expected_token
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:48 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:633:48 - illegal_character
+  error - Undefined name '棣冾殰' - lib\screens\settings\wheel_settings_screen.dart:633:48 - undefined_identifier
+  error - Illegal character '59036' - lib\screens\settings\wheel_settings_screen.dart:633:49 - illegal_character
+warning - Two elements in a set literal shouldn't be equal - lib\screens\settings\wheel_settings_screen.dart:633:50 - equal_elements_in_set
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:50 - expected_token
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:54 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:633:54 - illegal_character
+  error - Undefined name '棣冨椽' - lib\screens\settings\wheel_settings_screen.dart:633:54 - undefined_identifier
+  error - Illegal character '23850' - lib\screens\settings\wheel_settings_screen.dart:633:55 - illegal_character
+warning - Two elements in a set literal shouldn't be equal - lib\screens\settings\wheel_settings_screen.dart:633:56 - equal_elements_in_set
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:56 - expected_token
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:60 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:633:60 - illegal_character
+  error - Undefined name '棣冾殱' - lib\screens\settings\wheel_settings_screen.dart:633:60 - undefined_identifier
+  error - Illegal character '59037' - lib\screens\settings\wheel_settings_screen.dart:633:61 - illegal_character
+warning - Two elements in a set literal shouldn't be equal - lib\screens\settings\wheel_settings_screen.dart:633:62 - equal_elements_in_set
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:62 - expected_token
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:66 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:633:66 - illegal_character
+  error - Undefined name '棣冨祫' - lib\screens\settings\wheel_settings_screen.dart:633:66 - undefined_identifier
+  error - Illegal character '23876' - lib\screens\settings\wheel_settings_screen.dart:633:67 - illegal_character
+warning - Two elements in a set literal shouldn't be equal - lib\screens\settings\wheel_settings_screen.dart:633:68 - equal_elements_in_set
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:68 - expected_token
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:72 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:633:72 - illegal_character
+  error - Undefined name '棣冨盀' - lib\screens\settings\wheel_settings_screen.dart:633:72 - undefined_identifier
+  error - Illegal character '23582' - lib\screens\settings\wheel_settings_screen.dart:633:73 - illegal_character
+warning - Two elements in a set literal shouldn't be equal - lib\screens\settings\wheel_settings_screen.dart:633:74 - equal_elements_in_set
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:74 - expected_token
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:78 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:633:78 - illegal_character
+  error - Undefined name '棣冾殨' - lib\screens\settings\wheel_settings_screen.dart:633:78 - undefined_identifier
+  error - Illegal character '59029' - lib\screens\settings\wheel_settings_screen.dart:633:79 - illegal_character
+warning - Two elements in a set literal shouldn't be equal - lib\screens\settings\wheel_settings_screen.dart:633:80 - equal_elements_in_set
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:80 - expected_token
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:84 - expected_token
+  error - Illegal character '39299' - lib\screens\settings\wheel_settings_screen.dart:633:84 - illegal_character
+  error - Undefined name '棣冨川' - lib\screens\settings\wheel_settings_screen.dart:633:84 - undefined_identifier
+  error - Illegal character '23848' - lib\screens\settings\wheel_settings_screen.dart:633:85 - illegal_character
+  error - Expected to find ',' - lib\screens\settings\wheel_settings_screen.dart:633:86 - expected_token
+  error - Unterminated string literal - lib\screens\settings\wheel_settings_screen.dart:633:116 - unterminated_string_literal
+  error - Expected to find '}' - lib\screens\settings\wheel_settings_screen.dart:634:19 - expected_token
+  error - The method 'toList' isn't defined for the type 'Wrap' - lib\screens\settings\wheel_settings_screen.dart:651:20 - undefined_method
+  error - Expected to find ']' - lib\screens\settings\wheel_settings_screen.dart:652:15 - expected_token
+  error - Expected an identifier - lib\screens\settings\wheel_settings_screen.dart:659:13 - missing_identifier
+  error - Expected to find ')' - lib\screens\settings\wheel_settings_screen.dart:659:13 - expected_token
+  error - The named parameter 'actions' isn't defined - lib\screens\settings\wheel_settings_screen.dart:661:11 - undefined_named_parameter
+  error - Expected to find ';' - lib\screens\settings\wheel_settings_screen.dart:683:7 - expected_token
+  error - Expected an identifier - lib\screens\settings\wheel_settings_screen.dart:683:8 - missing_identifier
+  error - Expected to find ';' - lib\screens\settings\wheel_settings_screen.dart:683:8 - expected_token
+  error - Unexpected text ';' - lib\screens\settings\wheel_settings_screen.dart:683:8 - unexpected_token
+  error - Expected an identifier - lib\screens\settings\wheel_settings_screen.dart:684:5 - missing_identifier
+  error - Unexpected text ';' - lib\screens\settings\wheel_settings_screen.dart:684:5 - unexpected_token
+   info - Unnecessary empty statement - lib\screens\settings\wheel_settings_screen.dart:684:6 - empty_statements
+   info - 'fetchSignInMethodsForEmail' is deprecated and shouldn't be used. fetchSignInMethodsForEmail() has been deprecated. Migrating off of this method is recommended as a security best-practice. Learn more in the Identity Platform documentation:  https://cloud.google.com/identity-platform/docs/admin/email-enumeration-protection - lib\services\auth_service.dart:265:35 - deprecated_member_use
+  error - Unterminated string literal - lib\widgets\animation\achievement_system.dart:301:72 - unterminated_string_literal
+   info - Unnecessary 'const' keyword - lib\widgets\animation\achievement_system.dart:302:25 - unnecessary_const
+  error - Expected to find ',' - lib\widgets\animation\achievement_system.dart:302:25 - expected_token
+  error - Too many positional arguments: 1 expected, but 3 found - lib\widgets\animation\achievement_system.dart:302:25 - extra_positional_arguments_could_be_named
+  error - Invalid constant value - lib\widgets\animation\achievement_system.dart:304:31 - invalid_constant
+   info - Unnecessary 'const' keyword - lib\widgets\animation\achievement_system.dart:305:34 - unnecessary_const
+  error - Expected to find ')' - lib\widgets\animation\achievement_system.dart:311:23 - expected_token
+  error - Unterminated string literal - lib\widgets\animation\animation_onboarding.dart:498:62 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\animation\animation_onboarding.dart:499:3 - expected_token
+  error - The element type 'Type' can't be assigned to the list type 'String' - lib\widgets\animation\animation_onboarding.dart:499:3 - list_element_type_not_assignable
+  error - Expected to find ',' - lib\widgets\animation\animation_onboarding.dart:499:7 - expected_token
+  error - The element type 'int' can't be assigned to the list type 'String' - lib\widgets\animation\animation_onboarding.dart:499:7 - list_element_type_not_assignable
+  error - Undefined name '_currentEmoji' - lib\widgets\animation\animation_onboarding.dart:499:7 - undefined_identifier
+  error - Expected to find ']' - lib\widgets\animation\animation_onboarding.dart:499:24 - expected_token
+  error - Undefined name '_currentEmoji' - lib\widgets\animation\animation_onboarding.dart:510:13 - undefined_identifier
+  error - Undefined name '_currentEmoji' - lib\widgets\animation\animation_onboarding.dart:510:30 - undefined_identifier
+  error - Undefined name '_currentEmoji' - lib\widgets\animation\animation_onboarding.dart:542:34 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\animation\celebration_effects.dart:22:38 - expected_token
+  error - Illegal character '39299' - lib\widgets\animation\celebration_effects.dart:22:38 - illegal_character
+  error - The default value of an optional parameter must be constant - lib\widgets\animation\celebration_effects.dart:22:38 - non_constant_default_value
+  error - The values in a const list literal must be constants - lib\widgets\animation\celebration_effects.dart:22:38 - non_constant_list_element
+  error - Undefined name '棣冨皞' - lib\widgets\animation\celebration_effects.dart:22:38 - undefined_identifier
+  error - Illegal character '23554' - lib\widgets\animation\celebration_effects.dart:22:39 - illegal_character
+  error - Expected to find ',' - lib\widgets\animation\celebration_effects.dart:22:40 - expected_token
+  error - Expected to find ',' - lib\widgets\animation\celebration_effects.dart:22:44 - expected_token
+  error - Illegal character '39299' - lib\widgets\animation\celebration_effects.dart:22:44 - illegal_character
+  error - The values in a const list literal must be constants - lib\widgets\animation\celebration_effects.dart:22:44 - non_constant_list_element
+  error - Undefined name '棣冨竸' - lib\widgets\animation\celebration_effects.dart:22:44 - undefined_identifier
+  error - Illegal character '24068' - lib\widgets\animation\celebration_effects.dart:22:45 - illegal_character
+  error - Expected to find ',' - lib\widgets\animation\celebration_effects.dart:22:46 - expected_token
+  error - Expected to find ',' - lib\widgets\animation\celebration_effects.dart:22:50 - expected_token
+  error - Illegal character '29496' - lib\widgets\animation\celebration_effects.dart:22:50 - illegal_character
+  error - The values in a const list literal must be constants - lib\widgets\animation\celebration_effects.dart:22:50 - non_constant_list_element
+  error - Undefined name '鐚? - lib\widgets\animation\celebration_effects.dart:22:50 - undefined_identifier
+  error - Expected an identifier - lib\widgets\animation\celebration_effects.dart:22:52 - missing_identifier
+  error - Expected to find ':' - lib\widgets\animation\celebration_effects.dart:22:52 - expected_token
+  error - Unterminated string literal - lib\widgets\animation\recipe_animation_player.dart:778:21 - unterminated_string_literal
+  error - Expected to find '}' - lib\widgets\animation\recipe_animation_player.dart:779:17 - expected_token
+  error - Unterminated string literal - lib\widgets\animation\recipe_animation_player.dart:791:21 - unterminated_string_literal
+  error - Unterminated string literal - lib\widgets\animation\recipe_animation_player.dart:794:22 - unterminated_string_literal
+  error - Expected to find ';' - lib\widgets\animation\recipe_animation_player.dart:796:38 - expected_token
+  error - Unterminated string literal - lib\widgets\animation\recipe_animation_player.dart:796:45 - unterminated_string_literal
+  error - Expected to find ';' - lib\widgets\community\challenge_card.dart:308:16 - expected_token
+  error - Unterminated string literal - lib\widgets\community\challenge_card.dart:308:19 - unterminated_string_literal
+  error - Expected to find ';' - lib\widgets\community\challenge_card.dart:310:16 - expected_token
+  error - Unterminated string literal - lib\widgets\community\challenge_card.dart:310:21 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\community\collection_widgets.dart:547:45 - expected_token
+  error - Illegal character '29496' - lib\widgets\community\collection_widgets.dart:547:45 - illegal_character
+  error - Undefined name '鐚? - lib\widgets\community\collection_widgets.dart:547:45 - undefined_identifier
+  error - Expected an identifier - lib\widgets\community\collection_widgets.dart:547:47 - missing_identifier
+  error - Expected to find ':' - lib\widgets\community\collection_widgets.dart:547:47 - expected_token
+  error - A value of type 'Object?' can't be assigned to a variable of type 'String' - lib\widgets\community\collection_widgets.dart:604:64 - invalid_assignment
+  error - The argument type 'Object?' can't be assigned to the parameter type 'String'.  - lib\widgets\community\collection_widgets.dart:619:35 - argument_type_not_assignable
+  error - Unterminated string literal - lib\widgets\community\forum_post_card.dart:139:52 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\community\forum_post_card.dart:140:23 - expected_token
+  error - The literal can't be either a map or a set because it contains at least one literal map entry or a spread operator spreading a 'Map', and at least one element which is neither of these - lib\widgets\community\user_badge.dart:37:7 - ambiguous_set_or_map_literal_both
+  error - Unterminated string literal - lib\widgets\community\user_badge.dart:37:72 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\community\user_badge.dart:38:7 - expected_token
+  error - The literal can't be either a map or a set because it contains at least one literal map entry or a spread operator spreading a 'Map', and at least one element which is neither of these - lib\widgets\community\user_badge.dart:38:7 - ambiguous_set_or_map_literal_both
+  error - Unterminated string literal - lib\widgets\community\user_badge.dart:38:71 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\community\user_badge.dart:39:7 - expected_token
+  error - Expected to find '}' - lib\widgets\community\user_badge.dart:42:5 - expected_token
+  error - Unterminated string literal - lib\widgets\creative\advanced_widgets.dart:109:77 - unterminated_string_literal
+  error - Too many positional arguments: 1 expected, but 3 found - lib\widgets\creative\advanced_widgets.dart:115:21 - extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\widgets\creative\advanced_widgets.dart:166:19 - expected_token
+  error - Unterminated string literal - lib\widgets\creative\advanced_widgets.dart:380:89 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\creative\advanced_widgets.dart:381:15 - expected_token
+  error - Too many positional arguments: 0 expected, but 1 found - lib\widgets\creative\advanced_widgets.dart:381:15 - extra_positional_arguments
+  error - Expected to find ')' - lib\widgets\creative\advanced_widgets.dart:382:13 - expected_token
+  error - Unterminated string literal - lib\widgets\creative\advanced_widgets.dart:399:68 - unterminated_string_literal
+   info - Unnecessary 'const' keyword - lib\widgets\creative\advanced_widgets.dart:400:21 - unnecessary_const
+  error - Expected to find ',' - lib\widgets\creative\advanced_widgets.dart:400:21 - expected_token
+  error - Too many positional arguments: 1 expected, but 3 found - lib\widgets\creative\advanced_widgets.dart:400:21 - extra_positional_arguments_could_be_named
+  error - Invalid constant value - lib\widgets\creative\advanced_widgets.dart:402:39 - invalid_constant
+   info - Unnecessary 'const' keyword - lib\widgets\creative\advanced_widgets.dart:403:30 - unnecessary_const
+  error - Expected to find ')' - lib\widgets\creative\advanced_widgets.dart:409:19 - expected_token
+  error - Unterminated string literal - lib\widgets\creative\advanced_widgets.dart:441:40 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\creative\advanced_widgets.dart:442:19 - expected_token
+  error - Unterminated string literal - lib\widgets\creative\advanced_widgets.dart:522:42 - unterminated_string_literal
+  error - Unterminated string literal - lib\widgets\creative\advanced_widgets.dart:844:82 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\creative\advanced_widgets.dart:845:15 - expected_token
+  error - Too many positional arguments: 0 expected, but 1 found - lib\widgets\creative\advanced_widgets.dart:845:15 - extra_positional_arguments
+  error - Unterminated string literal - lib\widgets\creative\advanced_widgets.dart:845:73 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\creative\advanced_widgets.dart:846:15 - expected_token
+  error - Too many positional arguments: 0 expected, but 1 found - lib\widgets\creative\advanced_widgets.dart:846:15 - extra_positional_arguments
+  error - Expected to find ')' - lib\widgets\creative\advanced_widgets.dart:847:13 - expected_token
+  error - Unterminated string literal - lib\widgets\creative\advanced_widgets.dart:853:71 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\creative\advanced_widgets.dart:854:15 - expected_token
+  error - Too many positional arguments: 0 expected, but 1 found - lib\widgets\creative\advanced_widgets.dart:854:15 - extra_positional_arguments
+  error - Expected to find ')' - lib\widgets\creative\advanced_widgets.dart:855:13 - expected_token
+  error - Missing concrete implementation of 'abstract class State<T extends StatefulWidget> with Diagnosticable.build' - lib\widgets\creative\creative_widgets.dart:26:7 - non_abstract_class_inherits_abstract_member
+   info - The private field _frameIndex could be 'final' - lib\widgets\creative\creative_widgets.dart:27:7 - prefer_final_fields
+warning - The value of the field '_frameIndex' isn't used - lib\widgets\creative\creative_widgets.dart:27:7 - unused_field
+warning - The value of the field '_timer' isn't used - lib\widgets\creative\creative_widgets.dart:28:10 - unused_field
+warning - The value of the field '_defaultLoadings' isn't used - lib\widgets\creative\creative_widgets.dart:30:16 - unused_field
+  error - Const variables must be initialized with a constant value - lib\widgets\creative\creative_widgets.dart:31:51 - const_initialized_with_non_constant_value
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:31:51 - expected_token
+  error - The values in a const list literal must be constants - lib\widgets\creative\creative_widgets.dart:31:51 - non_constant_list_element
+  error - The values in a const map literal must be constant - lib\widgets\creative\creative_widgets.dart:31:51 - non_constant_map_value
+  error - Undefined name 'text' - lib\widgets\creative\creative_widgets.dart:31:51 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:31:55 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:31:59 - expected_token
+  error - The values in a const list literal must be constants - lib\widgets\creative\creative_widgets.dart:31:59 - non_constant_list_element
+  error - Undefined name 'Cracking' - lib\widgets\creative\creative_widgets.dart:31:59 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:31:68 - expected_token
+  error - The values in a const list literal must be constants - lib\widgets\creative\creative_widgets.dart:31:68 - non_constant_list_element
+  error - Undefined name 'the' - lib\widgets\creative\creative_widgets.dart:31:68 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:31:72 - expected_token
+  error - The values in a const list literal must be constants - lib\widgets\creative\creative_widgets.dart:31:72 - non_constant_list_element
+  error - Undefined name 'code' - lib\widgets\creative\creative_widgets.dart:31:72 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:31:76 - expected_token
+  error - A list or a set is expected in this spread - lib\widgets\creative\creative_widgets.dart:31:79 - const_spread_expected_list_or_set
+  error - Spread elements in list or set literals must implement 'Iterable' - lib\widgets\creative\creative_widgets.dart:31:79 - not_iterable_spread
+  error - Unterminated string literal - lib\widgets\creative\creative_widgets.dart:31:81 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:32:5 - expected_token
+  error - The literal can't be either a map or a set because it contains at least one literal map entry or a spread operator spreading a 'Map', and at least one element which is neither of these - lib\widgets\creative\creative_widgets.dart:33:5 - ambiguous_set_or_map_literal_both
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:33:25 - expected_token
+  error - Undefined name 'frames' - lib\widgets\creative\creative_widgets.dart:33:25 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:33:31 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:33:36 - expected_token
+  error - Illegal character '39299' - lib\widgets\creative\creative_widgets.dart:33:36 - illegal_character
+  error - Undefined name '棣冩噯閳ュ稅鐓? - lib\widgets\creative\creative_widgets.dart:33:36 - undefined_identifier
+  error - Illegal character '25030' - lib\widgets\creative\creative_widgets.dart:33:37 - illegal_character
+  error - Illegal character '37413' - lib\widgets\creative\creative_widgets.dart:33:38 - illegal_character
+  error - Illegal character '23952' - lib\widgets\creative\creative_widgets.dart:33:39 - illegal_character
+  error - Illegal character '28995' - lib\widgets\creative\creative_widgets.dart:33:40 - illegal_character
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:33:42 - missing_identifier
+  error - Expected to find ':' - lib\widgets\creative\creative_widgets.dart:33:42 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:33:59 - expected_token
+  error - Undefined name 'text' - lib\widgets\creative\creative_widgets.dart:33:59 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:33:63 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:33:67 - expected_token
+  error - Undefined name 'Chef' - lib\widgets\creative\creative_widgets.dart:33:67 - undefined_identifier
+  error - The name 'preparing' isn't defined, so it can't be used in an 'is' expression - lib\widgets\creative\creative_widgets.dart:33:75 - type_test_with_undefined_name
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:33:84 - expected_token
+  error - Unterminated string literal - lib\widgets\creative\creative_widgets.dart:33:89 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:34:5 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:34:51 - expected_token
+  error - The values in a const list literal must be constants - lib\widgets\creative\creative_widgets.dart:34:51 - non_constant_list_element
+  error - The values in a const map literal must be constant - lib\widgets\creative\creative_widgets.dart:34:51 - non_constant_map_value
+  error - Undefined name 'text' - lib\widgets\creative\creative_widgets.dart:34:51 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:34:55 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:34:59 - expected_token
+  error - The values in a const list literal must be constants - lib\widgets\creative\creative_widgets.dart:34:59 - non_constant_list_element
+  error - Undefined name 'Tossing' - lib\widgets\creative\creative_widgets.dart:34:59 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:34:67 - expected_token
+  error - The values in a const list literal must be constants - lib\widgets\creative\creative_widgets.dart:34:67 - non_constant_list_element
+  error - Undefined name 'up' - lib\widgets\creative\creative_widgets.dart:34:67 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:34:70 - expected_token
+  error - The values in a const list literal must be constants - lib\widgets\creative\creative_widgets.dart:34:70 - non_constant_list_element
+  error - Undefined name 'something' - lib\widgets\creative\creative_widgets.dart:34:70 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:34:80 - expected_token
+  error - The values in a const list literal must be constants - lib\widgets\creative\creative_widgets.dart:34:80 - non_constant_list_element
+  error - Undefined name 'good' - lib\widgets\creative\creative_widgets.dart:34:80 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:34:84 - expected_token
+  error - A list or a set is expected in this spread - lib\widgets\creative\creative_widgets.dart:34:87 - const_spread_expected_list_or_set
+  error - Spread elements in list or set literals must implement 'Iterable' - lib\widgets\creative\creative_widgets.dart:34:87 - not_iterable_spread
+  error - Unterminated string literal - lib\widgets\creative\creative_widgets.dart:34:89 - unterminated_string_literal
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:35:4 - expected_token
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:84:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:84:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:84:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:84:7 - expected_token
+  error - Undefined name 'FloatingFoodParticles' - lib\widgets\creative\creative_widgets.dart:84:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:84:29 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:84:29 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:84:29 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:84:37 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:84:52 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:85:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:85:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:85:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:100:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:100:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:100:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:100:7 - expected_token
+  error - Undefined name '_FloatingFoodParticlesState' - lib\widgets\creative\creative_widgets.dart:100:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:100:35 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:100:35 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:100:35 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:100:43 - expected_token
+  error - The operator '<' isn't defined for the type 'Type' - lib\widgets\creative\creative_widgets.dart:100:48 - undefined_operator
+  error - Undefined name 'FloatingFoodParticles' - lib\widgets\creative\creative_widgets.dart:100:49 - undefined_identifier
+  error - A comparison expression can't be an operand of another comparison expression - lib\widgets\creative\creative_widgets.dart:100:70 - equality_cannot_be_equality_operand
+  error - 'with' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:101:5 - expected_identifier_but_got_keyword
+  error - Undefined name 'with' - lib\widgets\creative\creative_widgets.dart:101:5 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:101:10 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:101:41 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:102:3 - non_constant_set_element
+  error - Undefined name 'late' - lib\widgets\creative\creative_widgets.dart:102:3 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:102:8 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:102:28 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:102:28 - non_constant_set_element
+  error - Undefined name '_controller' - lib\widgets\creative\creative_widgets.dart:102:28 - undefined_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:102:39 - expected_token
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:157:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:157:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:157:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:157:7 - expected_token
+  error - Undefined name '_Particle' - lib\widgets\creative\creative_widgets.dart:157:7 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:157:17 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:158:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:158:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:158:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:175:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:175:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:175:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:175:7 - expected_token
+  error - Undefined name '_ParticlePainter' - lib\widgets\creative\creative_widgets.dart:175:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:175:24 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:175:24 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:175:24 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:175:32 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:175:46 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:176:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:176:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:176:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:211:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:211:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:211:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:211:7 - expected_token
+  error - Undefined name 'ShakeToDiscover' - lib\widgets\creative\creative_widgets.dart:211:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:211:23 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:211:23 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:211:23 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:211:31 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:211:46 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:212:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:212:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:212:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:227:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:227:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:227:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:227:7 - expected_token
+  error - Undefined name '_ShakeToDiscoverState' - lib\widgets\creative\creative_widgets.dart:227:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:227:29 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:227:29 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:227:29 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:227:37 - expected_token
+  error - The operator '<' isn't defined for the type 'Type' - lib\widgets\creative\creative_widgets.dart:227:42 - undefined_operator
+  error - Undefined name 'ShakeToDiscover' - lib\widgets\creative\creative_widgets.dart:227:43 - undefined_identifier
+  error - A comparison expression can't be an operand of another comparison expression - lib\widgets\creative\creative_widgets.dart:227:58 - equality_cannot_be_equality_operand
+  error - 'with' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:228:5 - expected_identifier_but_got_keyword
+  error - Undefined name 'with' - lib\widgets\creative\creative_widgets.dart:228:5 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:228:10 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:228:41 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:229:3 - non_constant_set_element
+  error - Undefined name 'late' - lib\widgets\creative\creative_widgets.dart:229:3 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:229:8 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:229:28 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:229:28 - non_constant_set_element
+  error - Undefined name '_hintController' - lib\widgets\creative\creative_widgets.dart:229:28 - undefined_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:229:43 - expected_token
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:300:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:300:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:300:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:300:7 - expected_token
+  error - Undefined name 'DailySpinWheel' - lib\widgets\creative\creative_widgets.dart:300:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:300:22 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:300:22 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:300:22 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:300:30 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:300:45 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:301:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:301:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:301:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:314:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:314:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:314:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:314:7 - expected_token
+  error - Undefined name '_DailySpinWheelState' - lib\widgets\creative\creative_widgets.dart:314:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:314:28 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:314:28 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:314:28 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:314:36 - expected_token
+  error - The operator '<' isn't defined for the type 'Type' - lib\widgets\creative\creative_widgets.dart:314:41 - undefined_operator
+  error - Undefined name 'DailySpinWheel' - lib\widgets\creative\creative_widgets.dart:314:42 - undefined_identifier
+  error - A comparison expression can't be an operand of another comparison expression - lib\widgets\creative\creative_widgets.dart:314:56 - equality_cannot_be_equality_operand
+  error - 'with' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:315:5 - expected_identifier_but_got_keyword
+  error - Undefined name 'with' - lib\widgets\creative\creative_widgets.dart:315:5 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:315:10 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:315:41 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:316:3 - non_constant_set_element
+  error - Undefined name 'late' - lib\widgets\creative\creative_widgets.dart:316:3 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:316:8 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:316:28 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:316:28 - non_constant_set_element
+  error - Undefined name '_controller' - lib\widgets\creative\creative_widgets.dart:316:28 - undefined_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:316:39 - expected_token
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:442:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:442:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:442:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:442:7 - expected_token
+  error - Undefined name '_WheelPainter' - lib\widgets\creative\creative_widgets.dart:442:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:442:21 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:442:21 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:442:21 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:442:29 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:442:43 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:443:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:443:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:443:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:504:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:504:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:504:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:504:7 - expected_token
+  error - Undefined name 'SpinPrize' - lib\widgets\creative\creative_widgets.dart:504:7 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:504:17 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:505:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:505:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:505:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:523:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:523:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:523:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:523:7 - expected_token
+  error - Undefined name 'MysteryBox' - lib\widgets\creative\creative_widgets.dart:523:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:523:18 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:523:18 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:523:18 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:523:26 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:523:41 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:524:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:524:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:524:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:539:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:539:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:539:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:539:7 - expected_token
+  error - Undefined name '_MysteryBoxState' - lib\widgets\creative\creative_widgets.dart:539:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:539:24 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:539:24 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:539:24 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:539:32 - expected_token
+  error - The operator '<' isn't defined for the type 'Type' - lib\widgets\creative\creative_widgets.dart:539:37 - undefined_operator
+  error - Undefined name 'MysteryBox' - lib\widgets\creative\creative_widgets.dart:539:38 - undefined_identifier
+  error - A comparison expression can't be an operand of another comparison expression - lib\widgets\creative\creative_widgets.dart:539:48 - equality_cannot_be_equality_operand
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:540:8 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:540:8 - non_constant_set_element
+  error - Undefined name '_isOpened' - lib\widgets\creative\creative_widgets.dart:540:8 - undefined_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:540:25 - expected_token
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:566:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:566:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:566:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:566:7 - expected_token
+  error - Undefined name '_ClosedBox' - lib\widgets\creative\creative_widgets.dart:566:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:566:18 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:566:18 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:566:18 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:566:26 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:566:42 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:567:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:567:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:567:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:611:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:611:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:611:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:611:7 - expected_token
+  error - Undefined name '_OpenedBox' - lib\widgets\creative\creative_widgets.dart:611:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:611:18 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:611:18 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:611:18 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:611:26 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:611:42 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:612:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:612:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:612:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:657:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:657:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:657:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:657:7 - expected_token
+  error - Undefined name 'ChefJokeCard' - lib\widgets\creative\creative_widgets.dart:657:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:657:20 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:657:20 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:657:20 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:657:28 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:657:43 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:658:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:658:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:658:3 - non_constant_set_element
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:671:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:671:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:671:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:671:7 - expected_token
+  error - Undefined name '_ChefJokeCardState' - lib\widgets\creative\creative_widgets.dart:671:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:671:26 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:671:26 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:671:26 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:671:34 - expected_token
+  error - The operator '<' isn't defined for the type 'Type' - lib\widgets\creative\creative_widgets.dart:671:39 - undefined_operator
+  error - Undefined name 'ChefJokeCard' - lib\widgets\creative\creative_widgets.dart:671:40 - undefined_identifier
+  error - A comparison expression can't be an operand of another comparison expression - lib\widgets\creative\creative_widgets.dart:671:52 - equality_cannot_be_equality_operand
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:672:8 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:672:8 - non_constant_set_element
+  error - Undefined name '_showPunchline' - lib\widgets\creative\creative_widgets.dart:672:8 - undefined_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:672:30 - expected_token
+  error - 'class' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:735:1 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:735:1 - expected_token
+  error - Undefined name 'class' - lib\widgets\creative\creative_widgets.dart:735:1 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:735:7 - expected_token
+  error - Undefined name 'FoodPersonalityCard' - lib\widgets\creative\creative_widgets.dart:735:7 - undefined_identifier
+  error - 'extends' can't be used as an identifier because it's a keyword - lib\widgets\creative\creative_widgets.dart:735:27 - expected_identifier_but_got_keyword
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:735:27 - expected_token
+  error - Undefined name 'extends' - lib\widgets\creative\creative_widgets.dart:735:27 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:735:35 - expected_token
+  error - Expected to find ',' - lib\widgets\creative\creative_widgets.dart:735:51 - expected_token
+  error - Expected an identifier - lib\widgets\creative\creative_widgets.dart:736:3 - missing_identifier
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:736:3 - expected_token
+  error - The values in a const set literal must be constants - lib\widgets\creative\creative_widgets.dart:736:3 - non_constant_set_element
+  error - Expected to find ';' - lib\widgets\creative\creative_widgets.dart:814:1 - expected_token
+  error - Expected to find ']' - lib\widgets\creative\creative_widgets.dart:816:1 - expected_token
+  error - Expected to find '}' - lib\widgets\creative\creative_widgets.dart:816:1 - expected_token
+  error - Expected to find ':' - lib\widgets\creative\game_widgets.dart:209:65 - expected_token
+  error - Expected to find ';' - lib\widgets\creative\game_widgets.dart:209:65 - expected_token
+  error - Illegal character '39299' - lib\widgets\creative\game_widgets.dart:209:65 - illegal_character
+  error - Undefined name '棣冩啢' - lib\widgets\creative\game_widgets.dart:209:65 - undefined_identifier
+  error - Illegal character '24996' - lib\widgets\creative\game_widgets.dart:209:66 - illegal_character
+  error - Expected to find ')' - lib\widgets\creative\game_widgets.dart:209:67 - expected_token
+  error - Expected to find ';' - lib\widgets\creative\game_widgets.dart:209:67 - expected_token
+  error - Unterminated string literal - lib\widgets\creative\game_widgets.dart:209:69 - unterminated_string_literal
+  error - Unterminated string literal - lib\widgets\creative\game_widgets.dart:420:57 - unterminated_string_literal
+  error - Expected to find ')' - lib\widgets\creative\game_widgets.dart:423:91 - expected_token
+  error - Unterminated string literal - lib\widgets\discovery\discovery_widgets.dart:383:96 - unterminated_string_literal
+  error - Too many positional arguments: 1 expected, but 2 found - lib\widgets\discovery\discovery_widgets.dart:387:19 - extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\widgets\discovery\discovery_widgets.dart:406:17 - expected_token
+  error - Unterminated string literal - lib\widgets\engagement\engagement_widgets.dart:229:92 - unterminated_string_literal
+  error - Too many positional arguments: 1 expected, but 4 found - lib\widgets\engagement\engagement_widgets.dart:235:15 - extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\widgets\engagement\engagement_widgets.dart:359:13 - expected_token
+  error - The literal can't be either a map or a set because it contains at least one literal map entry or a spread operator spreading a 'Map', and at least one element which is neither of these - lib\widgets\onboarding\onboarding_widgets.dart:128:5 - ambiguous_set_or_map_literal_both
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:128:64 - expected_token
+  error - Undefined name 'description' - lib\widgets\onboarding\onboarding_widgets.dart:128:64 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:128:75 - expected_token
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:128:79 - expected_token
+  error - Undefined name 'Love' - lib\widgets\onboarding\onboarding_widgets.dart:128:79 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:128:84 - expected_token
+  error - Undefined name 'trying' - lib\widgets\onboarding\onboarding_widgets.dart:128:84 - undefined_identifier
+   info - Unnecessary 'new' keyword - lib\widgets\onboarding\onboarding_widgets.dart:128:91 - unnecessary_new
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:128:91 - expected_token
+  error - Expected to find '(' - lib\widgets\onboarding\onboarding_widgets.dart:128:95 - expected_token
+  error - The name 'techniques' isn't a class - lib\widgets\onboarding\onboarding_widgets.dart:128:95 - creation_with_non_type
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:128:105 - expected_token
+  error - Unterminated string literal - lib\widgets\onboarding\onboarding_widgets.dart:128:107 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:129:5 - expected_token
+  error - The literal can't be either a map or a set because it contains at least one literal map entry or a spread operator spreading a 'Map', and at least one element which is neither of these - lib\widgets\onboarding\onboarding_widgets.dart:129:5 - ambiguous_set_or_map_literal_both
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:129:56 - expected_token
+  error - Undefined name 'description' - lib\widgets\onboarding\onboarding_widgets.dart:129:56 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:129:67 - expected_token
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:129:71 - expected_token
+  error - Undefined name 'Professional' - lib\widgets\onboarding\onboarding_widgets.dart:129:71 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:129:84 - expected_token
+  error - Undefined name 'level' - lib\widgets\onboarding\onboarding_widgets.dart:129:84 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:129:90 - expected_token
+  error - Undefined name 'skills' - lib\widgets\onboarding\onboarding_widgets.dart:129:90 - undefined_identifier
+  error - Expected to find ',' - lib\widgets\onboarding\onboarding_widgets.dart:129:96 - expected_token
+  error - Unterminated string literal - lib\widgets\onboarding\onboarding_widgets.dart:129:98 - unterminated_string_literal
+  error - Expected to find '}' - lib\widgets\onboarding\onboarding_widgets.dart:130:3 - expected_token
+  error - Unterminated string literal - lib\widgets\onboarding\onboarding_widgets.dart:387:74 - unterminated_string_literal
+  error - Expected to find '}' - lib\widgets\onboarding\onboarding_widgets.dart:388:3 - expected_token
+  error - Unterminated string literal - lib\widgets\recipe\nutrition_widgets.dart:130:66 - unterminated_string_literal
+   info - Unnecessary 'const' keyword - lib\widgets\recipe\nutrition_widgets.dart:131:17 - unnecessary_const
+  error - Expected to find ',' - lib\widgets\recipe\nutrition_widgets.dart:131:17 - expected_token
+  error - Too many positional arguments: 1 expected, but 7 found - lib\widgets\recipe\nutrition_widgets.dart:131:17 - extra_positional_arguments_could_be_named
+   info - Unnecessary 'const' keyword - lib\widgets\recipe\nutrition_widgets.dart:132:17 - unnecessary_const
+   info - Unnecessary 'const' keyword - lib\widgets\recipe\nutrition_widgets.dart:139:17 - unnecessary_const
+   info - Unnecessary 'const' keyword - lib\widgets\recipe\nutrition_widgets.dart:140:17 - unnecessary_const
+   info - Unnecessary 'const' keyword - lib\widgets\recipe\nutrition_widgets.dart:147:17 - unnecessary_const
+  error - Invalid constant value - lib\widgets\recipe\nutrition_widgets.dart:149:19 - invalid_constant
+  error - Expected to find ')' - lib\widgets\recipe\nutrition_widgets.dart:152:15 - expected_token
+  error - Unterminated string literal - lib\widgets\recipe\nutrition_widgets.dart:389:64 - unterminated_string_literal
+   info - Unnecessary 'const' keyword - lib\widgets\recipe\nutrition_widgets.dart:390:15 - unnecessary_const
+  error - Expected to find ',' - lib\widgets\recipe\nutrition_widgets.dart:390:15 - expected_token
+  error - Too many positional arguments: 1 expected, but 5 found - lib\widgets\recipe\nutrition_widgets.dart:390:15 - extra_positional_arguments_could_be_named
+   info - Unnecessary 'const' keyword - lib\widgets\recipe\nutrition_widgets.dart:391:15 - unnecessary_const
+   info - Unnecessary 'const' keyword - lib\widgets\recipe\nutrition_widgets.dart:398:15 - unnecessary_const
+  error - Invalid constant value - lib\widgets\recipe\nutrition_widgets.dart:400:24 - invalid_constant
+  error - Expected to find ')' - lib\widgets\recipe\nutrition_widgets.dart:403:13 - expected_token
+  error - Unterminated string literal - lib\widgets\recipe\recipe_card.dart:61:77 - unterminated_string_literal
+  error - Too many positional arguments: 0 expected, but 3 found - lib\widgets\recipe\recipe_card.dart:68:19 - extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\widgets\recipe\recipe_card.dart:147:17 - expected_token
+  error - Unterminated string literal - lib\widgets\ui\ui_utility_widgets.dart:202:64 - unterminated_string_literal
+  error - Expected to find ',' - lib\widgets\ui\ui_utility_widgets.dart:203:23 - expected_token
+  error - Too many positional arguments: 1 expected, but 3 found - lib\widgets\ui\ui_utility_widgets.dart:203:23 - extra_positional_arguments_could_be_named
+  error - Expected to find ')' - lib\widgets\ui\ui_utility_widgets.dart:211:21 - expected_token
+  error - Expected to find ';' - lib\widgets\ui\ui_utility_widgets.dart:448:44 - expected_token
+  error - Unterminated string literal - lib\widgets\ui\ui_utility_widgets.dart:448:48 - unterminated_string_literal
+  error - Expected to find ')' - lib\widgets\ui\ui_utility_widgets.dart:449:3 - expected_token
+  error - Expected to find ';' - lib\widgets\ui\ui_utility_widgets.dart:452:44 - expected_token
+  error - Unterminated string literal - lib\widgets\ui\ui_utility_widgets.dart:452:86 - unterminated_string_literal
+  error - Expected to find ')' - lib\widgets\ui\ui_utility_widgets.dart:453:3 - expected_token
+

@@ -1,0 +1,3 @@
+1. Collect full analyzer output (errors/warnings) to scope work.
+2. Fix analyzer errors (undefined getters, invalid constants, deprecated withOpacity) across widgets and theme.
+3. Re-run flutter analyze until clean.

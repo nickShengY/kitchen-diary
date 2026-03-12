@@ -1,0 +1,7 @@
+{
+  "name": "CookToon: Wholesome Recipe Builder",
+  "description": "A cute, animated, cartoon-style recipe builder and social cooking companion. Create step-by-step visual recipes, spin the wheel for meal ideas, or scan menus with AI.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
