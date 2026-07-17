@@ -167,7 +167,8 @@ class HapticService {
     }
   }
 
-  Future<void> _rhythmicImpact(int count, Future<void> Function() impactFn) async {
+  Future<void> _rhythmicImpact(
+      int count, Future<void> Function() impactFn) async {
     for (int i = 0; i < count; i++) {
       await impactFn();
       if (i < count - 1) {

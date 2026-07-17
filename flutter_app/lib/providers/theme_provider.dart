@@ -4,18 +4,18 @@ import 'package:hive/hive.dart';
 class ThemeProvider extends ChangeNotifier {
   static const String _boxName = 'settings';
   static const String _themeKey = 'theme_mode';
-  
+
   ThemeMode _themeMode = ThemeMode.light;
   bool _isInitialized = false;
-  
+
   ThemeMode get themeMode => _themeMode;
   bool get isDarkMode => _themeMode == ThemeMode.dark;
   bool get isInitialized => _isInitialized;
-  
+
   ThemeProvider() {
     _loadTheme();
   }
-  
+
   Future<void> _loadTheme() async {
     try {
       final box = await Hive.openBox(_boxName);
@@ -28,19 +28,20 @@ class ThemeProvider extends ChangeNotifier {
     _isInitialized = true;
     notifyListeners();
   }
-  
+
   Future<void> toggleTheme() async {
-    _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    _themeMode =
+        _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     await _saveTheme();
     notifyListeners();
   }
-  
+
   Future<void> setThemeMode(ThemeMode mode) async {
     _themeMode = mode;
     await _saveTheme();
     notifyListeners();
   }
-  
+
   Future<void> _saveTheme() async {
     try {
       final box = await Hive.openBox(_boxName);

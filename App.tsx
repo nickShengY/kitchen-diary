@@ -16,15 +16,22 @@ function App() {
       setCurrentView(AppView.BUILDER);
   };
 
+  const handleNavigate = (view: AppView) => {
+      if (view === AppView.BUILDER) {
+          setImportRecipe(undefined);
+      }
+      setCurrentView(view);
+  };
+
   const renderView = () => {
     switch (currentView) {
       case AppView.COMMUNITY:
         return <Community onCookThis={handleCookThis} />;
       case AppView.BUILDER:
         return (
-            <RecipeBuilder 
-                key={importRecipe?.id || 'new'} 
-                initialRecipe={importRecipe} 
+            <RecipeBuilder
+                key={importRecipe?.id || 'new'}
+                initialRecipe={importRecipe}
                 onExit={() => setCurrentView(AppView.COMMUNITY)}
             />
         );
@@ -38,21 +45,19 @@ function App() {
   };
 
   return (
-    <div className="bg-[#FFF5F0] min-h-screen font-sans text-toon-dark selection:bg-toon-primary selection:text-white overflow-hidden">
-      <div className="max-w-md mx-auto min-h-screen bg-[#FFF5F0] relative shadow-2xl sm:border-x sm:border-orange-100 overflow-y-auto hide-scrollbar">
-        
-        {/* Main Content Area */}
-        <main className="animate-in fade-in duration-500 min-h-screen">
+    <div className="toon-atmosphere min-h-screen font-sans text-toon-dark selection:bg-toon-primary selection:text-white overflow-hidden">
+      <div className="toon-atmosphere max-w-md mx-auto min-h-screen relative shadow-2xl sm:border-x sm:border-orange-100 overflow-y-auto hide-scrollbar">
+
+        {/* Main Content Area. Screens animate their own content in; main itself
+            must stay unanimated so it doesn't become a stacking context that
+            would let the nav paint above full-screen overlays rendered inside. */}
+        <main key={currentView} className="min-h-screen">
             {renderView()}
         </main>
 
         {/* Navigation */}
-        <Navigation currentView={currentView} setView={setCurrentView} />
+        <Navigation currentView={currentView} setView={handleNavigate} />
 
-        {/* Background Decor - Blobs */}
-        <div className="fixed top-0 left-0 w-64 h-64 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none -z-10 animate-blob"></div>
-        <div className="fixed top-0 right-0 w-64 h-64 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none -z-10 animate-blob animation-delay-2000"></div>
-        <div className="fixed -bottom-8 left-20 w-64 h-64 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none -z-10 animate-blob animation-delay-4000"></div>
       </div>
     </div>
   );

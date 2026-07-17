@@ -1,0 +1,7834 @@
+{
+  "version": "2.0.0",
+  "library": "kitchen-diary-complete-visual-contract",
+  "styleGuide": {
+    "camera": "three-quarter top-down",
+    "framing": "single centered subject with 10 percent padding",
+    "background": "transparent or flat neutral background",
+    "lighting": "soft studio light",
+    "renderStyle": "stylized cooking-game food sprite",
+    "forbidden": [
+      "hands",
+      "people",
+      "text",
+      "labels",
+      "watermarks",
+      "multi-object clutter",
+      "dramatic shadows"
+    ],
+    "masterSize": [
+      1024,
+      1024
+    ],
+    "safePadding": "8-12 percent",
+    "anchorPolicy": "family-locked anchors and pivots; no frame-to-frame jumps",
+    "stateCuePolicy": "communicate by cuts, texture, moisture, bubbles, crust, char and steam; never colour alone"
+  },
+  "stateProfiles": {
+    "produce": [
+      "raw",
+      "washed",
+      "peeled",
+      "trimmed",
+      "halved",
+      "quartered",
+      "wedged",
+      "sliced",
+      "diced",
+      "chopped",
+      "minced",
+      "julienned",
+      "grated",
+      "crushed",
+      "mashed",
+      "zested",
+      "juiced",
+      "mixed",
+      "blended",
+      "pureed",
+      "pickled",
+      "fermented",
+      "sauteed",
+      "stir_fried",
+      "shallow_fried",
+      "boiled",
+      "blanched",
+      "steamed",
+      "braised",
+      "baked",
+      "roasted",
+      "grilled",
+      "smoked",
+      "wilted",
+      "garnished",
+      "plated"
+    ],
+    "seasoning": [
+      "raw",
+      "washed",
+      "chopped",
+      "minced",
+      "crushed",
+      "grated",
+      "toasted",
+      "mixed",
+      "sprinkled",
+      "garnished"
+    ],
+    "protein": [
+      "raw",
+      "trimmed",
+      "sliced",
+      "diced",
+      "minced",
+      "mixed",
+      "marinated",
+      "breaded",
+      "shallow_fried",
+      "deep_fried",
+      "seared",
+      "boiled",
+      "simmered",
+      "poached",
+      "steamed",
+      "braised",
+      "baked",
+      "roasted",
+      "grilled",
+      "smoked",
+      "browned",
+      "fully_cooked",
+      "tender",
+      "juicy",
+      "lightly_charred",
+      "plated"
+    ],
+    "dairy": [
+      "raw",
+      "sliced",
+      "diced",
+      "grated",
+      "cracked",
+      "whisked",
+      "mixed",
+      "melted",
+      "whipped",
+      "sauced",
+      "drizzled",
+      "set",
+      "plated"
+    ],
+    "grain": [
+      "raw",
+      "washed",
+      "sifted",
+      "boiled",
+      "steamed",
+      "stir_fried",
+      "mixed",
+      "toasted",
+      "baked",
+      "plated"
+    ],
+    "dough": [
+      "raw",
+      "sifted",
+      "mixed",
+      "kneaded",
+      "folded",
+      "rolled",
+      "shaped",
+      "baked",
+      "toasted",
+      "golden",
+      "plated"
+    ],
+    "liquid": [
+      "raw",
+      "mixed",
+      "blended",
+      "pureed",
+      "simmered",
+      "reduced",
+      "thickened",
+      "sauced",
+      "drizzled",
+      "plated"
+    ],
+    "dessert": [
+      "raw",
+      "sifted",
+      "chopped",
+      "grated",
+      "melted",
+      "mixed",
+      "whisked",
+      "blended",
+      "pureed",
+      "kneaded",
+      "folded",
+      "rolled",
+      "shaped",
+      "baked",
+      "caramelized",
+      "whipped",
+      "set",
+      "drizzled",
+      "sprinkled",
+      "garnished",
+      "plated"
+    ]
+  },
+  "processingStates": [
+    {
+      "id": "raw",
+      "label": "Raw",
+      "descriptor": "whole and unprocessed"
+    },
+    {
+      "id": "washed",
+      "label": "Washed",
+      "descriptor": "clean with visible moisture droplets"
+    },
+    {
+      "id": "peeled",
+      "label": "Peeled",
+      "descriptor": "skin removed and flesh exposed"
+    },
+    {
+      "id": "trimmed",
+      "label": "Trimmed",
+      "descriptor": "inedible ends removed"
+    },
+    {
+      "id": "halved",
+      "label": "Halved",
+      "descriptor": "two clean halves"
+    },
+    {
+      "id": "quartered",
+      "label": "Quartered",
+      "descriptor": "four wedge-like pieces"
+    },
+    {
+      "id": "wedged",
+      "label": "Wedged",
+      "descriptor": "thick wedges"
+    },
+    {
+      "id": "sliced",
+      "label": "Sliced",
+      "descriptor": "thin even slices"
+    },
+    {
+      "id": "diced",
+      "label": "Diced",
+      "descriptor": "small uniform cubes"
+    },
+    {
+      "id": "chopped",
+      "label": "Chopped",
+      "descriptor": "rough chopped pieces"
+    },
+    {
+      "id": "minced",
+      "label": "Minced",
+      "descriptor": "very fine pieces"
+    },
+    {
+      "id": "julienned",
+      "label": "Julienned",
+      "descriptor": "thin matchsticks"
+    },
+    {
+      "id": "grated",
+      "label": "Grated",
+      "descriptor": "fine shredded strands"
+    },
+    {
+      "id": "crushed",
+      "label": "Crushed",
+      "descriptor": "broken and lightly smashed"
+    },
+    {
+      "id": "mashed",
+      "label": "Mashed",
+      "descriptor": "soft mashed texture"
+    },
+    {
+      "id": "zested",
+      "label": "Zested",
+      "descriptor": "fine aromatic zest"
+    },
+    {
+      "id": "juiced",
+      "label": "Juiced",
+      "descriptor": "fresh liquid with pulp cues"
+    },
+    {
+      "id": "sifted",
+      "label": "Sifted",
+      "descriptor": "fine aerated powder"
+    },
+    {
+      "id": "cracked",
+      "label": "Cracked",
+      "descriptor": "shell or exterior cleanly broken"
+    },
+    {
+      "id": "whisked",
+      "label": "Whisked",
+      "descriptor": "smooth aerated mixture"
+    },
+    {
+      "id": "mixed",
+      "label": "Mixed",
+      "descriptor": "cohesive combined mixture"
+    },
+    {
+      "id": "blended",
+      "label": "Blended",
+      "descriptor": "smooth blended texture"
+    },
+    {
+      "id": "pureed",
+      "label": "Pureed",
+      "descriptor": "silky thick puree"
+    },
+    {
+      "id": "kneaded",
+      "label": "Kneaded",
+      "descriptor": "elastic worked dough"
+    },
+    {
+      "id": "folded",
+      "label": "Folded",
+      "descriptor": "gently layered mixture"
+    },
+    {
+      "id": "rolled",
+      "label": "Rolled",
+      "descriptor": "evenly rolled sheet or coil"
+    },
+    {
+      "id": "shaped",
+      "label": "Shaped",
+      "descriptor": "formed portion"
+    },
+    {
+      "id": "marinated",
+      "label": "Marinated",
+      "descriptor": "visibly coated in marinade"
+    },
+    {
+      "id": "breaded",
+      "label": "Breaded",
+      "descriptor": "crisp crumb or batter coating"
+    },
+    {
+      "id": "pickled",
+      "label": "Pickled",
+      "descriptor": "brined translucent texture"
+    },
+    {
+      "id": "fermented",
+      "label": "Fermented",
+      "descriptor": "matured, textured surface"
+    },
+    {
+      "id": "sauteed",
+      "label": "Sauteed",
+      "descriptor": "lightly browned with retained moisture"
+    },
+    {
+      "id": "stir_fried",
+      "label": "Stir Fried",
+      "descriptor": "glossy wok-cooked edges"
+    },
+    {
+      "id": "shallow_fried",
+      "label": "Shallow Fried",
+      "descriptor": "crisp shallow-fry crust"
+    },
+    {
+      "id": "deep_fried",
+      "label": "Deep Fried",
+      "descriptor": "puffed golden crisp crust"
+    },
+    {
+      "id": "seared",
+      "label": "Seared",
+      "descriptor": "deep caramelized crust"
+    },
+    {
+      "id": "blanched",
+      "label": "Blanched",
+      "descriptor": "bright tender surface"
+    },
+    {
+      "id": "boiled",
+      "label": "Boiled",
+      "descriptor": "softened by boiling"
+    },
+    {
+      "id": "simmered",
+      "label": "Simmered",
+      "descriptor": "gently cooked in liquid"
+    },
+    {
+      "id": "poached",
+      "label": "Poached",
+      "descriptor": "delicately cooked in liquid"
+    },
+    {
+      "id": "steamed",
+      "label": "Steamed",
+      "descriptor": "tender and moist"
+    },
+    {
+      "id": "braised",
+      "label": "Braised",
+      "descriptor": "tender in reduced cooking liquid"
+    },
+    {
+      "id": "baked",
+      "label": "Baked",
+      "descriptor": "oven-cooked with browned surface"
+    },
+    {
+      "id": "roasted",
+      "label": "Roasted",
+      "descriptor": "caramelized edges"
+    },
+    {
+      "id": "grilled",
+      "label": "Grilled",
+      "descriptor": "structural grill marks and char"
+    },
+    {
+      "id": "smoked",
+      "label": "Smoked",
+      "descriptor": "smoke-kissed surface"
+    },
+    {
+      "id": "toasted",
+      "label": "Toasted",
+      "descriptor": "crisp golden surface"
+    },
+    {
+      "id": "melted",
+      "label": "Melted",
+      "descriptor": "soft glossy melt"
+    },
+    {
+      "id": "browned",
+      "label": "Browned",
+      "descriptor": "even browned surface"
+    },
+    {
+      "id": "caramelized",
+      "label": "Caramelized",
+      "descriptor": "deep glossy caramel structure"
+    },
+    {
+      "id": "reduced",
+      "label": "Reduced",
+      "descriptor": "thickened concentrated liquid"
+    },
+    {
+      "id": "scrambled",
+      "label": "Scrambled",
+      "descriptor": "soft egg curds"
+    },
+    {
+      "id": "whipped",
+      "label": "Whipped",
+      "descriptor": "light stable peaks"
+    },
+    {
+      "id": "wilted",
+      "label": "Wilted",
+      "descriptor": "softened leaf structure"
+    },
+    {
+      "id": "sauced",
+      "label": "Sauced",
+      "descriptor": "even sauce coating"
+    },
+    {
+      "id": "drizzled",
+      "label": "Drizzled",
+      "descriptor": "thin visible drizzle"
+    },
+    {
+      "id": "sprinkled",
+      "label": "Sprinkled",
+      "descriptor": "light topping distribution"
+    },
+    {
+      "id": "garnished",
+      "label": "Garnished",
+      "descriptor": "finished herb or topping placement"
+    },
+    {
+      "id": "plated",
+      "label": "Plated",
+      "descriptor": "ready-to-serve presentation"
+    },
+    {
+      "id": "crispy",
+      "label": "Crispy",
+      "descriptor": "structurally crisp exterior"
+    },
+    {
+      "id": "tender",
+      "label": "Tender",
+      "descriptor": "soft yielding structure"
+    },
+    {
+      "id": "juicy",
+      "label": "Juicy",
+      "descriptor": "visible moisture retained"
+    },
+    {
+      "id": "thickened",
+      "label": "Thickened",
+      "descriptor": "spoon-coating consistency"
+    },
+    {
+      "id": "set",
+      "label": "Set",
+      "descriptor": "firm set structure"
+    },
+    {
+      "id": "golden",
+      "label": "Golden",
+      "descriptor": "golden crust"
+    },
+    {
+      "id": "lightly_charred",
+      "label": "Lightly Charred",
+      "descriptor": "small dark char patches"
+    },
+    {
+      "id": "fully_cooked",
+      "label": "Fully Cooked",
+      "descriptor": "cooked opaque center"
+    }
+  ],
+  "ingredients": [
+    {
+      "id": "onion",
+      "label": "Onion",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "garlic",
+      "label": "Garlic",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "shallot",
+      "label": "Shallot",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "scallion",
+      "label": "Scallion",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "leek",
+      "label": "Leek",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "ginger",
+      "label": "Ginger",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "tomato",
+      "label": "Tomato",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "potato",
+      "label": "Potato",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "sweet_potato",
+      "label": "Sweet Potato",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "carrot",
+      "label": "Carrot",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "celery",
+      "label": "Celery",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "mushroom",
+      "label": "Mushroom",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "bell_pepper",
+      "label": "Bell Pepper",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "chili_pepper",
+      "label": "Chili Pepper",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "broccoli",
+      "label": "Broccoli",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "cauliflower",
+      "label": "Cauliflower",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "cabbage",
+      "label": "Cabbage",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "napa_cabbage",
+      "label": "Napa Cabbage",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "spinach",
+      "label": "Spinach",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "lettuce",
+      "label": "Lettuce",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "bok_choy",
+      "label": "Bok Choy",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "kale",
+      "label": "Kale",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "zucchini",
+      "label": "Zucchini",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "eggplant",
+      "label": "Eggplant",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "cucumber",
+      "label": "Cucumber",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "corn",
+      "label": "Corn",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "green_beans",
+      "label": "Green Beans",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "peas",
+      "label": "Peas",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "radish",
+      "label": "Radish",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "beet",
+      "label": "Beet",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "asparagus",
+      "label": "Asparagus",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "bean_sprouts",
+      "label": "Bean Sprouts",
+      "category": "vegetable",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "basil",
+      "label": "Basil",
+      "category": "herb",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "parsley",
+      "label": "Parsley",
+      "category": "herb",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "cilantro",
+      "label": "Cilantro",
+      "category": "herb",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "mint",
+      "label": "Mint",
+      "category": "herb",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "thyme",
+      "label": "Thyme",
+      "category": "herb",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "rosemary",
+      "label": "Rosemary",
+      "category": "herb",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "oregano",
+      "label": "Oregano",
+      "category": "herb",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "dill",
+      "label": "Dill",
+      "category": "herb",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "salt",
+      "label": "Salt",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "black_pepper",
+      "label": "Black Pepper",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "generic_pepper",
+      "label": "Generic Pepper",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "chili_flakes",
+      "label": "Chili Flakes",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "paprika",
+      "label": "Paprika",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "cumin",
+      "label": "Cumin",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "turmeric",
+      "label": "Turmeric",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "curry_powder",
+      "label": "Curry Powder",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "coriander",
+      "label": "Coriander",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "garam_masala",
+      "label": "Garam Masala",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "cinnamon",
+      "label": "Cinnamon",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "nutmeg",
+      "label": "Nutmeg",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "sumac",
+      "label": "Sumac",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "za_atar",
+      "label": "Za'atar",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "bay_leaf",
+      "label": "Bay Leaf",
+      "category": "spice",
+      "defaultUnit": "pcs",
+      "stateProfile": "seasoning"
+    },
+    {
+      "id": "chicken",
+      "label": "Chicken",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "chicken_breast",
+      "label": "Chicken Breast",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "chicken_thigh",
+      "label": "Chicken Thigh",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "turkey",
+      "label": "Turkey",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "beef",
+      "label": "Beef",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "ground_beef",
+      "label": "Ground Beef",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "beef_slices",
+      "label": "Beef Slices",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "steak",
+      "label": "Steak",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "pork",
+      "label": "Pork",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "pork_belly",
+      "label": "Pork Belly",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "pork_chop",
+      "label": "Pork Chop",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "bacon",
+      "label": "Bacon",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "sausage",
+      "label": "Sausage",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "lamb",
+      "label": "Lamb",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "lamb_shoulder",
+      "label": "Lamb Shoulder",
+      "category": "protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "fish",
+      "label": "Fish",
+      "category": "seafood",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "white_fish",
+      "label": "White Fish",
+      "category": "seafood",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "salmon",
+      "label": "Salmon",
+      "category": "seafood",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "tuna",
+      "label": "Tuna",
+      "category": "seafood",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "shrimp",
+      "label": "Shrimp",
+      "category": "seafood",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "squid",
+      "label": "Squid",
+      "category": "seafood",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "tofu",
+      "label": "Tofu",
+      "category": "plant_protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "tempeh",
+      "label": "Tempeh",
+      "category": "plant_protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "chickpeas",
+      "label": "Chickpeas",
+      "category": "plant_protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "lentils",
+      "label": "Lentils",
+      "category": "plant_protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "black_beans",
+      "label": "Black Beans",
+      "category": "plant_protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "kidney_beans",
+      "label": "Kidney Beans",
+      "category": "plant_protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "soybean",
+      "label": "Soybean",
+      "category": "plant_protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "edamame",
+      "label": "Edamame",
+      "category": "plant_protein",
+      "defaultUnit": "pcs",
+      "stateProfile": "protein"
+    },
+    {
+      "id": "egg",
+      "label": "Egg",
+      "category": "dairy",
+      "defaultUnit": "pcs",
+      "stateProfile": "dairy"
+    },
+    {
+      "id": "milk",
+      "label": "Milk",
+      "category": "dairy",
+      "defaultUnit": "pcs",
+      "stateProfile": "dairy"
+    },
+    {
+      "id": "cream",
+      "label": "Cream",
+      "category": "dairy",
+      "defaultUnit": "pcs",
+      "stateProfile": "dairy"
+    },
+    {
+      "id": "yogurt",
+      "label": "Yogurt",
+      "category": "dairy",
+      "defaultUnit": "pcs",
+      "stateProfile": "dairy"
+    },
+    {
+      "id": "butter",
+      "label": "Butter",
+      "category": "dairy",
+      "defaultUnit": "pcs",
+      "stateProfile": "dairy"
+    },
+    {
+      "id": "generic_cheese",
+      "label": "Generic Cheese",
+      "category": "dairy",
+      "defaultUnit": "pcs",
+      "stateProfile": "dairy"
+    },
+    {
+      "id": "mozzarella",
+      "label": "Mozzarella",
+      "category": "dairy",
+      "defaultUnit": "pcs",
+      "stateProfile": "dairy"
+    },
+    {
+      "id": "cheddar",
+      "label": "Cheddar",
+      "category": "dairy",
+      "defaultUnit": "pcs",
+      "stateProfile": "dairy"
+    },
+    {
+      "id": "parmesan",
+      "label": "Parmesan",
+      "category": "dairy",
+      "defaultUnit": "pcs",
+      "stateProfile": "dairy"
+    },
+    {
+      "id": "paneer",
+      "label": "Paneer",
+      "category": "dairy",
+      "defaultUnit": "pcs",
+      "stateProfile": "dairy"
+    },
+    {
+      "id": "rice",
+      "label": "Rice",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "white_rice",
+      "label": "White Rice",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "brown_rice",
+      "label": "Brown Rice",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "jasmine_rice",
+      "label": "Jasmine Rice",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "basmati_rice",
+      "label": "Basmati Rice",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "pasta",
+      "label": "Pasta",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "spaghetti",
+      "label": "Spaghetti",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "penne",
+      "label": "Penne",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "macaroni",
+      "label": "Macaroni",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "noodles",
+      "label": "Noodles",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "ramen_noodles",
+      "label": "Ramen Noodles",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "udon",
+      "label": "Udon",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "rice_noodles",
+      "label": "Rice Noodles",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "bread",
+      "label": "Bread",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "dough"
+    },
+    {
+      "id": "bread_slice",
+      "label": "Bread Slice",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "dough"
+    },
+    {
+      "id": "bun",
+      "label": "Bun",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "pita",
+      "label": "Pita",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "dough"
+    },
+    {
+      "id": "naan",
+      "label": "Naan",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "dough"
+    },
+    {
+      "id": "tortilla",
+      "label": "Tortilla",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "dough"
+    },
+    {
+      "id": "flour",
+      "label": "Flour",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "dough"
+    },
+    {
+      "id": "wheat",
+      "label": "Wheat",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "oats",
+      "label": "Oats",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "quinoa",
+      "label": "Quinoa",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "couscous",
+      "label": "Couscous",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "cereal",
+      "label": "Cereal",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "yeast",
+      "label": "Yeast",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "dough"
+    },
+    {
+      "id": "cornstarch",
+      "label": "Cornstarch",
+      "category": "grain",
+      "defaultUnit": "pcs",
+      "stateProfile": "grain"
+    },
+    {
+      "id": "water",
+      "label": "Water",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "broth",
+      "label": "Broth",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "stock",
+      "label": "Stock",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "wine",
+      "label": "Wine",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "olive_oil",
+      "label": "Olive Oil",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "vegetable_oil",
+      "label": "Vegetable Oil",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "sesame_oil",
+      "label": "Sesame Oil",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "generic_oil",
+      "label": "Generic Oil",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "soy_sauce",
+      "label": "Soy Sauce",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "vinegar",
+      "label": "Vinegar",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "coconut_milk",
+      "label": "Coconut Milk",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "fish_sauce",
+      "label": "Fish Sauce",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "oyster_sauce",
+      "label": "Oyster Sauce",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "tomato_paste",
+      "label": "Tomato Paste",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "honey",
+      "label": "Honey",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "ketchup",
+      "label": "Ketchup",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "mayonnaise",
+      "label": "Mayonnaise",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "mustard",
+      "label": "Mustard",
+      "category": "liquid",
+      "defaultUnit": "pcs",
+      "stateProfile": "liquid"
+    },
+    {
+      "id": "apple",
+      "label": "Apple",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "lemon",
+      "label": "Lemon",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "lime",
+      "label": "Lime",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "orange",
+      "label": "Orange",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "banana",
+      "label": "Banana",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "strawberry",
+      "label": "Strawberry",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "blueberry",
+      "label": "Blueberry",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "mango",
+      "label": "Mango",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "pineapple",
+      "label": "Pineapple",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "grape",
+      "label": "Grape",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "pear",
+      "label": "Pear",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "peach",
+      "label": "Peach",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "avocado",
+      "label": "Avocado",
+      "category": "fruit",
+      "defaultUnit": "pcs",
+      "stateProfile": "produce"
+    },
+    {
+      "id": "cocoa",
+      "label": "Cocoa",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "chocolate",
+      "label": "Chocolate",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "white_chocolate",
+      "label": "White Chocolate",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "milk_chocolate",
+      "label": "Milk Chocolate",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "dark_chocolate",
+      "label": "Dark Chocolate",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "vanilla",
+      "label": "Vanilla",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "vanilla_extract",
+      "label": "Vanilla Extract",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "baking_powder",
+      "label": "Baking Powder",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "baking_soda",
+      "label": "Baking Soda",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "powdered_sugar",
+      "label": "Powdered Sugar",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "brown_sugar",
+      "label": "Brown Sugar",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "granulated_sugar",
+      "label": "Granulated Sugar",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "gelatin",
+      "label": "Gelatin",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "agar",
+      "label": "Agar",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "pastry_dough",
+      "label": "Pastry Dough",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "pie_dough",
+      "label": "Pie Dough",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "puff_pastry",
+      "label": "Puff Pastry",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "phyllo",
+      "label": "Phyllo",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "cake_batter",
+      "label": "Cake Batter",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "brownie_batter",
+      "label": "Brownie Batter",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "cookie_dough",
+      "label": "Cookie Dough",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "cream_cheese",
+      "label": "Cream Cheese",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "mascarpone",
+      "label": "Mascarpone",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "condensed_milk",
+      "label": "Condensed Milk",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "evaporated_milk",
+      "label": "Evaporated Milk",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "custard",
+      "label": "Custard",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "ice_cream_base",
+      "label": "Ice Cream Base",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "sorbet_base",
+      "label": "Sorbet Base",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "caramel",
+      "label": "Caramel",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "almond",
+      "label": "Almond",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "walnut",
+      "label": "Walnut",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "pecan",
+      "label": "Pecan",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "pistachio",
+      "label": "Pistachio",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "hazelnut",
+      "label": "Hazelnut",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "coconut",
+      "label": "Coconut",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "dates",
+      "label": "Dates",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "raisins",
+      "label": "Raisins",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "mochi",
+      "label": "Mochi",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "rice_flour",
+      "label": "Rice Flour",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "sprinkles",
+      "label": "Sprinkles",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "whipped_cream",
+      "label": "Whipped Cream",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "syrup",
+      "label": "Syrup",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    },
+    {
+      "id": "fruit_glaze",
+      "label": "Fruit Glaze",
+      "category": "dessert",
+      "defaultUnit": "pcs",
+      "stateProfile": "dessert"
+    }
+  ],
+  "tools": [
+    {
+      "id": "chef_knife",
+      "label": "Chef Knife",
+      "category": "tool"
+    },
+    {
+      "id": "paring_knife",
+      "label": "Paring Knife",
+      "category": "tool"
+    },
+    {
+      "id": "peeler",
+      "label": "Peeler",
+      "category": "tool"
+    },
+    {
+      "id": "grater",
+      "label": "Grater",
+      "category": "tool"
+    },
+    {
+      "id": "whisk",
+      "label": "Whisk",
+      "category": "tool"
+    },
+    {
+      "id": "mixing_bowl",
+      "label": "Mixing Bowl",
+      "category": "tool"
+    },
+    {
+      "id": "cutting_board",
+      "label": "Cutting Board",
+      "category": "tool"
+    },
+    {
+      "id": "measuring_cup",
+      "label": "Measuring Cup",
+      "category": "tool"
+    },
+    {
+      "id": "measuring_spoon",
+      "label": "Measuring Spoon",
+      "category": "tool"
+    },
+    {
+      "id": "colander",
+      "label": "Colander",
+      "category": "tool"
+    },
+    {
+      "id": "mortar_pestle",
+      "label": "Mortar and Pestle",
+      "category": "tool"
+    },
+    {
+      "id": "spatula",
+      "label": "Spatula",
+      "category": "tool"
+    },
+    {
+      "id": "tongs",
+      "label": "Tongs",
+      "category": "tool"
+    },
+    {
+      "id": "saute_pan",
+      "label": "Sauté Pan",
+      "category": "tool"
+    },
+    {
+      "id": "skillet",
+      "label": "Skillet",
+      "category": "tool"
+    },
+    {
+      "id": "wok",
+      "label": "Wok",
+      "category": "tool"
+    },
+    {
+      "id": "stock_pot",
+      "label": "Stock Pot",
+      "category": "tool"
+    },
+    {
+      "id": "saucepan",
+      "label": "Saucepan",
+      "category": "tool"
+    },
+    {
+      "id": "dutch_oven",
+      "label": "Dutch Oven",
+      "category": "tool"
+    },
+    {
+      "id": "grill",
+      "label": "Grill",
+      "category": "tool"
+    },
+    {
+      "id": "oven",
+      "label": "Oven",
+      "category": "tool"
+    },
+    {
+      "id": "steamer",
+      "label": "Steamer",
+      "category": "tool"
+    },
+    {
+      "id": "air_fryer",
+      "label": "Air Fryer",
+      "category": "tool"
+    },
+    {
+      "id": "blender",
+      "label": "Blender",
+      "category": "tool"
+    },
+    {
+      "id": "food_processor",
+      "label": "Food Processor",
+      "category": "tool"
+    },
+    {
+      "id": "serving_plate",
+      "label": "Serving Plate",
+      "category": "tool"
+    },
+    {
+      "id": "rolling_pin",
+      "label": "Rolling Pin",
+      "category": "tool"
+    },
+    {
+      "id": "baking_sheet",
+      "label": "Baking Sheet",
+      "category": "tool"
+    },
+    {
+      "id": "cake_pan",
+      "label": "Cake Pan",
+      "category": "tool"
+    },
+    {
+      "id": "pie_tart_pan",
+      "label": "Pie Tart Pan",
+      "category": "tool"
+    },
+    {
+      "id": "muffin_tray",
+      "label": "Muffin Tray",
+      "category": "tool"
+    },
+    {
+      "id": "roasting_tray",
+      "label": "Roasting Tray",
+      "category": "tool"
+    },
+    {
+      "id": "ladle",
+      "label": "Ladle",
+      "category": "tool"
+    },
+    {
+      "id": "wooden_spoon",
+      "label": "Wooden Spoon",
+      "category": "tool"
+    },
+    {
+      "id": "slotted_spoon",
+      "label": "Slotted Spoon",
+      "category": "tool"
+    },
+    {
+      "id": "pastry_brush",
+      "label": "Pastry Brush",
+      "category": "tool"
+    },
+    {
+      "id": "piping_bag",
+      "label": "Piping Bag",
+      "category": "tool"
+    },
+    {
+      "id": "sieve",
+      "label": "Sieve",
+      "category": "tool"
+    },
+    {
+      "id": "stand_mixer",
+      "label": "Stand Mixer",
+      "category": "tool"
+    },
+    {
+      "id": "hand_mixer",
+      "label": "Hand Mixer",
+      "category": "tool"
+    },
+    {
+      "id": "rice_cooker",
+      "label": "Rice Cooker",
+      "category": "tool"
+    },
+    {
+      "id": "pressure_cooker",
+      "label": "Pressure Cooker",
+      "category": "tool"
+    },
+    {
+      "id": "thermometer",
+      "label": "Thermometer",
+      "category": "tool"
+    },
+    {
+      "id": "grill_grate",
+      "label": "Grill Grate",
+      "category": "tool"
+    },
+    {
+      "id": "skewers",
+      "label": "Skewers",
+      "category": "tool"
+    },
+    {
+      "id": "serving_bowl",
+      "label": "Serving Bowl",
+      "category": "tool"
+    },
+    {
+      "id": "dessert_bowl",
+      "label": "Dessert Bowl",
+      "category": "tool"
+    },
+    {
+      "id": "glass",
+      "label": "Glass",
+      "category": "tool"
+    },
+    {
+      "id": "cup",
+      "label": "Cup",
+      "category": "tool"
+    }
+  ],
+  "actions": [
+    {
+      "id": "wash",
+      "label": "Wash",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "peel",
+      "label": "Peel",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "trim",
+      "label": "Trim",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "halve",
+      "label": "Halve",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "slice",
+      "label": "Slice",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "dice",
+      "label": "Dice",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "chop",
+      "label": "Chop",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "mince",
+      "label": "Mince",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "julienne",
+      "label": "Julienne",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "grate",
+      "label": "Grate",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "crush",
+      "label": "Crush",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "mash",
+      "label": "Mash",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "mix",
+      "label": "Mix",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "whisk",
+      "label": "Whisk",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "stir",
+      "label": "Stir",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "toss",
+      "label": "Toss",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "knead",
+      "label": "Knead",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "fold",
+      "label": "Fold",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "roll",
+      "label": "Roll",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "marinate",
+      "label": "Marinate",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "bread_batter",
+      "label": "Bread Batter",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "blend",
+      "label": "Blend",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "puree",
+      "label": "Puree",
+      "stage": "prep",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "saute",
+      "label": "Sauté",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "stir_fry",
+      "label": "Stir Fry",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "fry",
+      "label": "Fry",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "deep_fry",
+      "label": "Deep Fry",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "sear",
+      "label": "Sear",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "blanch",
+      "label": "Blanch",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "boil",
+      "label": "Boil",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "simmer",
+      "label": "Simmer",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "poach",
+      "label": "Poach",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "steam",
+      "label": "Steam",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "braise",
+      "label": "Braise",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "bake",
+      "label": "Bake",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "roast",
+      "label": "Roast",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "grill",
+      "label": "Grill",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "smoke",
+      "label": "Smoke",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "toast",
+      "label": "Toast",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "scramble",
+      "label": "Scramble",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "reduce",
+      "label": "Reduce",
+      "stage": "cook",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "drizzle",
+      "label": "Drizzle",
+      "stage": "finish",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "sprinkle",
+      "label": "Sprinkle",
+      "stage": "finish",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "garnish",
+      "label": "Garnish",
+      "stage": "finish",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    },
+    {
+      "id": "plate",
+      "label": "Plate",
+      "stage": "finish",
+      "sequence": [
+        "start",
+        "active",
+        "midpoint",
+        "complete"
+      ],
+      "reducedMotion": "complete"
+    }
+  ],
+  "dishFamilies": [
+    {
+      "id": "stir_fry",
+      "label": "Stir Fry",
+      "primaryActions": [
+        "stir_fry",
+        "saute",
+        "fry"
+      ],
+      "presentation": "wok-tossed glossy ingredients with readable separation"
+    },
+    {
+      "id": "curry",
+      "label": "Curry",
+      "primaryActions": [
+        "saute",
+        "simmer",
+        "plate"
+      ],
+      "presentation": "saucy cohesive dish with warm steam and layered garnish"
+    },
+    {
+      "id": "soup_stew",
+      "label": "Soup or Stew",
+      "primaryActions": [
+        "boil",
+        "simmer",
+        "garnish"
+      ],
+      "presentation": "brothy or hearty bowl with visible surface ingredients"
+    },
+    {
+      "id": "rice_bowl",
+      "label": "Rice Bowl",
+      "primaryActions": [
+        "boil",
+        "steam",
+        "plate"
+      ],
+      "presentation": "tidy grain base with toppings and garnish hierarchy"
+    },
+    {
+      "id": "noodle_bowl",
+      "label": "Noodle Bowl",
+      "primaryActions": [
+        "boil",
+        "mix",
+        "plate"
+      ],
+      "presentation": "readable noodles with sauce or broth cohesion"
+    },
+    {
+      "id": "dumpling_plate",
+      "label": "Dumpling Plate",
+      "primaryActions": [
+        "mix",
+        "steam",
+        "plate"
+      ],
+      "presentation": "soft plump shapes with neat arrangement and steam cues"
+    },
+    {
+      "id": "grill_plate",
+      "label": "Grill Plate",
+      "primaryActions": [
+        "marinate",
+        "grill",
+        "plate"
+      ],
+      "presentation": "charred edges, caramelized highlights, composed plated sides"
+    },
+    {
+      "id": "flatbread_wrap",
+      "label": "Flatbread or Wrap",
+      "primaryActions": [
+        "mix",
+        "toast",
+        "plate"
+      ],
+      "presentation": "folded or rolled bread with visible layered filling"
+    },
+    {
+      "id": "mezze_salad",
+      "label": "Mezze or Salad",
+      "primaryActions": [
+        "slice",
+        "mix",
+        "garnish"
+      ],
+      "presentation": "fresh chopped textures with olive oil sheen and herb sparkle"
+    },
+    {
+      "id": "baked_casserole",
+      "label": "Baked Casserole",
+      "primaryActions": [
+        "mix",
+        "bake",
+        "plate"
+      ],
+      "presentation": "golden oven finish with bubbling edges"
+    },
+    {
+      "id": "breakfast_plate",
+      "label": "Breakfast Plate",
+      "primaryActions": [
+        "whisk",
+        "fry",
+        "plate"
+      ],
+      "presentation": "comfort-forward plate with eggs, toast, or breakfast proteins"
+    },
+    {
+      "id": "dessert_pastry",
+      "label": "Dessert or Pastry",
+      "primaryActions": [
+        "mix",
+        "bake",
+        "plate"
+      ],
+      "presentation": "polished sweet finish with restrained garnish or glaze"
+    }
+  ],
+  "cuisineProfiles": [
+    {
+      "id": "italian",
+      "label": "Italian",
+      "region": "Southern Europe",
+      "signatureDishes": [
+        "carbonara",
+        "lasagna",
+        "risotto",
+        "pizza"
+      ],
+      "staples": [
+        "olive_oil",
+        "tomato",
+        "basil",
+        "parmesan"
+      ],
+      "preferredActions": [
+        "saute",
+        "simmer",
+        "boil",
+        "bake",
+        "plate"
+      ],
+      "dishFamilies": [
+        "rice_bowl",
+        "noodle_bowl",
+        "baked_casserole"
+      ]
+    },
+    {
+      "id": "french",
+      "label": "French",
+      "region": "Western Europe",
+      "signatureDishes": [
+        "coq_au_vin",
+        "onion_soup",
+        "ratatouille",
+        "quiche"
+      ],
+      "staples": [
+        "butter",
+        "cream",
+        "thyme",
+        "wine"
+      ],
+      "preferredActions": [
+        "saute",
+        "simmer",
+        "roast",
+        "bake",
+        "plate"
+      ],
+      "dishFamilies": [
+        "soup_stew",
+        "baked_casserole"
+      ]
+    },
+    {
+      "id": "spanish",
+      "label": "Spanish",
+      "region": "Southern Europe",
+      "signatureDishes": [
+        "paella",
+        "gazpacho",
+        "tortilla_espanola",
+        "patatas_bravas"
+      ],
+      "staples": [
+        "olive_oil",
+        "paprika",
+        "tomato",
+        "parsley"
+      ],
+      "preferredActions": [
+        "saute",
+        "boil",
+        "roast",
+        "plate"
+      ],
+      "dishFamilies": [
+        "rice_bowl",
+        "mezze_salad",
+        "grill_plate"
+      ]
+    },
+    {
+      "id": "greek",
+      "label": "Greek",
+      "region": "Eastern Mediterranean",
+      "signatureDishes": [
+        "moussaka",
+        "gyros",
+        "spanakopita",
+        "avgolemono"
+      ],
+      "staples": [
+        "olive_oil",
+        "lemon",
+        "oregano",
+        "parsley"
+      ],
+      "preferredActions": [
+        "mix",
+        "roast",
+        "grill",
+        "plate"
+      ],
+      "dishFamilies": [
+        "mezze_salad",
+        "grill_plate",
+        "baked_casserole"
+      ]
+    },
+    {
+      "id": "levantine",
+      "label": "Levantine",
+      "region": "Eastern Mediterranean",
+      "signatureDishes": [
+        "hummus",
+        "falafel",
+        "shawarma",
+        "fattoush"
+      ],
+      "staples": [
+        "olive_oil",
+        "chickpeas",
+        "parsley",
+        "lemon"
+      ],
+      "preferredActions": [
+        "mix",
+        "fry",
+        "grill",
+        "plate"
+      ],
+      "dishFamilies": [
+        "mezze_salad",
+        "flatbread_wrap",
+        "grill_plate"
+      ]
+    },
+    {
+      "id": "turkish",
+      "label": "Turkish",
+      "region": "Anatolia",
+      "signatureDishes": [
+        "doner",
+        "pide",
+        "menemen",
+        "mercimek_corbasi"
+      ],
+      "staples": [
+        "yogurt",
+        "tomato",
+        "parsley",
+        "olive_oil"
+      ],
+      "preferredActions": [
+        "grill",
+        "bake",
+        "simmer",
+        "plate"
+      ],
+      "dishFamilies": [
+        "flatbread_wrap",
+        "soup_stew",
+        "grill_plate"
+      ]
+    },
+    {
+      "id": "persian",
+      "label": "Persian",
+      "region": "West Asia",
+      "signatureDishes": [
+        "chelo_kebab",
+        "ghormeh_sabzi",
+        "fesenjan",
+        "tahdig"
+      ],
+      "staples": [
+        "basmati_rice",
+        "parsley",
+        "mint",
+        "cinnamon"
+      ],
+      "preferredActions": [
+        "steam",
+        "grill",
+        "simmer",
+        "plate"
+      ],
+      "dishFamilies": [
+        "rice_bowl",
+        "grill_plate",
+        "soup_stew"
+      ]
+    },
+    {
+      "id": "moroccan",
+      "label": "Moroccan",
+      "region": "North Africa",
+      "signatureDishes": [
+        "tagine",
+        "couscous",
+        "harira",
+        "bastilla"
+      ],
+      "staples": [
+        "couscous",
+        "cinnamon",
+        "cumin",
+        "parsley"
+      ],
+      "preferredActions": [
+        "saute",
+        "simmer",
+        "steam",
+        "plate"
+      ],
+      "dishFamilies": [
+        "soup_stew",
+        "rice_bowl"
+      ]
+    },
+    {
+      "id": "american",
+      "label": "American",
+      "region": "North America",
+      "signatureDishes": [
+        "burger",
+        "mac_and_cheese",
+        "bbq_ribs",
+        "meatloaf"
+      ],
+      "staples": [
+        "cheddar",
+        "butter",
+        "potato",
+        "bacon"
+      ],
+      "preferredActions": [
+        "fry",
+        "bake",
+        "grill",
+        "plate"
+      ],
+      "dishFamilies": [
+        "grill_plate",
+        "baked_casserole",
+        "breakfast_plate"
+      ]
+    },
+    {
+      "id": "southern_us",
+      "label": "Southern US",
+      "region": "North America",
+      "signatureDishes": [
+        "fried_chicken",
+        "gumbo",
+        "jambalaya",
+        "biscuits_and_gravy"
+      ],
+      "staples": [
+        "flour",
+        "butter",
+        "sausage",
+        "shrimp"
+      ],
+      "preferredActions": [
+        "fry",
+        "simmer",
+        "bake",
+        "plate"
+      ],
+      "dishFamilies": [
+        "soup_stew",
+        "breakfast_plate",
+        "grill_plate"
+      ]
+    },
+    {
+      "id": "mexican",
+      "label": "Mexican",
+      "region": "North America",
+      "signatureDishes": [
+        "tacos",
+        "enchiladas",
+        "pozole",
+        "mole"
+      ],
+      "staples": [
+        "chili_pepper",
+        "corn",
+        "tomato",
+        "lime"
+      ],
+      "preferredActions": [
+        "grill",
+        "simmer",
+        "roast",
+        "plate"
+      ],
+      "dishFamilies": [
+        "flatbread_wrap",
+        "soup_stew",
+        "rice_bowl"
+      ]
+    },
+    {
+      "id": "peruvian",
+      "label": "Peruvian",
+      "region": "South America",
+      "signatureDishes": [
+        "ceviche",
+        "lomo_saltado",
+        "aji_de_gallina",
+        "anticuchos"
+      ],
+      "staples": [
+        "lime",
+        "chili_pepper",
+        "white_rice",
+        "cilantro"
+      ],
+      "preferredActions": [
+        "mix",
+        "stir_fry",
+        "grill",
+        "plate"
+      ],
+      "dishFamilies": [
+        "rice_bowl",
+        "grill_plate",
+        "mezze_salad"
+      ]
+    },
+    {
+      "id": "brazilian",
+      "label": "Brazilian",
+      "region": "South America",
+      "signatureDishes": [
+        "feijoada",
+        "moqueca",
+        "churrasco",
+        "pao_de_queijo"
+      ],
+      "staples": [
+        "black_beans",
+        "white_rice",
+        "cilantro",
+        "lime"
+      ],
+      "preferredActions": [
+        "simmer",
+        "grill",
+        "bake",
+        "plate"
+      ],
+      "dishFamilies": [
+        "soup_stew",
+        "grill_plate",
+        "baked_casserole"
+      ]
+    },
+    {
+      "id": "chinese",
+      "label": "Chinese",
+      "region": "East Asia",
+      "signatureDishes": [
+        "fried_rice",
+        "dumplings",
+        "mapo_tofu",
+        "chow_mein"
+      ],
+      "staples": [
+        "soy_sauce",
+        "sesame_oil",
+        "scallion",
+        "ginger"
+      ],
+      "preferredActions": [
+        "stir_fry",
+        "steam",
+        "boil",
+        "plate"
+      ],
+      "dishFamilies": [
+        "stir_fry",
+        "rice_bowl",
+        "dumpling_plate",
+        "noodle_bowl"
+      ]
+    },
+    {
+      "id": "cantonese",
+      "label": "Cantonese",
+      "region": "South China",
+      "signatureDishes": [
+        "dim_sum",
+        "char_siu",
+        "wonton_noodles",
+        "steamed_fish"
+      ],
+      "staples": [
+        "soy_sauce",
+        "scallion",
+        "ginger",
+        "white_rice"
+      ],
+      "preferredActions": [
+        "steam",
+        "roast",
+        "boil",
+        "plate"
+      ],
+      "dishFamilies": [
+        "dumpling_plate",
+        "noodle_bowl",
+        "grill_plate"
+      ]
+    },
+    {
+      "id": "sichuan",
+      "label": "Sichuan",
+      "region": "West China",
+      "signatureDishes": [
+        "mapo_tofu",
+        "kung_pao_chicken",
+        "dan_dan_noodles",
+        "hot_pot"
+      ],
+      "staples": [
+        "chili_pepper",
+        "garlic",
+        "ginger",
+        "scallion"
+      ],
+      "preferredActions": [
+        "stir_fry",
+        "simmer",
+        "boil",
+        "plate"
+      ],
+      "dishFamilies": [
+        "stir_fry",
+        "noodle_bowl",
+        "soup_stew"
+      ]
+    },
+    {
+      "id": "japanese",
+      "label": "Japanese",
+      "region": "East Asia",
+      "signatureDishes": [
+        "ramen",
+        "tempura",
+        "teriyaki",
+        "donburi"
+      ],
+      "staples": [
+        "white_rice",
+        "soy_sauce",
+        "scallion",
+        "egg"
+      ],
+      "preferredActions": [
+        "boil",
+        "fry",
+        "grill",
+        "plate"
+      ],
+      "dishFamilies": [
+        "noodle_bowl",
+        "rice_bowl",
+        "grill_plate"
+      ]
+    },
+    {
+      "id": "korean",
+      "label": "Korean",
+      "region": "East Asia",
+      "signatureDishes": [
+        "bibimbap",
+        "bulgogi",
+        "kimchi_jjigae",
+        "tteokbokki"
+      ],
+      "staples": [
+        "white_rice",
+        "scallion",
+        "garlic",
+        "sesame_oil"
+      ],
+      "preferredActions": [
+        "stir_fry",
+        "grill",
+        "simmer",
+        "plate"
+      ],
+      "dishFamilies": [
+        "rice_bowl",
+        "soup_stew",
+        "grill_plate"
+      ]
+    },
+    {
+      "id": "thai",
+      "label": "Thai",
+      "region": "Southeast Asia",
+      "signatureDishes": [
+        "pad_thai",
+        "green_curry",
+        "tom_yum",
+        "pad_kra_pao"
+      ],
+      "staples": [
+        "coconut_milk",
+        "lime",
+        "chili_pepper",
+        "cilantro"
+      ],
+      "preferredActions": [
+        "stir_fry",
+        "simmer",
+        "boil",
+        "plate"
+      ],
+      "dishFamilies": [
+        "noodle_bowl",
+        "curry",
+        "stir_fry"
+      ]
+    },
+    {
+      "id": "vietnamese",
+      "label": "Vietnamese",
+      "region": "Southeast Asia",
+      "signatureDishes": [
+        "pho",
+        "bun_cha",
+        "banh_mi",
+        "goi_cuon"
+      ],
+      "staples": [
+        "broth",
+        "cilantro",
+        "lime",
+        "scallion"
+      ],
+      "preferredActions": [
+        "boil",
+        "grill",
+        "mix",
+        "plate"
+      ],
+      "dishFamilies": [
+        "noodle_bowl",
+        "flatbread_wrap",
+        "mezze_salad"
+      ]
+    },
+    {
+      "id": "filipino",
+      "label": "Filipino",
+      "region": "Southeast Asia",
+      "signatureDishes": [
+        "adobo",
+        "sinigang",
+        "pancit",
+        "lumpia"
+      ],
+      "staples": [
+        "soy_sauce",
+        "vinegar",
+        "garlic",
+        "white_rice"
+      ],
+      "preferredActions": [
+        "simmer",
+        "fry",
+        "boil",
+        "plate"
+      ],
+      "dishFamilies": [
+        "soup_stew",
+        "noodle_bowl",
+        "rice_bowl"
+      ]
+    },
+    {
+      "id": "indonesian",
+      "label": "Indonesian",
+      "region": "Southeast Asia",
+      "signatureDishes": [
+        "nasi_goreng",
+        "satay",
+        "rendang",
+        "gado_gado"
+      ],
+      "staples": [
+        "white_rice",
+        "soy_sauce",
+        "chili_pepper",
+        "coconut_milk"
+      ],
+      "preferredActions": [
+        "stir_fry",
+        "grill",
+        "simmer",
+        "plate"
+      ],
+      "dishFamilies": [
+        "rice_bowl",
+        "grill_plate",
+        "mezze_salad"
+      ]
+    },
+    {
+      "id": "malaysian",
+      "label": "Malaysian",
+      "region": "Southeast Asia",
+      "signatureDishes": [
+        "laksa",
+        "nasi_lemak",
+        "char_kway_teow",
+        "roti_canai"
+      ],
+      "staples": [
+        "coconut_milk",
+        "rice_noodles",
+        "chili_pepper",
+        "lime"
+      ],
+      "preferredActions": [
+        "stir_fry",
+        "simmer",
+        "boil",
+        "plate"
+      ],
+      "dishFamilies": [
+        "noodle_bowl",
+        "rice_bowl",
+        "curry"
+      ]
+    },
+    {
+      "id": "indian_north",
+      "label": "North Indian",
+      "region": "South Asia",
+      "signatureDishes": [
+        "butter_chicken",
+        "biryani",
+        "dal_makhani",
+        "naan"
+      ],
+      "staples": [
+        "garam_masala",
+        "cumin",
+        "butter",
+        "basmati_rice"
+      ],
+      "preferredActions": [
+        "saute",
+        "simmer",
+        "grill",
+        "plate"
+      ],
+      "dishFamilies": [
+        "curry",
+        "rice_bowl",
+        "flatbread_wrap"
+      ]
+    },
+    {
+      "id": "indian_south",
+      "label": "South Indian",
+      "region": "South Asia",
+      "signatureDishes": [
+        "dosa",
+        "sambar",
+        "idli",
+        "lemon_rice"
+      ],
+      "staples": [
+        "coconut_milk",
+        "curry_powder",
+        "mustard",
+        "white_rice"
+      ],
+      "preferredActions": [
+        "ferment",
+        "steam",
+        "simmer",
+        "plate"
+      ],
+      "dishFamilies": [
+        "breakfast_plate",
+        "curry",
+        "rice_bowl"
+      ]
+    },
+    {
+      "id": "pakistani",
+      "label": "Pakistani",
+      "region": "South Asia",
+      "signatureDishes": [
+        "nihari",
+        "karahi",
+        "haleem",
+        "seekh_kebab"
+      ],
+      "staples": [
+        "garam_masala",
+        "cumin",
+        "ginger",
+        "basmati_rice"
+      ],
+      "preferredActions": [
+        "simmer",
+        "grill",
+        "saute",
+        "plate"
+      ],
+      "dishFamilies": [
+        "curry",
+        "grill_plate",
+        "rice_bowl"
+      ]
+    },
+    {
+      "id": "russian",
+      "label": "Russian",
+      "region": "Eastern Europe",
+      "signatureDishes": [
+        "borscht",
+        "stroganoff",
+        "pelmeni",
+        "blini"
+      ],
+      "staples": [
+        "potato",
+        "cabbage",
+        "dill",
+        "cream"
+      ],
+      "preferredActions": [
+        "boil",
+        "simmer",
+        "plate"
+      ],
+      "dishFamilies": [
+        "soup_stew",
+        "dumpling_plate",
+        "breakfast_plate"
+      ]
+    },
+    {
+      "id": "polish",
+      "label": "Polish",
+      "region": "Eastern Europe",
+      "signatureDishes": [
+        "pierogi",
+        "bigos",
+        "zurek",
+        "golabki"
+      ],
+      "staples": [
+        "cabbage",
+        "mushroom",
+        "potato",
+        "sausage"
+      ],
+      "preferredActions": [
+        "boil",
+        "simmer",
+        "bake",
+        "plate"
+      ],
+      "dishFamilies": [
+        "dumpling_plate",
+        "soup_stew",
+        "baked_casserole"
+      ]
+    },
+    {
+      "id": "british",
+      "label": "British",
+      "region": "Northern Europe",
+      "signatureDishes": [
+        "fish_and_chips",
+        "shepherds_pie",
+        "full_english",
+        "sticky_toffee_pudding"
+      ],
+      "staples": [
+        "potato",
+        "butter",
+        "sausage",
+        "bread_slice"
+      ],
+      "preferredActions": [
+        "fry",
+        "bake",
+        "roast",
+        "plate"
+      ],
+      "dishFamilies": [
+        "breakfast_plate",
+        "baked_casserole",
+        "grill_plate"
+      ]
+    }
+  ],
+  "resultNamingTemplates": [
+    {
+      "actionId": "mix",
+      "label": "Mix Base"
+    },
+    {
+      "actionId": "marinate",
+      "label": "Marinated Mix"
+    },
+    {
+      "actionId": "knead",
+      "label": "Dough Base"
+    },
+    {
+      "actionId": "toss",
+      "label": "Tossed Base"
+    },
+    {
+      "actionId": "saute",
+      "label": "Saute Base"
+    },
+    {
+      "actionId": "stir_fry",
+      "label": "Stir Fry Base"
+    },
+    {
+      "actionId": "fry",
+      "label": "Fried Base"
+    },
+    {
+      "actionId": "deep_fry",
+      "label": "Crispy Batch"
+    },
+    {
+      "actionId": "sear",
+      "label": "Seared Base"
+    },
+    {
+      "actionId": "boil",
+      "label": "Boiled Base"
+    },
+    {
+      "actionId": "simmer",
+      "label": "Soup Base"
+    },
+    {
+      "actionId": "braise",
+      "label": "Braised Base"
+    },
+    {
+      "actionId": "steam",
+      "label": "Steamed Base"
+    },
+    {
+      "actionId": "bake",
+      "label": "Baked Base"
+    },
+    {
+      "actionId": "roast",
+      "label": "Roasted Base"
+    },
+    {
+      "actionId": "grill",
+      "label": "Grilled Plate"
+    },
+    {
+      "actionId": "blend",
+      "label": "Blend Base"
+    },
+    {
+      "actionId": "puree",
+      "label": "Puree Base"
+    },
+    {
+      "actionId": "reduce",
+      "label": "Sauce Reduction"
+    },
+    {
+      "actionId": "plate",
+      "label": "Finished Dish"
+    }
+  ],
+  "synonyms": {
+    "chickpea": "chickpeas",
+    "lentil": "lentils",
+    "black_bean": "black_beans",
+    "generic_pepper": "black_pepper",
+    "generic_cheese": "cheese",
+    "noodle": "noodles"
+  },
+  "mixtures": [
+    {
+      "id": "chopped_vegetable_mixture",
+      "label": "Chopped Vegetable Mixture"
+    },
+    {
+      "id": "aromatic_base",
+      "label": "Aromatic Base"
+    },
+    {
+      "id": "marinated_protein",
+      "label": "Marinated Protein"
+    },
+    {
+      "id": "batter",
+      "label": "Batter"
+    },
+    {
+      "id": "dough",
+      "label": "Dough"
+    },
+    {
+      "id": "pastry_dough",
+      "label": "Pastry Dough"
+    },
+    {
+      "id": "sauce_base",
+      "label": "Sauce Base"
+    },
+    {
+      "id": "curry_base",
+      "label": "Curry Base"
+    },
+    {
+      "id": "soup_base",
+      "label": "Soup Base"
+    },
+    {
+      "id": "stock_broth_base",
+      "label": "Stock Broth Base"
+    },
+    {
+      "id": "stew_base",
+      "label": "Stew Base"
+    },
+    {
+      "id": "stir_fry_mixture",
+      "label": "Stir Fry Mixture"
+    },
+    {
+      "id": "fried_mixture",
+      "label": "Fried Mixture"
+    },
+    {
+      "id": "rice_mixture",
+      "label": "Rice Mixture"
+    },
+    {
+      "id": "noodle_mixture",
+      "label": "Noodle Mixture"
+    },
+    {
+      "id": "salad_mixture",
+      "label": "Salad Mixture"
+    },
+    {
+      "id": "filling",
+      "label": "Filling"
+    },
+    {
+      "id": "custard",
+      "label": "Custard"
+    },
+    {
+      "id": "cream_frosting",
+      "label": "Cream Frosting"
+    },
+    {
+      "id": "reduced_sauce",
+      "label": "Reduced Sauce"
+    },
+    {
+      "id": "finished_plated_dish",
+      "label": "Finished Plated Dish"
+    }
+  ],
+  "effects": [
+    {
+      "id": "burner_off",
+      "label": "Burner Off"
+    },
+    {
+      "id": "low_flame",
+      "label": "Low Flame"
+    },
+    {
+      "id": "medium_flame",
+      "label": "Medium Flame"
+    },
+    {
+      "id": "high_flame",
+      "label": "High Flame"
+    },
+    {
+      "id": "electric_induction_glow",
+      "label": "Electric Induction Glow"
+    },
+    {
+      "id": "oven_preheating_glow",
+      "label": "Oven Preheating Glow"
+    },
+    {
+      "id": "oven_active_glow",
+      "label": "Oven Active Glow"
+    },
+    {
+      "id": "grill_flame",
+      "label": "Grill Flame"
+    },
+    {
+      "id": "hot_coals",
+      "label": "Hot Coals"
+    },
+    {
+      "id": "flare_up",
+      "label": "Flare Up"
+    },
+    {
+      "id": "warm_pan_shimmer",
+      "label": "Warm Pan Shimmer"
+    },
+    {
+      "id": "browning_progression",
+      "label": "Browning Progression"
+    },
+    {
+      "id": "char_progression",
+      "label": "Char Progression"
+    },
+    {
+      "id": "droplets",
+      "label": "Droplets"
+    },
+    {
+      "id": "rinsing_stream",
+      "label": "Rinsing Stream"
+    },
+    {
+      "id": "pour",
+      "label": "Pour"
+    },
+    {
+      "id": "splash",
+      "label": "Splash"
+    },
+    {
+      "id": "pot_filling",
+      "label": "Pot Filling"
+    },
+    {
+      "id": "low_water_level",
+      "label": "Low Water Level"
+    },
+    {
+      "id": "medium_water_level",
+      "label": "Medium Water Level"
+    },
+    {
+      "id": "high_water_level",
+      "label": "High Water Level"
+    },
+    {
+      "id": "submerged_ingredients",
+      "label": "Submerged Ingredients"
+    },
+    {
+      "id": "gentle_simmer",
+      "label": "Gentle Simmer"
+    },
+    {
+      "id": "rolling_boil",
+      "label": "Rolling Boil"
+    },
+    {
+      "id": "draining",
+      "label": "Draining"
+    },
+    {
+      "id": "condensation",
+      "label": "Condensation"
+    },
+    {
+      "id": "oil_drizzle",
+      "label": "Oil Drizzle"
+    },
+    {
+      "id": "pan_coating",
+      "label": "Pan Coating"
+    },
+    {
+      "id": "shallow_fry_level",
+      "label": "Shallow Fry Level"
+    },
+    {
+      "id": "deep_fry_level",
+      "label": "Deep Fry Level"
+    },
+    {
+      "id": "sizzle_droplets",
+      "label": "Sizzle Droplets"
+    },
+    {
+      "id": "sauce_pour",
+      "label": "Sauce Pour"
+    },
+    {
+      "id": "sauce_coating",
+      "label": "Sauce Coating"
+    },
+    {
+      "id": "thickening",
+      "label": "Thickening"
+    },
+    {
+      "id": "reduction",
+      "label": "Reduction"
+    },
+    {
+      "id": "glaze",
+      "label": "Glaze"
+    },
+    {
+      "id": "syrup_drizzle",
+      "label": "Syrup Drizzle"
+    },
+    {
+      "id": "steam",
+      "label": "Steam"
+    },
+    {
+      "id": "smoke",
+      "label": "Smoke"
+    },
+    {
+      "id": "bubbles",
+      "label": "Bubbles"
+    },
+    {
+      "id": "sizzle",
+      "label": "Sizzle"
+    },
+    {
+      "id": "sparks",
+      "label": "Sparks"
+    },
+    {
+      "id": "knife_glint",
+      "label": "Knife Glint"
+    },
+    {
+      "id": "mixing_swirl",
+      "label": "Mixing Swirl"
+    },
+    {
+      "id": "whisking_spiral",
+      "label": "Whisking Spiral"
+    },
+    {
+      "id": "blender_vortex",
+      "label": "Blender Vortex"
+    },
+    {
+      "id": "ingredient_fall",
+      "label": "Ingredient Fall"
+    },
+    {
+      "id": "wok_toss",
+      "label": "Wok Toss"
+    },
+    {
+      "id": "spice_sprinkle",
+      "label": "Spice Sprinkle"
+    },
+    {
+      "id": "flour_dust",
+      "label": "Flour Dust"
+    },
+    {
+      "id": "melt",
+      "label": "Melt"
+    },
+    {
+      "id": "finished_food_shine",
+      "label": "Finished Food Shine"
+    }
+  ],
+  "characters": [
+    {
+      "id": "idle",
+      "label": "Idle",
+      "layer": "character"
+    },
+    {
+      "id": "thinking_choosing",
+      "label": "Thinking Choosing",
+      "layer": "character"
+    },
+    {
+      "id": "washing",
+      "label": "Washing",
+      "layer": "character"
+    },
+    {
+      "id": "chopping",
+      "label": "Chopping",
+      "layer": "character"
+    },
+    {
+      "id": "mixing",
+      "label": "Mixing",
+      "layer": "character"
+    },
+    {
+      "id": "whisking",
+      "label": "Whisking",
+      "layer": "character"
+    },
+    {
+      "id": "stirring",
+      "label": "Stirring",
+      "layer": "character"
+    },
+    {
+      "id": "tossing_wok",
+      "label": "Tossing Wok",
+      "layer": "character"
+    },
+    {
+      "id": "frying",
+      "label": "Frying",
+      "layer": "character"
+    },
+    {
+      "id": "checking_pot",
+      "label": "Checking Pot",
+      "layer": "character"
+    },
+    {
+      "id": "opening_oven",
+      "label": "Opening Oven",
+      "layer": "character"
+    },
+    {
+      "id": "grilling",
+      "label": "Grilling",
+      "layer": "character"
+    },
+    {
+      "id": "blending",
+      "label": "Blending",
+      "layer": "character"
+    },
+    {
+      "id": "tasting",
+      "label": "Tasting",
+      "layer": "character"
+    },
+    {
+      "id": "plating",
+      "label": "Plating",
+      "layer": "character"
+    },
+    {
+      "id": "celebrating_completion",
+      "label": "Celebrating Completion",
+      "layer": "character"
+    },
+    {
+      "id": "warning_error",
+      "label": "Warning Error",
+      "layer": "character"
+    },
+    {
+      "id": "burn_smoke_reaction",
+      "label": "Burn Smoke Reaction",
+      "layer": "character"
+    }
+  ],
+  "fallbacks": [
+    {
+      "id": "unknown_vegetable",
+      "label": "Unknown Vegetable",
+      "generic": true,
+      "uiLabel": "Generic representation: Unknown Vegetable"
+    },
+    {
+      "id": "unknown_fruit",
+      "label": "Unknown Fruit",
+      "generic": true,
+      "uiLabel": "Generic representation: Unknown Fruit"
+    },
+    {
+      "id": "unknown_herb_spice",
+      "label": "Unknown Herb Spice",
+      "generic": true,
+      "uiLabel": "Generic representation: Unknown Herb Spice"
+    },
+    {
+      "id": "unknown_protein",
+      "label": "Unknown Protein",
+      "generic": true,
+      "uiLabel": "Generic representation: Unknown Protein"
+    },
+    {
+      "id": "unknown_seafood",
+      "label": "Unknown Seafood",
+      "generic": true,
+      "uiLabel": "Generic representation: Unknown Seafood"
+    },
+    {
+      "id": "unknown_grain_noodle",
+      "label": "Unknown Grain Noodle",
+      "generic": true,
+      "uiLabel": "Generic representation: Unknown Grain Noodle"
+    },
+    {
+      "id": "unknown_dairy",
+      "label": "Unknown Dairy",
+      "generic": true,
+      "uiLabel": "Generic representation: Unknown Dairy"
+    },
+    {
+      "id": "unknown_liquid_sauce",
+      "label": "Unknown Liquid Sauce",
+      "generic": true,
+      "uiLabel": "Generic representation: Unknown Liquid Sauce"
+    },
+    {
+      "id": "unknown_dessert_ingredient",
+      "label": "Unknown Dessert Ingredient",
+      "generic": true,
+      "uiLabel": "Generic representation: Unknown Dessert Ingredient"
+    },
+    {
+      "id": "unknown_mixed_result",
+      "label": "Unknown Mixed Result",
+      "generic": true,
+      "uiLabel": "Generic representation: Unknown Mixed Result"
+    },
+    {
+      "id": "generic_cut_transformation",
+      "label": "Generic Cut Transformation",
+      "generic": true,
+      "uiLabel": "Generic representation: Generic Cut Transformation"
+    },
+    {
+      "id": "generic_wet_cooking_transformation",
+      "label": "Generic Wet Cooking Transformation",
+      "generic": true,
+      "uiLabel": "Generic representation: Generic Wet Cooking Transformation"
+    },
+    {
+      "id": "generic_dry_heat_transformation",
+      "label": "Generic Dry Heat Transformation",
+      "generic": true,
+      "uiLabel": "Generic representation: Generic Dry Heat Transformation"
+    },
+    {
+      "id": "generic_frying_transformation",
+      "label": "Generic Frying Transformation",
+      "generic": true,
+      "uiLabel": "Generic representation: Generic Frying Transformation"
+    },
+    {
+      "id": "generic_mixing_transformation",
+      "label": "Generic Mixing Transformation",
+      "generic": true,
+      "uiLabel": "Generic representation: Generic Mixing Transformation"
+    },
+    {
+      "id": "generic_plating_result",
+      "label": "Generic Plating Result",
+      "generic": true,
+      "uiLabel": "Generic representation: Generic Plating Result"
+    }
+  ],
+  "dishHeroes": [
+    {
+      "id": "adobo",
+      "label": "Adobo",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "aji_de_gallina",
+      "label": "Aji de Gallina",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "anticuchos",
+      "label": "Anticuchos",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "arroz_con_mariscos",
+      "label": "Arroz con Mariscos",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "asado",
+      "label": "Asado",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "ash_reshteh",
+      "label": "Ash Reshteh",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "avgolemono",
+      "label": "Avgolemono",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bbq_ribs",
+      "label": "BBQ Ribs",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bacalhau",
+      "label": "Bacalhau",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bak_kut_teh",
+      "label": "Bak Kut Teh",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "baklava",
+      "label": "Baklava",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "banh_mi",
+      "label": "Banh Mi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "barramundi",
+      "label": "Barramundi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bastilla",
+      "label": "Bastilla",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "beef_rendang",
+      "label": "Beef Rendang",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "beef_stroganoff",
+      "label": "Beef Stroganoff",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bibimbap",
+      "label": "Bibimbap",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bigos",
+      "label": "Bigos",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "biryani",
+      "label": "Biryani",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "biscuits_gravy",
+      "label": "Biscuits and Gravy",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "blini",
+      "label": "Blini",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "borscht",
+      "label": "Borscht",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bouillabaisse",
+      "label": "Bouillabaisse",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "boxty",
+      "label": "Boxty",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bratwurst",
+      "label": "Bratwurst",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "brigadeiro",
+      "label": "Brigadeiro",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "buffalo_wings",
+      "label": "Buffalo Wings",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bulgogi",
+      "label": "Bulgogi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bun_bo_hue",
+      "label": "Bun Bo Hue",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "bun_cha",
+      "label": "Bun Cha",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "burger",
+      "label": "Burger",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "burrito_bowl",
+      "label": "Burrito Bowl",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "butter_chicken",
+      "label": "Butter Chicken",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "ca_kho_to",
+      "label": "Ca Kho To",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "caldo_verde",
+      "label": "Caldo Verde",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "carbonara",
+      "label": "Carbonara",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "cardamom_buns",
+      "label": "Cardamom Buns",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "carrot_cake",
+      "label": "Carrot Cake",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "ceviche",
+      "label": "Ceviche",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "chapli_kebab",
+      "label": "Chapli Kebab",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "char_kway_teow",
+      "label": "Char Kway Teow",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "char_siu",
+      "label": "Char Siu",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "chelo_kebab",
+      "label": "Chelo Kebab",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "chettinad_curry",
+      "label": "Chettinad Curry",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "chickpea_salad",
+      "label": "Chickpea Salad",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "chili_crab",
+      "label": "Chili Crab",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "chili_con_carne",
+      "label": "Chili con Carne",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "chimichurri_steak",
+      "label": "Chimichurri Steak",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "choila",
+      "label": "Choila",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "chole",
+      "label": "Chole",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "chow_mein",
+      "label": "Chow Mein",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "churrasco",
+      "label": "Churrasco",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "churros",
+      "label": "Churros",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "clay_pot_rice",
+      "label": "Clay Pot Rice",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "coddle",
+      "label": "Coddle",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "colcannon",
+      "label": "Colcannon",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "collard_greens",
+      "label": "Collard Greens",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "congee",
+      "label": "Congee",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "coq_au_vin",
+      "label": "Coq au Vin",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "couscous",
+      "label": "Couscous",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "crawfish_boil",
+      "label": "Crawfish Boil",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "crepes",
+      "label": "Crepes",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "croquetas",
+      "label": "Croquetas",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "dal_bhat",
+      "label": "Dal Bhat",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "dal_makhani",
+      "label": "Dal Makhani",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "dan_dan_noodles",
+      "label": "Dan Dan Noodles",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "deruny",
+      "label": "Deruny",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "dim_sum",
+      "label": "Dim Sum",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "dirty_rice",
+      "label": "Dirty Rice",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "donburi",
+      "label": "Donburi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "doner",
+      "label": "Doner",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "doro_wat",
+      "label": "Doro Wat",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "dosa",
+      "label": "Dosa",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "dumplings",
+      "label": "Dumplings",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "empanadas",
+      "label": "Empanadas",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "enchiladas",
+      "label": "Enchiladas",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "etouffee",
+      "label": "Etouffee",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "fajitas",
+      "label": "Fajitas",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "falafel",
+      "label": "Falafel",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "fattoush",
+      "label": "Fattoush",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "feijoada",
+      "label": "Feijoada",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "fesenjan",
+      "label": "Fesenjan",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "fish_chips",
+      "label": "Fish and Chips",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "francesinha",
+      "label": "Francesinha",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "fried_chicken",
+      "label": "Fried Chicken",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "fried_rice",
+      "label": "Fried Rice",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "ful_medames",
+      "label": "Ful Medames",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "full_english",
+      "label": "Full English",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "gado_gado",
+      "label": "Gado-Gado",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "gazpacho",
+      "label": "Gazpacho",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "ghormeh_sabzi",
+      "label": "Ghormeh Sabzi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "gnocchi",
+      "label": "Gnocchi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "goi_cuon",
+      "label": "Goi Cuon",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "golabki",
+      "label": "Golabki",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "grain_bowls",
+      "label": "Grain Bowls",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "gravlax",
+      "label": "Gravlax",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "greek_salad",
+      "label": "Greek Salad",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "green_curry",
+      "label": "Green Curry",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "grits",
+      "label": "Grits",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "guacamole",
+      "label": "Guacamole",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "gumbo",
+      "label": "Gumbo",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "gyros",
+      "label": "Gyros",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "hainanese_chicken_rice",
+      "label": "Hainanese Chicken Rice",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "haleem",
+      "label": "Haleem",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "harira",
+      "label": "Harira",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "hawawshi",
+      "label": "Hawawshi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "holubtsi",
+      "label": "Holubtsi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "hoppers",
+      "label": "Hoppers",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "hummus",
+      "label": "Hummus",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "idli",
+      "label": "Idli",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "injera_platter",
+      "label": "Injera Platter",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "irish_stew",
+      "label": "Irish Stew",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "jambalaya",
+      "label": "Jambalaya",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "japchae",
+      "label": "Japchae",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "karahi",
+      "label": "Karahi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "kare_kare",
+      "label": "Kare-Kare",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "katsu_curry",
+      "label": "Katsu Curry",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "khichuri",
+      "label": "Khichuri",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "kimchi_jjigae",
+      "label": "Kimchi Jjigae",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "koshari",
+      "label": "Koshari",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "kottu",
+      "label": "Kottu",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "kuku_sabzi",
+      "label": "Kuku Sabzi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "kung_pao_chicken",
+      "label": "Kung Pao Chicken",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "lahmacun",
+      "label": "Lahmacun",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "laksa",
+      "label": "Laksa",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "lamingtons",
+      "label": "Lamingtons",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "lasagna",
+      "label": "Lasagna",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "lemon_herb_chicken",
+      "label": "Lemon Herb Chicken",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "lemon_rice",
+      "label": "Lemon Rice",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "locro",
+      "label": "Locro",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "lomo_saltado",
+      "label": "Lomo Saltado",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "luchi_aloo_dum",
+      "label": "Luchi and Aloo Dum",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "lumpia",
+      "label": "Lumpia",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "mac_cheese",
+      "label": "Mac and Cheese",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "machher_jhol",
+      "label": "Machher Jhol",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "mahshi",
+      "label": "Mahshi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "mala_hot_pot",
+      "label": "Mala Hot Pot",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "manakish",
+      "label": "Manakish",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "mapo_tofu",
+      "label": "Mapo Tofu",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "margherita_pizza",
+      "label": "Margherita Pizza",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "massaman_curry",
+      "label": "Massaman Curry",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "meat_pie",
+      "label": "Meat Pie",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "meatballs",
+      "label": "Meatballs",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "meatloaf",
+      "label": "Meatloaf",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "menemen",
+      "label": "Menemen",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "mercimek_corbasi",
+      "label": "Mercimek Corbasi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "mie_goreng",
+      "label": "Mie Goreng",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "milanesa",
+      "label": "Milanesa",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "mishti_doi",
+      "label": "Mishti Doi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "misir_wat",
+      "label": "Misir Wat",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "mole",
+      "label": "Mole",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "molokhia",
+      "label": "Molokhia",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "momo",
+      "label": "Momo",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "moqueca",
+      "label": "Moqueca",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "moussaka",
+      "label": "Moussaka",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "naan",
+      "label": "Naan",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "nachos",
+      "label": "Nachos",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "nasi_goreng",
+      "label": "Nasi Goreng",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "nasi_lemak",
+      "label": "Nasi Lemak",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "nihari",
+      "label": "Nihari",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "olivier_salad",
+      "label": "Olivier Salad",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "onion_soup",
+      "label": "Onion Soup",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "osso_buco",
+      "label": "Osso Buco",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pad_kra_pao",
+      "label": "Pad Kra Pao",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pad_thai",
+      "label": "Pad Thai",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "paella",
+      "label": "Paella",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pancakes",
+      "label": "Pancakes",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pancit",
+      "label": "Pancit",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "paneer_tikka",
+      "label": "Paneer Tikka",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pao_de_queijo",
+      "label": "Pao de Queijo",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "parippu",
+      "label": "Parippu",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pastel_de_nata",
+      "label": "Pastel de Nata",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "patatas_bravas",
+      "label": "Patatas Bravas",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pelmeni",
+      "label": "Pelmeni",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pho",
+      "label": "Pho",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pide",
+      "label": "Pide",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pierogi",
+      "label": "Pierogi",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "piri_piri_chicken",
+      "label": "Piri Piri Chicken",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "placki_ziemniaczane",
+      "label": "Placki Ziemniaczane",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pol_sambol",
+      "label": "Pol Sambol",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "potato_salad",
+      "label": "Potato Salad",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pozole",
+      "label": "Pozole",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "pumpkin_soup",
+      "label": "Pumpkin Soup",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "queso_dip",
+      "label": "Queso Dip",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "quiche",
+      "label": "Quiche",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "ramen",
+      "label": "Ramen",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "ratatouille",
+      "label": "Ratatouille",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "red_beans_rice",
+      "label": "Red Beans and Rice",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "rendang",
+      "label": "Rendang",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "rfissa",
+      "label": "Rfissa",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "rice_curry",
+      "label": "Rice and Curry",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "risotto",
+      "label": "Risotto",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "roasted_vegetables",
+      "label": "Roasted Vegetables",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "roti_canai",
+      "label": "Roti Canai",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "salmon_soup",
+      "label": "Salmon Soup",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "sambar",
+      "label": "Sambar",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "samgyeopsal",
+      "label": "Samgyeopsal",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "satay",
+      "label": "Satay",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "sauerbraten",
+      "label": "Sauerbraten",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "sausage_rolls",
+      "label": "Sausage Rolls",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "schnitzel",
+      "label": "Schnitzel",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "seekh_kebab",
+      "label": "Seekh Kebab",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "sel_roti",
+      "label": "Sel Roti",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "shawarma",
+      "label": "Shawarma",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "shepherds_pie",
+      "label": "Shepherds Pie",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "shiro",
+      "label": "Shiro",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "shorshe_ilish",
+      "label": "Shorshe Ilish",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "shrimp_creole",
+      "label": "Shrimp Creole",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "sinigang",
+      "label": "Sinigang",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "smorrebrod",
+      "label": "Smorrebrod",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "soda_bread",
+      "label": "Soda Bread",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "som_tam",
+      "label": "Som Tam",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "soto_ayam",
+      "label": "Soto Ayam",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "souvlaki",
+      "label": "Souvlaki",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "spaetzle",
+      "label": "Spaetzle",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "spanakopita",
+      "label": "Spanakopita",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "steamed_fish",
+      "label": "Steamed Fish",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "sticky_toffee_pudding",
+      "label": "Sticky Toffee Pudding",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "stuffed_peppers",
+      "label": "Stuffed Peppers",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "sunday_roast",
+      "label": "Sunday Roast",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "sweet_sour_pork",
+      "label": "Sweet and Sour Pork",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "syrnyky",
+      "label": "Syrnyky",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tabbouleh",
+      "label": "Tabbouleh",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tacos",
+      "label": "Tacos",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tagine",
+      "label": "Tagine",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tahdig",
+      "label": "Tahdig",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tamales",
+      "label": "Tamales",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tempura",
+      "label": "Tempura",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "teriyaki",
+      "label": "Teriyaki",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "thukpa",
+      "label": "Thukpa",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tibs",
+      "label": "Tibs",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tocino",
+      "label": "Tocino",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tom_yum",
+      "label": "Tom Yum",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tortilla_espanola",
+      "label": "Tortilla Espanola",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "tteokbokki",
+      "label": "Tteokbokki",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "twice_cooked_pork",
+      "label": "Twice-Cooked Pork",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "udon",
+      "label": "Udon",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "upma",
+      "label": "Upma",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "varenyky",
+      "label": "Varenyky",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "wonton_noodles",
+      "label": "Wonton Noodles",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "zaalouk",
+      "label": "Zaalouk",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "id": "zurek",
+      "label": "Zurek",
+      "frames": [
+        "hero",
+        "prep",
+        "cook",
+        "garnish",
+        "static"
+      ],
+      "masterSize": [
+        1024,
+        1024
+      ]
+    }
+  ],
+  "generationContract": {
+    "formats": {
+      "master": "PNG 1024x1024",
+      "animation": "transparent WebP",
+      "reducedMotion": "static PNG"
+    },
+    "layers": [
+      "character",
+      "tool",
+      "food",
+      "effects"
+    ],
+    "selectionOnly": true,
+    "customInputPolicy": "show the explicit generic fallback label; never substitute a named ingredient"
+  }
+}

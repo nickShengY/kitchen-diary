@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -48,8 +48,8 @@ class CustomTextField extends StatelessWidget {
           Text(
             label!,
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: AppColors.textSecondary,
-            ),
+                  color: AppColors.textSecondary,
+                ),
           ),
           const SizedBox(height: 8),
         ],
@@ -142,4 +142,3 @@ class SearchTextField extends StatelessWidget {
     );
   }
 }
-

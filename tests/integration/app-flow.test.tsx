@@ -24,6 +24,7 @@ vi.mock('../../services/authService', () => ({
   login: vi.fn(),
   logout: vi.fn(),
   getCurrentUser: vi.fn(),
+  subscribeToAuthState: vi.fn(() => () => undefined),
 }));
 
 import { searchSmartRecipes, analyzeMenuImage, getFoodDescription } from '../../services/geminiService';
@@ -95,14 +96,14 @@ describe('App integration flows', () => {
     render(<TestApp />);
 
     await screen.findByText('Live Pasta');
-    await user.click(screen.getByRole('button', { name: 'Decider', exact: true }));
+    await user.click(screen.getByRole('button', { name: /^Decide$/ }));
     await screen.findByText('Italian');
 
-    await user.click(screen.getByRole('button', { name: 'Me', exact: true }));
+    await user.click(screen.getByRole('button', { name: /^Profile$/ }));
     expect(screen.getByText('CookToon')).toBeInTheDocument();
 
-    await user.click(screen.getByRole('button', { name: 'Home', exact: true }));
-    expect(screen.getByText('Explore')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: /^Explore$/ }));
+    expect(screen.getByRole('heading', { name: 'Explore' })).toBeInTheDocument();
   });
 
   it('opens recipe builder from Cook This action', async () => {
@@ -119,8 +120,8 @@ describe('App integration flows', () => {
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
     render(<TestApp />);
 
-    await user.click(screen.getByRole('button', { name: 'Decider', exact: true }));
-    await user.click(screen.getByRole('button', { name: 'Scan', exact: true }));
+    await user.click(screen.getByRole('button', { name: /^Decide$/ }));
+    await user.click(screen.getByRole('button', { name: /^Scan$/ }));
 
     const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     const file = new File(['content'], 'menu.jpg', { type: 'image/jpeg' });

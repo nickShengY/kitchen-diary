@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:iconsax/iconsax.dart';
@@ -452,8 +452,7 @@ class RecipeCardCompact extends StatelessWidget {
                           errorWidget: (context, url, error) => Container(
                             color: scheme.surfaceContainerHighest,
                             child: const Center(
-                              child:
-                                  Text('🥗', style: TextStyle(fontSize: 28)),
+                              child: Text('🥗', style: TextStyle(fontSize: 28)),
                             ),
                           ),
                         )

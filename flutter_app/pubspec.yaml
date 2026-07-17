@@ -14,7 +14,6 @@ dependencies:
   firebase_core: ^3.0.0
   firebase_auth: ^5.0.0
   cloud_firestore: ^5.0.0
-  firebase_storage: ^12.0.0
   google_sign_in: ^6.2.1
   
   # State Management
@@ -44,13 +43,8 @@ dependencies:
   image_cropper: ^8.0.0
   photo_view: ^0.14.0
   
-  # Camera & ML
+  # Camera
   camera: ^0.10.5+9
-  google_generative_ai: ^0.2.2
-  
-  # Payments / Subscriptions
-  purchases_flutter: ^6.17.1
-  in_app_purchase: ^3.1.13
   
   # Storage & Persistence
   shared_preferences: ^2.2.2

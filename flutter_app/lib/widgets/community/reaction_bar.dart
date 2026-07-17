@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -106,16 +106,14 @@ class ReactionPicker extends StatelessWidget {
           children: reactions.asMap().entries.map((entry) {
             final index = entry.key;
             final reaction = entry.value;
-            
+
             return _ReactionItem(
               reaction: reaction,
               onTap: () {
                 HapticFeedback.selectionClick();
                 onReactionSelected?.call(reaction.id);
               },
-            )
-                .animate(delay: Duration(milliseconds: index * 50))
-                .scale(
+            ).animate(delay: Duration(milliseconds: index * 50)).scale(
                   begin: const Offset(0, 0),
                   end: const Offset(1, 1),
                   duration: 200.ms,
@@ -189,7 +187,7 @@ class ReactionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     // Filter reactions with count > 0
     final activeReactions = reactions.where((r) => r.count > 0).toList();
-    
+
     if (activeReactions.isEmpty && !showAddButton) {
       return const SizedBox.shrink();
     }
@@ -199,10 +197,10 @@ class ReactionBar extends StatelessWidget {
       runSpacing: 6,
       children: [
         ...activeReactions.map((reaction) => _ReactionChip(
-          reaction: reaction,
-          compact: compact,
-          onTap: () => onReactionTap?.call(reaction.id),
-        )),
+              reaction: reaction,
+              compact: compact,
+              onTap: () => onReactionTap?.call(reaction.id),
+            )),
         if (showAddButton)
           _AddReactionButton(
             onTap: onAddReaction,
@@ -257,8 +255,11 @@ class _ReactionChip extends StatelessWidget {
               _formatCount(reaction.count),
               style: TextStyle(
                 fontSize: compact ? 12 : 13,
-                fontWeight: reaction.isSelected ? FontWeight.w700 : FontWeight.w500,
-                color: reaction.isSelected ? AppColors.primary : AppColors.textSecondary,
+                fontWeight:
+                    reaction.isSelected ? FontWeight.w700 : FontWeight.w500,
+                color: reaction.isSelected
+                    ? AppColors.primary
+                    : AppColors.textSecondary,
               ),
             ),
           ],
@@ -435,4 +436,3 @@ class _ActionButton extends StatelessWidget {
     );
   }
 }
-

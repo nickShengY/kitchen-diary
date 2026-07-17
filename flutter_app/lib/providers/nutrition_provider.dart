@@ -32,9 +32,12 @@ class NutritionProvider extends ChangeNotifier {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     return _logs.cast<DailyNutritionLog?>().firstWhere(
-      (l) => l!.date.year == today.year && l.date.month == today.month && l.date.day == today.day,
-      orElse: () => null,
-    );
+          (l) =>
+              l!.date.year == today.year &&
+              l.date.month == today.month &&
+              l.date.day == today.day,
+          orElse: () => null,
+        );
   }
 
   double get calorieProgress {
@@ -57,13 +60,14 @@ class NutritionProvider extends ChangeNotifier {
     return (todayLog!.totals.fat / _goal.targetFat).clamp(0.0, 1.5);
   }
 
-  double get waterProgress => (_todayWaterMl / 2500).clamp(0.0, 1.5); // 2.5L daily target
+  double get waterProgress =>
+      (_todayWaterMl / 2500).clamp(0.0, 1.5); // 2.5L daily target
 
   List<Achievement> get unlockedAchievements =>
-    _achievements.where((a) => a.isUnlocked).toList();
+      _achievements.where((a) => a.isUnlocked).toList();
 
   List<Achievement> get inProgressAchievements =>
-    _achievements.where((a) => !a.isUnlocked && a.currentValue > 0).toList();
+      _achievements.where((a) => !a.isUnlocked && a.currentValue > 0).toList();
 
   NutritionProvider() {
     _loadData();
@@ -102,7 +106,8 @@ class NutritionProvider extends ChangeNotifier {
       final colJson = box.get(_collectionsKey);
       if (colJson != null) {
         final List<dynamic> decoded = jsonDecode(colJson);
-        _collections = decoded.map((e) => RecipeCollection.fromJson(e)).toList();
+        _collections =
+            decoded.map((e) => RecipeCollection.fromJson(e)).toList();
       }
 
       final waterJson = box.get(_waterKey);
@@ -121,10 +126,13 @@ class NutritionProvider extends ChangeNotifier {
     try {
       final box = await Hive.openBox(_boxName);
       await box.put(_goalsKey, jsonEncode(_goal.toJson()));
-      await box.put(_logsKey, jsonEncode(_logs.map((e) => e.toJson()).toList()));
+      await box.put(
+          _logsKey, jsonEncode(_logs.map((e) => e.toJson()).toList()));
       await box.put(_streakKey, jsonEncode(_streak.toJson()));
-      await box.put(_achievementsKey, jsonEncode(_achievements.map((e) => e.toJson()).toList()));
-      await box.put(_collectionsKey, jsonEncode(_collections.map((e) => e.toJson()).toList()));
+      await box.put(_achievementsKey,
+          jsonEncode(_achievements.map((e) => e.toJson()).toList()));
+      await box.put(_collectionsKey,
+          jsonEncode(_collections.map((e) => e.toJson()).toList()));
       await box.put(_waterKey, jsonEncode(_todayWaterMl));
     } catch (e) {
       debugPrint('Error saving nutrition data: $e');
@@ -140,10 +148,12 @@ class NutritionProvider extends ChangeNotifier {
   Future<void> logMeal(NutritionInfo nutrition) async {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
-    
+
     final idx = _logs.indexWhere((l) =>
-      l.date.year == today.year && l.date.month == today.month && l.date.day == today.day);
-    
+        l.date.year == today.year &&
+        l.date.month == today.month &&
+        l.date.day == today.day);
+
     if (idx != -1) {
       final existing = _logs[idx];
       _logs[idx] = DailyNutritionLog(
@@ -174,7 +184,7 @@ class NutritionProvider extends ChangeNotifier {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final lastCook = _streak.lastCookDate;
-    
+
     int newStreak = _streak.currentStreak;
     if (lastCook == null) {
       newStreak = 1;
@@ -190,7 +200,8 @@ class NutritionProvider extends ChangeNotifier {
 
     _streak = CookingStreak(
       currentStreak: newStreak,
-      longestStreak: newStreak > _streak.longestStreak ? newStreak : _streak.longestStreak,
+      longestStreak:
+          newStreak > _streak.longestStreak ? newStreak : _streak.longestStreak,
       lastCookDate: today,
       totalMealsCooked: _streak.totalMealsCooked + 1,
       totalRecipesCreated: _streak.totalRecipesCreated,
@@ -234,16 +245,25 @@ class NutritionProvider extends ChangeNotifier {
 
       if (newVal >= a.requiredValue && !a.isUnlocked) {
         _achievements[i] = Achievement(
-          id: a.id, title: a.title, description: a.description,
-          emoji: a.emoji, category: a.category,
-          requiredValue: a.requiredValue, currentValue: newVal,
-          isUnlocked: true, unlockedAt: DateTime.now(),
+          id: a.id,
+          title: a.title,
+          description: a.description,
+          emoji: a.emoji,
+          category: a.category,
+          requiredValue: a.requiredValue,
+          currentValue: newVal,
+          isUnlocked: true,
+          unlockedAt: DateTime.now(),
         );
       } else if (newVal != a.currentValue) {
         _achievements[i] = Achievement(
-          id: a.id, title: a.title, description: a.description,
-          emoji: a.emoji, category: a.category,
-          requiredValue: a.requiredValue, currentValue: newVal,
+          id: a.id,
+          title: a.title,
+          description: a.description,
+          emoji: a.emoji,
+          category: a.category,
+          requiredValue: a.requiredValue,
+          currentValue: newVal,
           isUnlocked: false,
         );
       }
@@ -258,7 +278,8 @@ class NutritionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addRecipeToCollection(String collectionId, String recipeId) async {
+  Future<void> addRecipeToCollection(
+      String collectionId, String recipeId) async {
     final idx = _collections.indexWhere((c) => c.id == collectionId);
     if (idx == -1) return;
     final col = _collections[idx];
@@ -268,11 +289,13 @@ class NutritionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removeRecipeFromCollection(String collectionId, String recipeId) async {
+  Future<void> removeRecipeFromCollection(
+      String collectionId, String recipeId) async {
     final idx = _collections.indexWhere((c) => c.id == collectionId);
     if (idx == -1) return;
     final col = _collections[idx];
-    _collections[idx] = col.copyWith(recipeIds: col.recipeIds.where((id) => id != recipeId).toList());
+    _collections[idx] = col.copyWith(
+        recipeIds: col.recipeIds.where((id) => id != recipeId).toList());
     await _save();
     notifyListeners();
   }
@@ -286,32 +309,60 @@ class NutritionProvider extends ChangeNotifier {
   List<Achievement> _getDefaultAchievements() {
     return [
       const Achievement(
-        id: 'first_cook', title: 'First Dish', description: 'Cook your first meal',
-        emoji: '🍳', category: 'cooking', requiredValue: 1,
+        id: 'first_cook',
+        title: 'First Dish',
+        description: 'Cook your first meal',
+        emoji: '🍳',
+        category: 'cooking',
+        requiredValue: 1,
       ),
       const Achievement(
-        id: 'streak_7', title: 'Week Warrior', description: '7-day cooking streak',
-        emoji: '🔥', category: 'streak', requiredValue: 7,
+        id: 'streak_7',
+        title: 'Week Warrior',
+        description: '7-day cooking streak',
+        emoji: '🔥',
+        category: 'streak',
+        requiredValue: 7,
       ),
       const Achievement(
-        id: 'streak_30', title: 'Iron Chef', description: '30-day cooking streak',
-        emoji: '🏆', category: 'streak', requiredValue: 30,
+        id: 'streak_30',
+        title: 'Iron Chef',
+        description: '30-day cooking streak',
+        emoji: '🏆',
+        category: 'streak',
+        requiredValue: 30,
       ),
       const Achievement(
-        id: 'meals_10', title: 'Home Cook', description: 'Cook 10 meals',
-        emoji: '👨‍🍳', category: 'cooking', requiredValue: 10,
+        id: 'meals_10',
+        title: 'Home Cook',
+        description: 'Cook 10 meals',
+        emoji: '👨‍🍳',
+        category: 'cooking',
+        requiredValue: 10,
       ),
       const Achievement(
-        id: 'meals_50', title: 'Kitchen Pro', description: 'Cook 50 meals',
-        emoji: '⭐', category: 'cooking', requiredValue: 50,
+        id: 'meals_50',
+        title: 'Kitchen Pro',
+        description: 'Cook 50 meals',
+        emoji: '⭐',
+        category: 'cooking',
+        requiredValue: 50,
       ),
       const Achievement(
-        id: 'meals_100', title: 'Master Chef', description: 'Cook 100 meals',
-        emoji: '👑', category: 'cooking', requiredValue: 100,
+        id: 'meals_100',
+        title: 'Master Chef',
+        description: 'Cook 100 meals',
+        emoji: '👑',
+        category: 'cooking',
+        requiredValue: 100,
       ),
       const Achievement(
-        id: 'collections_3', title: 'Curator', description: 'Create 3 recipe collections',
-        emoji: '📚', category: 'social', requiredValue: 3,
+        id: 'collections_3',
+        title: 'Curator',
+        description: 'Create 3 recipe collections',
+        emoji: '📚',
+        category: 'social',
+        requiredValue: 3,
       ),
     ];
   }

@@ -30,20 +30,20 @@ class NutritionInfo {
   });
 
   Map<String, dynamic> toJson() => {
-    'calories': calories,
-    'protein': protein,
-    'carbs': carbs,
-    'fat': fat,
-    'fiber': fiber,
-    'sugar': sugar,
-    'sodium': sodium,
-    'saturatedFat': saturatedFat,
-    'cholesterol': cholesterol,
-    'vitaminA': vitaminA,
-    'vitaminC': vitaminC,
-    'calcium': calcium,
-    'iron': iron,
-  };
+        'calories': calories,
+        'protein': protein,
+        'carbs': carbs,
+        'fat': fat,
+        'fiber': fiber,
+        'sugar': sugar,
+        'sodium': sodium,
+        'saturatedFat': saturatedFat,
+        'cholesterol': cholesterol,
+        'vitaminA': vitaminA,
+        'vitaminC': vitaminC,
+        'calcium': calcium,
+        'iron': iron,
+      };
 
   factory NutritionInfo.fromJson(Map<String, dynamic> json) {
     return NutritionInfo(
@@ -94,13 +94,13 @@ class NutritionGoal {
   });
 
   Map<String, dynamic> toJson() => {
-    'targetCalories': targetCalories,
-    'targetProtein': targetProtein,
-    'targetCarbs': targetCarbs,
-    'targetFat': targetFat,
-    'targetFiber': targetFiber,
-    'targetSodium': targetSodium,
-  };
+        'targetCalories': targetCalories,
+        'targetProtein': targetProtein,
+        'targetCarbs': targetCarbs,
+        'targetFat': targetFat,
+        'targetFiber': targetFiber,
+        'targetSodium': targetSodium,
+      };
 
   factory NutritionGoal.fromJson(Map<String, dynamic> json) {
     return NutritionGoal(
@@ -128,11 +128,11 @@ class DailyNutritionLog {
   });
 
   Map<String, dynamic> toJson() => {
-    'date': date.toIso8601String(),
-    'totals': totals.toJson(),
-    'mealsLogged': mealsLogged,
-    'waterIntakeMl': waterIntakeMl,
-  };
+        'date': date.toIso8601String(),
+        'totals': totals.toJson(),
+        'mealsLogged': mealsLogged,
+        'waterIntakeMl': waterIntakeMl,
+      };
 
   factory DailyNutritionLog.fromJson(Map<String, dynamic> json) {
     return DailyNutritionLog(
@@ -162,19 +162,21 @@ class CookingStreak {
   });
 
   Map<String, dynamic> toJson() => {
-    'currentStreak': currentStreak,
-    'longestStreak': longestStreak,
-    'lastCookDate': lastCookDate?.toIso8601String(),
-    'totalMealsCooked': totalMealsCooked,
-    'totalRecipesCreated': totalRecipesCreated,
-    'cuisineBreakdown': cuisineBreakdown,
-  };
+        'currentStreak': currentStreak,
+        'longestStreak': longestStreak,
+        'lastCookDate': lastCookDate?.toIso8601String(),
+        'totalMealsCooked': totalMealsCooked,
+        'totalRecipesCreated': totalRecipesCreated,
+        'cuisineBreakdown': cuisineBreakdown,
+      };
 
   factory CookingStreak.fromJson(Map<String, dynamic> json) {
     return CookingStreak(
       currentStreak: json['currentStreak'] ?? 0,
       longestStreak: json['longestStreak'] ?? 0,
-      lastCookDate: json['lastCookDate'] != null ? DateTime.parse(json['lastCookDate']) : null,
+      lastCookDate: json['lastCookDate'] != null
+          ? DateTime.parse(json['lastCookDate'])
+          : null,
       totalMealsCooked: json['totalMealsCooked'] ?? 0,
       totalRecipesCreated: json['totalRecipesCreated'] ?? 0,
       cuisineBreakdown: Map<String, int>.from(json['cuisineBreakdown'] ?? {}),
@@ -205,19 +207,20 @@ class Achievement {
     this.unlockedAt,
   });
 
-  double get progress => requiredValue > 0 ? (currentValue / requiredValue).clamp(0.0, 1.0) : 0;
+  double get progress =>
+      requiredValue > 0 ? (currentValue / requiredValue).clamp(0.0, 1.0) : 0;
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'title': title,
-    'description': description,
-    'emoji': emoji,
-    'category': category,
-    'requiredValue': requiredValue,
-    'currentValue': currentValue,
-    'isUnlocked': isUnlocked,
-    'unlockedAt': unlockedAt?.toIso8601String(),
-  };
+        'id': id,
+        'title': title,
+        'description': description,
+        'emoji': emoji,
+        'category': category,
+        'requiredValue': requiredValue,
+        'currentValue': currentValue,
+        'isUnlocked': isUnlocked,
+        'unlockedAt': unlockedAt?.toIso8601String(),
+      };
 
   factory Achievement.fromJson(Map<String, dynamic> json) {
     return Achievement(
@@ -229,7 +232,9 @@ class Achievement {
       requiredValue: json['requiredValue'],
       currentValue: json['currentValue'] ?? 0,
       isUnlocked: json['isUnlocked'] ?? false,
-      unlockedAt: json['unlockedAt'] != null ? DateTime.parse(json['unlockedAt']) : null,
+      unlockedAt: json['unlockedAt'] != null
+          ? DateTime.parse(json['unlockedAt'])
+          : null,
     );
   }
 }
@@ -286,17 +291,17 @@ class RecipeCollection {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'description': description,
-    'emoji': emoji,
-    'coverImageUrl': coverImageUrl,
-    'recipeIds': recipeIds,
-    'isPublic': isPublic,
-    'authorId': authorId,
-    'createdAt': createdAt.toIso8601String(),
-    'followersCount': followersCount,
-  };
+        'id': id,
+        'name': name,
+        'description': description,
+        'emoji': emoji,
+        'coverImageUrl': coverImageUrl,
+        'recipeIds': recipeIds,
+        'isPublic': isPublic,
+        'authorId': authorId,
+        'createdAt': createdAt.toIso8601String(),
+        'followersCount': followersCount,
+      };
 
   factory RecipeCollection.fromJson(Map<String, dynamic> json) {
     return RecipeCollection(

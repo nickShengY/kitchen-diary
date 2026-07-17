@@ -1,4 +1,4 @@
-﻿import 'dart:math' as math;
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -29,7 +29,8 @@ class CookingProgressIndicator extends StatefulWidget {
   });
 
   @override
-  State<CookingProgressIndicator> createState() => _CookingProgressIndicatorState();
+  State<CookingProgressIndicator> createState() =>
+      _CookingProgressIndicatorState();
 }
 
 class _CookingProgressIndicatorState extends State<CookingProgressIndicator>
@@ -76,7 +77,7 @@ class _CookingProgressIndicatorState extends State<CookingProgressIndicator>
                     strokeWidth: 8,
                   ),
                 ),
-                
+
                 // Progress ring with animation
                 AnimatedBuilder(
                   animation: _pulseController,
@@ -84,7 +85,7 @@ class _CookingProgressIndicatorState extends State<CookingProgressIndicator>
                     final pulseScale = widget.animate
                         ? 1.0 + (_pulseController.value * 0.02)
                         : 1.0;
-                    
+
                     return Transform.scale(
                       scale: pulseScale,
                       child: CustomPaint(
@@ -99,7 +100,7 @@ class _CookingProgressIndicatorState extends State<CookingProgressIndicator>
                     );
                   },
                 ),
-                
+
                 // Particle effects at progress point
                 if (widget.animate)
                   AnimatedBuilder(
@@ -116,7 +117,7 @@ class _CookingProgressIndicatorState extends State<CookingProgressIndicator>
                       );
                     },
                   ),
-                
+
                 // Center content
                 Container(
                   width: widget.size * 0.65,
@@ -153,13 +154,13 @@ class _CookingProgressIndicatorState extends State<CookingProgressIndicator>
                     ],
                   ),
                 ),
-                
+
                 // Progress notches
                 ...List.generate(12, (index) {
                   final angle = (index / 12) * 2 * math.pi - math.pi / 2;
                   final isActive = index / 12 <= widget.progress;
                   final notchRadius = widget.size / 2 - 20;
-                  
+
                   return Positioned(
                     left: widget.size / 2 + math.cos(angle) * notchRadius - 3,
                     top: widget.size / 2 + math.sin(angle) * notchRadius - 3,
@@ -176,7 +177,7 @@ class _CookingProgressIndicatorState extends State<CookingProgressIndicator>
               ],
             ),
           ),
-          
+
           // State labels
           if (widget.showLabels) ...[
             const SizedBox(height: 8),
@@ -240,7 +241,7 @@ class _ProgressRingPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = (size.width - strokeWidth) / 2;
-    
+
     final paint = Paint()
       ..color = color
       ..strokeWidth = strokeWidth
@@ -254,7 +255,7 @@ class _ProgressRingPainter extends CustomPainter {
         ..style = PaintingStyle.stroke
         ..strokeCap = StrokeCap.round
         ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 4);
-      
+
       canvas.drawArc(
         Rect.fromCircle(center: center, radius: radius),
         -math.pi / 2,
@@ -296,13 +297,13 @@ class _ProgressParticlesPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final progressAngle = 2 * math.pi * progress - math.pi / 2;
-    
+
     // Draw particles at progress point
     final progressPoint = Offset(
       center.dx + math.cos(progressAngle) * radius,
       center.dy + math.sin(progressAngle) * radius,
     );
-    
+
     final random = math.Random(42);
     for (int i = 0; i < 5; i++) {
       final offset = (animationValue + i * 0.2) % 1.0;
@@ -310,11 +311,11 @@ class _ProgressParticlesPainter extends CustomPainter {
         (random.nextDouble() - 0.5) * 20 * offset,
         (random.nextDouble() - 0.5) * 20 * offset - offset * 10,
       );
-      
+
       final paint = Paint()
         ..color = color.withValues(alpha: (1 - offset) * 0.6)
         ..style = PaintingStyle.fill;
-      
+
       canvas.drawCircle(
         progressPoint + particleOffset,
         3 * (1 - offset),
@@ -375,7 +376,8 @@ class CookingTimeline extends StatelessWidget {
                   isActive: isPast,
                 ),
             ],
-          ).animate(delay: Duration(milliseconds: index * 50))
+          )
+              .animate(delay: Duration(milliseconds: index * 50))
               .fadeIn()
               .slideX(begin: 0.1, end: 0);
         },
@@ -399,7 +401,8 @@ class _TimelineStepWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive || isPast ? AppColors.primary : AppColors.textSecondary;
+    final color =
+        isActive || isPast ? AppColors.primary : AppColors.textSecondary;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -416,7 +419,8 @@ class _TimelineStepWidget extends StatelessWidget {
                     : AppColors.divider.withValues(alpha: 0.3),
             shape: BoxShape.circle,
             border: Border.all(
-              color: isActive || isPast ? AppColors.primary : Colors.transparent,
+              color:
+                  isActive || isPast ? AppColors.primary : Colors.transparent,
               width: 2,
             ),
             boxShadow: isActive
@@ -605,4 +609,3 @@ class CookingActionCard extends StatelessWidget {
         );
   }
 }
-

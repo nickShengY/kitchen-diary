@@ -114,7 +114,7 @@ void main() {
       expect(post.category, 'discussion');
     });
 
-    group('fromNeonJson', () {
+    group('fromApiJson', () {
       test('parses snake_case fields correctly', () {
         final json = {
           'id': 'neon-1',
@@ -137,7 +137,7 @@ void main() {
           'tags': ['neon'],
           'image_urls': [],
         };
-        final post = ForumPostModel.fromNeonJson(json);
+        final post = ForumPostModel.fromApiJson(json);
         expect(post.id, 'neon-1');
         expect(post.authorId, 'user-a');
         expect(post.authorName, 'Neon Chef');
@@ -150,7 +150,7 @@ void main() {
 
       test('handles missing/null fields gracefully', () {
         final json = <String, dynamic>{};
-        final post = ForumPostModel.fromNeonJson(json);
+        final post = ForumPostModel.fromApiJson(json);
         expect(post.id, '');
         expect(post.authorId, '');
         expect(post.authorName, 'Chef');
@@ -172,7 +172,7 @@ void main() {
           'comments_count': '5',
           'created_at': '2025-01-01T00:00:00.000Z',
         };
-        final post = ForumPostModel.fromNeonJson(json);
+        final post = ForumPostModel.fromApiJson(json);
         expect(post.likes, 25);
         expect(post.views, 100);
         expect(post.commentsCount, 5);
@@ -183,13 +183,13 @@ void main() {
           'id': '1',
           'created_at': 'not-a-date',
         };
-        final post = ForumPostModel.fromNeonJson(json);
+        final post = ForumPostModel.fromApiJson(json);
         // Should not throw, falls back to DateTime.now()
         expect(post.createdAt, isNotNull);
       });
     });
 
-    group('toNeonJson', () {
+    group('toApiJson', () {
       test('produces snake_case fields', () {
         final post = ForumPostModel(
           id: 'post-1',
@@ -200,7 +200,7 @@ void main() {
           content: 'Content',
           createdAt: DateTime.utc(2025, 1, 1),
         );
-        final json = post.toNeonJson();
+        final json = post.toApiJson();
         expect(json['author_id'], 'user-1');
         expect(json['author_name'], 'Chef');
         expect(json['created_at'], '2025-01-01T00:00:00.000Z');
@@ -219,12 +219,12 @@ void main() {
           content: 'Content',
           createdAt: DateTime.utc(2025, 1, 1),
         );
-        final json = post.toNeonJson();
+        final json = post.toApiJson();
         expect(json.containsKey('id'), false);
       });
     });
 
-    test('Neon roundtrip: toNeonJson then fromNeonJson', () {
+    test('API roundtrip: toApiJson then fromApiJson', () {
       final original = ForumPostModel(
         id: 'rt-1',
         authorId: 'user-rt',
@@ -243,7 +243,7 @@ void main() {
         tags: ['roundtrip'],
         mentions: ['u2'],
       );
-      final restored = ForumPostModel.fromNeonJson(original.toNeonJson());
+      final restored = ForumPostModel.fromApiJson(original.toApiJson());
       expect(restored.id, original.id);
       expect(restored.authorId, original.authorId);
       expect(restored.title, original.title);

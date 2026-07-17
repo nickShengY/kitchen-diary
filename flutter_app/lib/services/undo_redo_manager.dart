@@ -6,13 +6,13 @@ import 'package:flutter/foundation.dart';
 class UndoRedoManager<T> extends ChangeNotifier {
   final int maxHistorySize;
   final Duration groupingDelay;
-  
+
   final Queue<UndoableAction<T>> _undoStack = Queue();
   final Queue<UndoableAction<T>> _redoStack = Queue();
-  
+
   DateTime? _lastActionTime;
   String? _lastActionType;
-  
+
   UndoRedoManager({
     this.maxHistorySize = 50,
     this.groupingDelay = const Duration(milliseconds: 500),
@@ -34,13 +34,13 @@ class UndoRedoManager<T> extends ChangeNotifier {
   void execute(UndoableAction<T> action) {
     // Execute the action
     action.execute();
-    
+
     // Check if we should group with previous action
     final now = DateTime.now();
     final shouldGroup = _lastActionTime != null &&
         _lastActionType == action.type &&
         now.difference(_lastActionTime!) < groupingDelay;
-    
+
     if (shouldGroup && _undoStack.isNotEmpty) {
       // Merge with previous action
       final previous = _undoStack.removeLast();
@@ -56,44 +56,44 @@ class UndoRedoManager<T> extends ChangeNotifier {
       // Add as new action
       _undoStack.addLast(action);
     }
-    
+
     // Enforce history limit
     while (_undoStack.length > maxHistorySize) {
       _undoStack.removeFirst();
     }
-    
+
     // Clear redo stack on new action
     _redoStack.clear();
-    
+
     // Update tracking
     _lastActionTime = now;
     _lastActionType = action.type;
-    
+
     notifyListeners();
   }
 
   /// Undo the last action
   void undo() {
     if (!canUndo) return;
-    
+
     final action = _undoStack.removeLast();
     action.undo();
     _redoStack.addLast(action);
-    
+
     _lastActionTime = null;
     _lastActionType = null;
-    
+
     notifyListeners();
   }
 
   /// Redo the last undone action
   void redo() {
     if (!canRedo) return;
-    
+
     final action = _redoStack.removeLast();
     action.execute();
     _undoStack.addLast(action);
-    
+
     notifyListeners();
   }
 
@@ -120,13 +120,13 @@ class UndoRedoManager<T> extends ChangeNotifier {
 abstract class UndoableAction<T> {
   /// Action type for grouping
   String get type;
-  
+
   /// Human-readable description
   String get description;
-  
+
   /// Execute the action
   void execute();
-  
+
   /// Undo the action
   void undo();
 }
@@ -135,13 +135,13 @@ abstract class UndoableAction<T> {
 class SimpleAction<T> implements UndoableAction<T> {
   @override
   final String type;
-  
+
   @override
   final String description;
-  
+
   final VoidCallback _execute;
   final VoidCallback _undo;
-  
+
   SimpleAction({
     required this.type,
     required this.description,
@@ -161,9 +161,9 @@ class SimpleAction<T> implements UndoableAction<T> {
 class GroupedAction<T> implements UndoableAction<T> {
   @override
   final String type;
-  
+
   final List<UndoableAction<T>> actions;
-  
+
   GroupedAction({
     required this.type,
     required this.actions,

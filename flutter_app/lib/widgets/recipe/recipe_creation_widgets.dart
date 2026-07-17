@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -42,7 +42,9 @@ class RecipeTemplateSelector extends StatelessWidget {
             duration: const Duration(milliseconds: 200),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: isSelected ? AppColors.primary.withValues(alpha: 0.1) : Colors.white,
+              color: isSelected
+                  ? AppColors.primary.withValues(alpha: 0.1)
+                  : Colors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: isSelected ? AppColors.primary : AppColors.divider,
@@ -68,7 +70,8 @@ class RecipeTemplateSelector extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: isSelected ? AppColors.primary : AppColors.textPrimary,
+                    color:
+                        isSelected ? AppColors.primary : AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -85,7 +88,8 @@ class RecipeTemplateSelector extends StatelessWidget {
               ],
             ),
           ),
-        ).animate(delay: Duration(milliseconds: index * 50))
+        )
+            .animate(delay: Duration(milliseconds: index * 50))
             .fadeIn()
             .scale(begin: const Offset(0.95, 0.95));
       },
@@ -155,7 +159,8 @@ class RecipeCreationProgress extends StatelessWidget {
                         ),
                         child: Center(
                           child: isCompleted
-                              ? const Icon(Icons.check, size: 16, color: Colors.white)
+                              ? const Icon(Icons.check,
+                                  size: 16, color: Colors.white)
                               : Text(
                                   '${index + 1}',
                                   style: TextStyle(
@@ -173,7 +178,8 @@ class RecipeCreationProgress extends StatelessWidget {
                         step.name,
                         style: TextStyle(
                           fontSize: 10,
-                          fontWeight: isCurrent ? FontWeight.w700 : FontWeight.w500,
+                          fontWeight:
+                              isCurrent ? FontWeight.w700 : FontWeight.w500,
                           color: isCurrent
                               ? AppColors.primary
                               : AppColors.textSecondary,
@@ -190,7 +196,8 @@ class RecipeCreationProgress extends StatelessWidget {
                     child: Container(
                       height: 2,
                       margin: const EdgeInsets.only(bottom: 20),
-                      color: isCompleted ? AppColors.primary : AppColors.divider,
+                      color:
+                          isCompleted ? AppColors.primary : AppColors.divider,
                     ),
                   ),
               ],
@@ -267,7 +274,9 @@ class AIAssistButton extends StatelessWidget {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: isLoading ? AppColors.textSecondary : const Color(0xFF667EEA),
+                color: isLoading
+                    ? AppColors.textSecondary
+                    : const Color(0xFF667EEA),
               ),
             ),
           ],
@@ -331,7 +340,8 @@ class _IngredientInputState extends State<IngredientInput> {
                   decoration: const InputDecoration(
                     hintText: 'Qty',
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                   ),
                   keyboardType: TextInputType.number,
                 ),
@@ -344,7 +354,8 @@ class _IngredientInputState extends State<IngredientInput> {
                   decoration: const InputDecoration(
                     hintText: 'Unit',
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                   ),
                 ),
               ),
@@ -355,7 +366,8 @@ class _IngredientInputState extends State<IngredientInput> {
                   decoration: const InputDecoration(
                     hintText: 'Ingredient name',
                     border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                   ),
                   onSubmitted: (_) => _handleAdd(),
                 ),
@@ -376,7 +388,8 @@ class _IngredientInputState extends State<IngredientInput> {
                 return GestureDetector(
                   onTap: () => _nameController.text = sug,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
@@ -439,7 +452,8 @@ class DraggableIngredientItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.drag_handle, color: AppColors.textSecondary, size: 20),
+          const Icon(Icons.drag_handle,
+              color: AppColors.textSecondary, size: 20),
           const SizedBox(width: 12),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -469,7 +483,8 @@ class DraggableIngredientItem extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.edit_outlined, size: 18, color: AppColors.textSecondary),
+            icon: const Icon(Icons.edit_outlined,
+                size: 18, color: AppColors.textSecondary),
             onPressed: onEdit,
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
@@ -545,13 +560,15 @@ class StepInput extends StatelessWidget {
               ),
               const Spacer(),
               IconButton(
-                icon: const Icon(Icons.timer_outlined, size: 20, color: AppColors.textSecondary),
+                icon: const Icon(Icons.timer_outlined,
+                    size: 20, color: AppColors.textSecondary),
                 onPressed: onAddTimer,
                 tooltip: 'Add timer',
               ),
               if (stepNumber > 1)
                 IconButton(
-                  icon: const Icon(Icons.delete_outline, size: 20, color: Colors.red),
+                  icon: const Icon(Icons.delete_outline,
+                      size: 20, color: Colors.red),
                   onPressed: onRemove,
                   tooltip: 'Remove step',
                 ),
@@ -588,7 +605,9 @@ class DraftIndicator extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: isSaving ? Colors.orange.withValues(alpha: 0.1) : Colors.green.withValues(alpha: 0.1),
+        color: isSaving
+            ? Colors.orange.withValues(alpha: 0.1)
+            : Colors.green.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -613,4 +632,3 @@ class DraftIndicator extends StatelessWidget {
     );
   }
 }
-

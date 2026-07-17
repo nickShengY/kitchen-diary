@@ -3,20 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../main.dart' show firebaseInitialized;
 import '../models/community_model.dart';
 import '../models/recipe_model.dart';
-import '../services/forum_neon_service.dart';
-import '../services/user_neon_service.dart';
 
 class CommunityProvider extends ChangeNotifier {
   FirebaseFirestore? _firestoreInstance;
-  final ForumNeonService _neonService = ForumNeonService();
-  final UserNeonService _userNeonService = userNeonService;
-  
+
   FirebaseFirestore get _firestore {
     _firestoreInstance ??= FirebaseFirestore.instance;
     return _firestoreInstance!;
   }
-
-  bool get _useNeon => NeonForumConfig.isConfigured;
 
   List<ForumPostModel> _forumPosts = [];
   List<CommentModel> _comments = [];
@@ -24,10 +18,10 @@ class CommunityProvider extends ChangeNotifier {
   List<ActivityModel> _activities = [];
   List<CollectionModel> _collections = [];
   List<RecipeModel> _trendingRecipes = [];
-  
+
   bool _isLoading = false;
   String? _errorMessage;
-  
+
   DocumentSnapshot? _lastForumPost;
   bool _hasMorePosts = true;
 
@@ -46,23 +40,6 @@ class CommunityProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    // Prefer Neon Data API when configured
-    if (_useNeon) {
-      try {
-        final posts = await _neonService.fetchPosts(category: category);
-        _forumPosts = posts;
-        _hasMorePosts = false; // Neon fetch currently loads all relevant posts
-        _errorMessage = null;
-      } catch (e) {
-        _errorMessage = 'Failed to load posts';
-        debugPrint('Error loading forum posts from Neon: $e');
-      }
-
-      _isLoading = false;
-      notifyListeners();
-      return;
-    }
-
     if (!firebaseInitialized) {
       _forumPosts = [];
       _challenges = [];
@@ -72,7 +49,7 @@ class CommunityProvider extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    
+
     // Default: Firestore-backed forum
     try {
       Query query = _firestore
@@ -87,11 +64,11 @@ class CommunityProvider extends ChangeNotifier {
       query = query.limit(20);
 
       final snapshot = await query.get();
-      
+
       _forumPosts = snapshot.docs
           .map((doc) => ForumPostModel.fromFirestore(doc))
           .toList();
-      
+
       if (snapshot.docs.isNotEmpty) {
         _lastForumPost = snapshot.docs.last;
         _hasMorePosts = snapshot.docs.length == 20;
@@ -110,9 +87,6 @@ class CommunityProvider extends ChangeNotifier {
 
   // Load more forum posts
   Future<void> loadMoreForumPosts() async {
-    // Neon path: currently load all posts in a single call
-    if (_useNeon) return;
-
     if (!_hasMorePosts || _isLoading || _lastForumPost == null) return;
 
     _isLoading = true;
@@ -148,45 +122,29 @@ class CommunityProvider extends ChangeNotifier {
 
   // Create forum post
   Future<String?> createForumPost(ForumPostModel post) async {
-    // Neon-backed forum
-    if (_useNeon) {
-      try {
-        final created = await _neonService.createPost(post);
-        if (created != null) {
-          _forumPosts.insert(0, created);
-          _errorMessage = null;
-          notifyListeners();
-          return created.id;
-        }
-      } catch (e) {
-        _errorMessage = 'Failed to create post';
-        debugPrint('Error creating Neon forum post: $e');
-        notifyListeners();
-      }
-      return null;
-    }
-
     // Firestore-backed forum
     try {
       final docRef = await _firestore.collection('forum_posts').add(
-        post.toFirestore(),
-      );
-      
+            post.toFirestore(),
+          );
+
       // Add to local list
-      _forumPosts.insert(0, ForumPostModel(
-        id: docRef.id,
-        authorId: post.authorId,
-        authorName: post.authorName,
-        authorAvatar: post.authorAvatar,
-        authorPhotoUrl: post.authorPhotoUrl,
-        title: post.title,
-        content: post.content,
-        tags: post.tags,
-        imageUrls: post.imageUrls,
-        category: post.category,
-        createdAt: DateTime.now(),
-      ));
-      
+      _forumPosts.insert(
+          0,
+          ForumPostModel(
+            id: docRef.id,
+            authorId: post.authorId,
+            authorName: post.authorName,
+            authorAvatar: post.authorAvatar,
+            authorPhotoUrl: post.authorPhotoUrl,
+            title: post.title,
+            content: post.content,
+            tags: post.tags,
+            imageUrls: post.imageUrls,
+            category: post.category,
+            createdAt: DateTime.now(),
+          ));
+
       _errorMessage = null;
       notifyListeners();
       return docRef.id;
@@ -201,7 +159,7 @@ class CommunityProvider extends ChangeNotifier {
   Future<void> loadComments(String parentId, {bool isForumPost = false}) async {
     try {
       final collection = isForumPost ? 'forum_comments' : 'comments';
-      
+
       final snapshot = await _firestore
           .collection(collection)
           .where('recipeId', isEqualTo: parentId)
@@ -209,10 +167,9 @@ class CommunityProvider extends ChangeNotifier {
           .orderBy('createdAt', descending: true)
           .get();
 
-      _comments = snapshot.docs
-          .map((doc) => CommentModel.fromFirestore(doc))
-          .toList();
-      
+      _comments =
+          snapshot.docs.map((doc) => CommentModel.fromFirestore(doc)).toList();
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error loading comments: $e');
@@ -220,18 +177,19 @@ class CommunityProvider extends ChangeNotifier {
   }
 
   // Add comment
-  Future<String?> addComment(CommentModel comment, {bool isForumPost = false}) async {
+  Future<String?> addComment(CommentModel comment,
+      {bool isForumPost = false}) async {
     try {
       final collection = isForumPost ? 'forum_comments' : 'comments';
-      
+
       final docRef = await _firestore.collection(collection).add(
-        comment.toFirestore(),
-      );
-      
+            comment.toFirestore(),
+          );
+
       // Update comment count on parent (recipe or forum post)
       final parentCollection = isForumPost ? 'forum_posts' : 'recipes';
       final parentId = comment.recipeId;
-      
+
       await _firestore.collection(parentCollection).doc(parentId).update({
         'commentsCount': FieldValue.increment(1),
       });
@@ -239,10 +197,8 @@ class CommunityProvider extends ChangeNotifier {
       // Create activity for parent author (only when commenting on
       // someone else's content)
       try {
-        final parentDoc = await _firestore
-            .collection(parentCollection)
-            .doc(parentId)
-            .get();
+        final parentDoc =
+            await _firestore.collection(parentCollection).doc(parentId).get();
         final parentData = parentDoc.data();
         if (parentData != null) {
           final parentAuthorId = parentData['authorId'] as String? ?? '';
@@ -275,18 +231,20 @@ class CommunityProvider extends ChangeNotifier {
       } catch (e) {
         debugPrint('Error creating comment activity: $e');
       }
-      
+
       // Add to local list
-      _comments.insert(0, CommentModel(
-        id: docRef.id,
-        recipeId: comment.recipeId,
-        authorId: comment.authorId,
-        authorName: comment.authorName,
-        authorAvatar: comment.authorAvatar,
-        content: comment.content,
-        createdAt: DateTime.now(),
-      ));
-      
+      _comments.insert(
+          0,
+          CommentModel(
+            id: docRef.id,
+            recipeId: comment.recipeId,
+            authorId: comment.authorId,
+            authorName: comment.authorName,
+            authorAvatar: comment.authorAvatar,
+            content: comment.content,
+            createdAt: DateTime.now(),
+          ));
+
       notifyListeners();
       return docRef.id;
     } catch (e) {
@@ -297,10 +255,11 @@ class CommunityProvider extends ChangeNotifier {
   }
 
   // Load replies for a comment
-  Future<List<CommentModel>> loadReplies(String commentId, {bool isForumPost = false}) async {
+  Future<List<CommentModel>> loadReplies(String commentId,
+      {bool isForumPost = false}) async {
     try {
       final collection = isForumPost ? 'forum_comments' : 'comments';
-      
+
       final snapshot = await _firestore
           .collection(collection)
           .where('parentCommentId', isEqualTo: commentId)
@@ -328,7 +287,7 @@ class CommunityProvider extends ChangeNotifier {
       _challenges = snapshot.docs
           .map((doc) => ChallengeModel.fromFirestore(doc))
           .toList();
-      
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error loading challenges: $e');
@@ -345,10 +304,9 @@ class CommunityProvider extends ChangeNotifier {
           .limit(50)
           .get();
 
-      _activities = snapshot.docs
-          .map((doc) => ActivityModel.fromFirestore(doc))
-          .toList();
-      
+      _activities =
+          snapshot.docs.map((doc) => ActivityModel.fromFirestore(doc)).toList();
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error loading activities: $e');
@@ -360,31 +318,33 @@ class CommunityProvider extends ChangeNotifier {
     try {
       final batch = _firestore.batch();
       final unreadActivities = _activities.where((a) => !a.isRead);
-      
+
       for (final activity in unreadActivities) {
         batch.update(
           _firestore.collection('activities').doc(activity.id),
           {'isRead': true},
         );
       }
-      
+
       await batch.commit();
-      
-      _activities = _activities.map((a) => ActivityModel(
-        id: a.id,
-        userId: a.userId,
-        type: a.type,
-        actorId: a.actorId,
-        actorName: a.actorName,
-        actorAvatar: a.actorAvatar,
-        targetId: a.targetId,
-        targetTitle: a.targetTitle,
-        targetImage: a.targetImage,
-        message: a.message,
-        createdAt: a.createdAt,
-        isRead: true,
-      )).toList();
-      
+
+      _activities = _activities
+          .map((a) => ActivityModel(
+                id: a.id,
+                userId: a.userId,
+                type: a.type,
+                actorId: a.actorId,
+                actorName: a.actorName,
+                actorAvatar: a.actorAvatar,
+                targetId: a.targetId,
+                targetTitle: a.targetTitle,
+                targetImage: a.targetImage,
+                message: a.message,
+                createdAt: a.createdAt,
+                isRead: true,
+              ))
+          .toList();
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error marking activities as read: $e');
@@ -422,17 +382,18 @@ class CommunityProvider extends ChangeNotifier {
   }
 
   // Load collections
-  Future<void> loadCollections({String? userId, bool publicOnly = false}) async {
+  Future<void> loadCollections(
+      {String? userId, bool publicOnly = false}) async {
     try {
       Query query = _firestore.collection('collections');
-      
+
       if (userId != null) {
         query = query.where('authorId', isEqualTo: userId);
       }
       if (publicOnly) {
         query = query.where('isPublic', isEqualTo: true);
       }
-      
+
       query = query.orderBy('updatedAt', descending: true);
 
       final snapshot = await query.get();
@@ -440,7 +401,7 @@ class CommunityProvider extends ChangeNotifier {
       _collections = snapshot.docs
           .map((doc) => CollectionModel.fromFirestore(doc))
           .toList();
-      
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error loading collections: $e');
@@ -451,22 +412,24 @@ class CommunityProvider extends ChangeNotifier {
   Future<String?> createCollection(CollectionModel collection) async {
     try {
       final docRef = await _firestore.collection('collections').add(
-        collection.toFirestore(),
-      );
-      
-      _collections.insert(0, CollectionModel(
-        id: docRef.id,
-        title: collection.title,
-        description: collection.description,
-        authorId: collection.authorId,
-        authorName: collection.authorName,
-        coverImageUrl: collection.coverImageUrl,
-        recipeIds: collection.recipeIds,
-        isPublic: collection.isPublic,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      ));
-      
+            collection.toFirestore(),
+          );
+
+      _collections.insert(
+          0,
+          CollectionModel(
+            id: docRef.id,
+            title: collection.title,
+            description: collection.description,
+            authorId: collection.authorId,
+            authorName: collection.authorName,
+            coverImageUrl: collection.coverImageUrl,
+            recipeIds: collection.recipeIds,
+            isPublic: collection.isPublic,
+            createdAt: DateTime.now(),
+            updatedAt: DateTime.now(),
+          ));
+
       notifyListeners();
       return docRef.id;
     } catch (e) {
@@ -477,13 +440,14 @@ class CommunityProvider extends ChangeNotifier {
   }
 
   // Add recipe to collection
-  Future<bool> addRecipeToCollection(String collectionId, String recipeId) async {
+  Future<bool> addRecipeToCollection(
+      String collectionId, String recipeId) async {
     try {
       await _firestore.collection('collections').doc(collectionId).update({
         'recipeIds': FieldValue.arrayUnion([recipeId]),
         'updatedAt': FieldValue.serverTimestamp(),
       });
-      
+
       final index = _collections.indexWhere((c) => c.id == collectionId);
       if (index != -1) {
         final collection = _collections[index];
@@ -502,7 +466,7 @@ class CommunityProvider extends ChangeNotifier {
         );
         notifyListeners();
       }
-      
+
       return true;
     } catch (e) {
       _errorMessage = 'Failed to add recipe to collection';
@@ -521,10 +485,9 @@ class CommunityProvider extends ChangeNotifier {
           .limit(10)
           .get();
 
-      _trendingRecipes = snapshot.docs
-          .map((doc) => RecipeModel.fromFirestore(doc))
-          .toList();
-      
+      _trendingRecipes =
+          snapshot.docs.map((doc) => RecipeModel.fromFirestore(doc)).toList();
+
       notifyListeners();
     } catch (e) {
       debugPrint('Error loading trending recipes: $e');
@@ -532,34 +495,11 @@ class CommunityProvider extends ChangeNotifier {
   }
 
   // Follow/unfollow user
-  Future<void> toggleFollow(String currentUserId, String targetUserId, bool isFollowing) async {
+  Future<void> toggleFollow(
+      String currentUserId, String targetUserId, bool isFollowing) async {
     try {
-      // Prefer Neon as canonical source for follow graph when configured
-      if (NeonUserConfig.isConfigured) {
-        try {
-          if (isFollowing) {
-            await _userNeonService.unfollowUser(currentUserId, targetUserId);
-          } else {
-            await _userNeonService.followUser(currentUserId, targetUserId);
-          }
-
-          // Create activity only when newly following
-          if (!isFollowing) {
-            await _createActivity(
-              userId: targetUserId,
-              type: ActivityType.followed,
-              actorId: currentUserId,
-            );
-          }
-        } catch (e) {
-          debugPrint('Error toggling follow via Neon: $e');
-        }
-        return;
-      }
-
-      // Fallback: Firestore-backed follow graph when Neon is not configured
       final batch = _firestore.batch();
-      
+
       // Update current user's following
       batch.update(
         _firestore.collection('users').doc(currentUserId),
@@ -569,7 +509,7 @@ class CommunityProvider extends ChangeNotifier {
               : FieldValue.arrayUnion([targetUserId]),
         },
       );
-      
+
       // Update target user's followers
       batch.update(
         _firestore.collection('users').doc(targetUserId),
@@ -579,9 +519,9 @@ class CommunityProvider extends ChangeNotifier {
               : FieldValue.arrayUnion([currentUserId]),
         },
       );
-      
+
       await batch.commit();
-      
+
       // Create activity if following
       if (!isFollowing) {
         await _createActivity(
@@ -596,52 +536,8 @@ class CommunityProvider extends ChangeNotifier {
   }
 
   // Like forum post
-  Future<void> togglePostLike(String postId, String userId, bool isLiked) async {
-    // Neon-backed forum
-    if (_useNeon) {
-      try {
-        await _neonService.toggleLike(
-          postId: postId,
-          userId: userId,
-          isLiked: isLiked,
-        );
-      } catch (e) {
-        debugPrint('Error toggling Neon post like: $e');
-      }
-
-      // Regardless of backend result, update local optimistic state
-      final index = _forumPosts.indexWhere((p) => p.id == postId);
-      if (index != -1) {
-        final post = _forumPosts[index];
-        _forumPosts[index] = ForumPostModel(
-          id: post.id,
-          authorId: post.authorId,
-          authorName: post.authorName,
-          authorAvatar: post.authorAvatar,
-          authorPhotoUrl: post.authorPhotoUrl,
-          title: post.title,
-          content: post.content,
-          tags: post.tags,
-          imageUrls: post.imageUrls,
-          category: post.category,
-          likes: post.likes + (isLiked ? -1 : 1),
-          likedBy: isLiked
-              ? post.likedBy.where((id) => id != userId).toList()
-              : [...post.likedBy, userId],
-          commentsCount: post.commentsCount,
-          views: post.views,
-          isPinned: post.isPinned,
-          isClosed: post.isClosed,
-          createdAt: post.createdAt,
-          editedAt: post.editedAt,
-          linkedRecipeId: post.linkedRecipeId,
-          mentions: post.mentions,
-        );
-        notifyListeners();
-      }
-      return;
-    }
-
+  Future<void> togglePostLike(
+      String postId, String userId, bool isLiked) async {
     // Firestore-backed forum
     try {
       await _firestore.collection('forum_posts').doc(postId).update({
@@ -650,7 +546,7 @@ class CommunityProvider extends ChangeNotifier {
             ? FieldValue.arrayRemove([userId])
             : FieldValue.arrayUnion([userId]),
       });
-      
+
       // Update local
       final index = _forumPosts.indexWhere((p) => p.id == postId);
       if (index != -1) {

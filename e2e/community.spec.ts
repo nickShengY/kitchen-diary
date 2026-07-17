@@ -1,10 +1,12 @@
 import { test, expect, Page } from '@playwright/test';
 
 const recipeCards = (page: Page) =>
-  page.locator('div.break-inside-avoid').filter({ has: page.getByRole('button', { name: 'Like post' }) });
+  page.locator('article.break-inside-avoid').filter({
+    has: page.getByRole('button', { name: 'Like post', exact: true }),
+  });
 
 const waitForLiveFeed = async (page: Page) => {
-  const feedError = page.getByText('Unable to load live community data right now.');
+  const feedError = page.getByText('Unable to load community recipes right now.');
   try {
     await Promise.race([
       recipeCards(page).first().waitFor({ state: 'visible', timeout: 15000 }),
@@ -36,14 +38,14 @@ test.describe('Community View', () => {
   test('should display tabs', async ({ page }) => {
     await expect(page.getByText('Popular')).toBeVisible();
     await expect(page.getByText('Recent')).toBeVisible();
-    await expect(page.getByText('Following')).toBeVisible();
+    await expect(page.getByText('Saved')).toBeVisible();
   });
 
   test('should display tag filters', async ({ page }) => {
-    await expect(page.getByRole('button', { name: 'All' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Breakfast' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Lunch' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Dinner' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'All', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Breakfast', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Lunch', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Dinner', exact: true })).toBeVisible();
   });
 
   test('should display live recipe posts', async ({ page }) => {
@@ -57,7 +59,7 @@ test.describe('Community View', () => {
   });
 
   test('should filter posts by tag', async ({ page }) => {
-    const breakfastTag = page.getByRole('button', { name: 'Breakfast' });
+    const breakfastTag = page.getByRole('button', { name: 'Breakfast', exact: true });
     await breakfastTag.click();
     await expect(breakfastTag).toHaveClass(/bg-toon-dark/);
   });
@@ -92,8 +94,7 @@ test.describe('Community View', () => {
 
   test('should display comment counters', async ({ page }) => {
     const firstPost = recipeCards(page).first();
-    const commentButton = firstPost.locator('button').nth(3);
-    await expect(commentButton).toBeVisible();
+    await expect(firstPost.getByLabel('Comment count')).toBeVisible();
   });
 
   test('should have Cook This button on posts', async ({ page }) => {
@@ -111,7 +112,7 @@ test.describe('Community View', () => {
   });
 
   test('should combine tag and search filters', async ({ page }) => {
-    const allTag = page.getByRole('button', { name: 'All' });
+    const allTag = page.getByRole('button', { name: 'All', exact: true });
     await allTag.click();
 
     const firstTitle = ((await recipeCards(page).first().locator('h3').first().textContent()) ?? '').trim();

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../core/theme/app_theme.dart';
 import '../../data/kitchen_data_repository.dart';
+import '../../data/visual_catalog.dart';
 import '../../models/procedure_model.dart';
 import '../../models/recipe_model.dart';
 import '../../providers/auth_provider.dart';
@@ -56,16 +57,15 @@ class _ProcedureBuilderScreenState extends State<ProcedureBuilderScreen> {
   List<Map<String, dynamic>> get _ingredients =>
       _kitchenData?.ingredients ?? const [];
 
-  List<Map<String, dynamic>> get _tools =>
-      _kitchenData?.tools ?? const [];
+  List<Map<String, dynamic>> get _tools => _kitchenData?.tools ?? const [];
 
-  List<Map<String, dynamic>> get _actions =>
-      _kitchenData?.actions ?? const [];
+  List<Map<String, dynamic>> get _actions => _kitchenData?.actions ?? const [];
 
   List<String> get _temperatures =>
       _kitchenData?.temperatures ?? const ['Low', 'Medium', 'High'];
 
-  List<String> get _times => _kitchenData?.times ?? const ['1 min', '5 mins', '10 mins'];
+  List<String> get _times =>
+      _kitchenData?.times ?? const ['1 min', '5 mins', '10 mins'];
 
   List<String> get _waterLevels =>
       _kitchenData?.waterLevels ?? const ['Splash', '1 cup', 'Covered'];
@@ -251,8 +251,8 @@ class _ProcedureBuilderScreenState extends State<ProcedureBuilderScreen> {
     if (_lots.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content:
-              Text('Add ingredients, spices, or liquids before building a step.'),
+          content: Text(
+              'Add ingredients, spices, or liquids before building a step.'),
         ),
       );
       return;
@@ -1349,6 +1349,17 @@ class _AddLotSheetState extends State<_AddLotSheet> {
       final name = (ing['name'] as String? ?? '').toLowerCase();
       return name.contains(query);
     }).toList();
+    final stateProfile = _selected?['visualStateProfile'] as String? ?? 'produce';
+    final allowedStateIds = List<String>.from(
+      VisualCatalog.stateProfiles[stateProfile] ?? const ['raw'],
+    );
+    final selectableStates = VisualCatalog.states
+        .where((state) => allowedStateIds.contains(state['id']))
+        .map((state) => Map<String, dynamic>.from(state))
+        .toList(growable: false);
+    final selectedState = allowedStateIds.contains(_stateController.text)
+        ? _stateController.text
+        : 'raw';
 
     return DraggableScrollableSheet(
       initialChildSize: 0.9,
@@ -1426,7 +1437,8 @@ class _AddLotSheetState extends State<_AddLotSheet> {
                           _selected = ing;
                           _unitController.text =
                               (ing['defaultUnit'] as String?) ??
-                              (ing['unit'] as String?) ?? 'pcs';
+                                  (ing['unit'] as String?) ??
+                                  'pcs';
                         });
                         HapticFeedback.selectionClick();
                       },
@@ -1472,13 +1484,26 @@ class _AddLotSheetState extends State<_AddLotSheet> {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    TextField(
-                      controller: _stateController,
+                    DropdownButtonFormField<String>(
+                      value: selectedState,
+                      isExpanded: true,
                       decoration: InputDecoration(
                         labelText: 'State',
+                        helperText: 'Choose a compatible visual state for this ingredient.',
                         filled: true,
                         fillColor: scheme.surface,
                       ),
+                      items: selectableStates
+                          .map(
+                            (state) => DropdownMenuItem<String>(
+                              value: state['id'] as String,
+                              child: Text(state['label'] as String),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        if (value != null) setState(() => _stateController.text = value);
+                      },
                     ),
                     const SizedBox(height: 14),
                     GradientButton(
@@ -1504,10 +1529,12 @@ class _AddLotSheetState extends State<_AddLotSheet> {
                                   state: _stateController.text.trim().isEmpty
                                       ? 'raw'
                                       : _stateController.text.trim(),
-                                  assetKey: (ing['id'] as String? ?? 'ingredient') + '_' +
-                                      (_stateController.text.trim().isEmpty
-                                          ? 'raw'
-                                          : _stateController.text.trim()),
+                                  assetKey:
+                                      (ing['id'] as String? ?? 'ingredient') +
+                                          '_' +
+                                          (_stateController.text.trim().isEmpty
+                                              ? 'raw'
+                                              : _stateController.text.trim()),
                                 ),
                               );
                             },
@@ -1894,8 +1921,7 @@ class _AddOperationSheetState extends State<_AddOperationSheet> {
                                   actionId: action['id'] as String,
                                   actionName:
                                       action['name'] as String? ?? 'Action',
-                                  actionEmoji:
-                                      action['icon'] as String? ?? '*',
+                                  actionEmoji: action['icon'] as String? ?? '*',
                                   toolId: tool?['id'] as String?,
                                   toolName: tool?['name'] as String?,
                                   toolIcon: tool?['icon'] as String?,
@@ -1921,5 +1947,3 @@ class _AddOperationSheetState extends State<_AddOperationSheet> {
     );
   }
 }
-
-

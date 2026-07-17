@@ -18,7 +18,12 @@ class CreatePostScreen extends StatefulWidget {
 class _CreatePostScreenState extends State<CreatePostScreen> {
   final _titleController = TextEditingController();
   final _contentController = TextEditingController();
-  final List<String> _categories = ['discussion', 'tips', 'question', 'challenge'];
+  final List<String> _categories = [
+    'discussion',
+    'tips',
+    'question',
+    'challenge'
+  ];
   String _selectedCategory = 'discussion';
   bool _isPosting = false;
 
@@ -77,7 +82,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       context.pop();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to publish post. Please try again.')),
+        const SnackBar(
+            content: Text('Failed to publish post. Please try again.')),
       );
     }
   }
@@ -135,7 +141,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       },
                       selectedColor: AppColors.primary,
                       labelStyle: TextStyle(
-                        color: isSelected ? Colors.white : AppColors.textSecondary,
+                        color:
+                            isSelected ? Colors.white : AppColors.textSecondary,
                       ),
                     ),
                   );

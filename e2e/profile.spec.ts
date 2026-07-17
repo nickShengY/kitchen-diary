@@ -1,12 +1,12 @@
 import { test, expect, Page } from '@playwright/test';
 
 const signInWithLiveProfile = async (page: Page) => {
-  await page.getByRole('button', { name: /sign in with google/i }).click();
+  await page.getByRole('button', { name: /create live profile/i }).click();
 
   const signOut = page.getByRole('button', { name: /sign out/i });
   await Promise.race([
     signOut.waitFor({ state: 'visible', timeout: 12000 }),
-    page.getByRole('button', { name: /sign in with google/i }).waitFor({ state: 'visible', timeout: 12000 }),
+    page.getByRole('button', { name: /create live profile/i }).waitFor({ state: 'visible', timeout: 12000 }),
   ]).catch(() => undefined);
 
   const loggedIn = await signOut.isVisible().catch(() => false);
@@ -16,7 +16,7 @@ const signInWithLiveProfile = async (page: Page) => {
 test.describe('Profile View', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('button', { name: 'Me', exact: true }).click();
+    await page.getByRole('button', { name: 'Profile', exact: true }).click();
   });
 
   test('should display login screen when not authenticated', async ({ page }) => {
@@ -28,22 +28,22 @@ test.describe('Profile View', () => {
   });
 
   test('should display sign in button', async ({ page }) => {
-    await expect(page.getByRole('button', { name: /sign in with google/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /create live profile/i })).toBeVisible();
   });
 
   test('should display live identity note', async ({ page }) => {
-    await expect(page.getByText(/powered by live identity data/i)).toBeVisible();
+    await expect(page.getByText(/profile data is saved in this browser/i)).toBeVisible();
   });
 
   test('should show loading state when signing in', async ({ page }) => {
-    const signInButton = page.getByRole('button', { name: /sign in with google/i });
+    const signInButton = page.getByRole('button', { name: /create live profile/i });
     await signInButton.click();
-    await expect(page.getByRole('button', { name: /signing you in/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /creating profile/i })).toBeVisible();
   });
 
   test('should show profile after login', async ({ page }) => {
     await signInWithLiveProfile(page);
-    await expect(page.locator('h2.text-2xl.font-bold.text-toon-dark')).toBeVisible();
+    await expect(page.locator('h2.text-2xl.text-toon-dark')).toBeVisible();
   });
 
   test('should display user bio', async ({ page }) => {
@@ -61,7 +61,7 @@ test.describe('Profile View', () => {
 
   test('should display stat values', async ({ page }) => {
     await signInWithLiveProfile(page);
-    await expect(page.locator('div.font-bold.text-xl.text-toon-dark')).toHaveCount(1);
+    await expect(page.locator('div.text-xl.text-toon-dark')).toHaveCount(1);
   });
 
   test('should display action buttons', async ({ page }) => {
@@ -78,47 +78,50 @@ test.describe('Profile View', () => {
   test('should sign out and return to login', async ({ page }) => {
     await signInWithLiveProfile(page);
     await page.getByRole('button', { name: /sign out/i }).click();
-    await expect(page.getByRole('button', { name: /sign in with google/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /create live profile/i })).toBeVisible();
   });
 
   test('should have settings button when logged in', async ({ page }) => {
     await signInWithLiveProfile(page);
-    const header = page.locator('header');
-    await expect(header.locator('button')).toBeVisible();
+    await page.getByRole('button', { name: 'Profile settings', exact: true }).click();
+    await expect(page.getByRole('dialog', { name: 'Profile Settings' })).toBeVisible();
   });
 
   test('should have clickable action buttons', async ({ page }) => {
     await signInWithLiveProfile(page);
 
-    const favoritesButton = page.getByText('Favorites').locator('..');
-    await expect(favoritesButton).toBeEnabled();
+    await page.getByRole('button', { name: 'Favorites', exact: true }).click();
+    await expect(page.getByRole('dialog', { name: 'Favorites' })).toBeVisible();
+    await expect(page.getByText('No favorites yet')).toBeVisible();
+    await page.getByRole('button', { name: 'Close profile panel', exact: true }).click();
 
-    const cookbookButton = page.getByText('My Cookbook').locator('..');
-    await expect(cookbookButton).toBeEnabled();
+    await page.getByRole('button', { name: 'My Cookbook', exact: true }).click();
+    await expect(page.getByRole('dialog', { name: 'My Cookbook' })).toBeVisible();
+    await expect(page.getByText('No cookbook recipes yet')).toBeVisible();
   });
 });
 
 test.describe('Profile Authentication Flow', () => {
   test('should persist login state during navigation', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('button', { name: 'Me', exact: true }).click();
+    await page.getByRole('button', { name: 'Profile', exact: true }).click();
     await signInWithLiveProfile(page);
 
-    await page.getByRole('button', { name: 'Home', exact: true }).click();
+    await page.getByRole('button', { name: 'Explore', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Explore' })).toBeVisible();
 
-    await page.getByRole('button', { name: 'Me', exact: true }).click();
+    await page.getByRole('button', { name: 'Profile', exact: true }).click();
     await expect(page.getByRole('button', { name: /sign out/i })).toBeVisible();
   });
 
   test('should allow multiple login/logout cycles', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'Flaky in WebKit');
     await page.goto('/');
-    await page.getByRole('button', { name: 'Me', exact: true }).click();
+    await page.getByRole('button', { name: 'Profile', exact: true }).click();
 
     await signInWithLiveProfile(page);
     await page.getByRole('button', { name: /sign out/i }).click();
-    await expect(page.getByRole('button', { name: /sign in with google/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /create live profile/i })).toBeVisible();
 
     await signInWithLiveProfile(page);
     await expect(page.getByRole('button', { name: /sign out/i })).toBeVisible();

@@ -1,79 +1,39 @@
+import { GoogleAuthProvider, User, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
 import { UserProfile } from '../types';
-import { fetchRealProfile, LiveUserProfile } from './liveDataService';
+import { getFirebaseAuth, isFirebaseConfigured } from './firebase';
 
-const STORAGE_KEY = 'kitchendiary.user_profile';
-
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const getStorage = (): Storage | null => {
-  if (typeof window !== 'undefined' && window.localStorage && typeof window.localStorage.getItem === 'function') {
-    return window.localStorage;
-  }
-  if (typeof globalThis !== 'undefined' && (globalThis as any).localStorage && typeof (globalThis as any).localStorage.getItem === 'function') {
-    return (globalThis as any).localStorage as Storage;
-  }
-  return null;
-};
-
-const normalizeProfile = (profile: LiveUserProfile | UserProfile): UserProfile => ({
-  id: profile.id,
-  name: profile.name,
-  avatar: profile.avatar,
-  bio: profile.bio,
-  favorites: profile.favorites ?? [],
-  myRecipes: profile.myRecipes ?? [],
-  recipesCount: profile.recipesCount ?? profile.myRecipes?.length,
-  followersCount: profile.followersCount,
-  likesReceived: profile.likesReceived,
+const toUserProfile = (user: User): UserProfile => ({
+  id: user.uid,
+  name: user.displayName?.trim() || 'Kitchen Diary Cook',
+  avatar: user.photoURL || '🧑‍🍳',
+  bio: 'Cooking with Kitchen Diary.',
+  favorites: [],
+  myRecipes: [],
 });
 
-const readStoredProfile = (): UserProfile | null => {
-  try {
-    const storage = getStorage();
-    if (!storage) return null;
-    const raw = storage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    return normalizeProfile(JSON.parse(raw) as UserProfile);
-  } catch {
-    return null;
+export const getCurrentUser = (): UserProfile | null => {
+  if (!isFirebaseConfigured()) return null;
+  const user = getFirebaseAuth().currentUser;
+  return user ? toUserProfile(user) : null;
+};
+
+export const subscribeToAuthState = (callback: (user: UserProfile | null) => void): (() => void) => {
+  if (!isFirebaseConfigured()) {
+    callback(null);
+    return () => undefined;
   }
-};
 
-const writeStoredProfile = (profile: UserProfile): void => {
-  const storage = getStorage();
-  if (!storage) return;
-  storage.setItem(STORAGE_KEY, JSON.stringify(profile));
+  return onAuthStateChanged(getFirebaseAuth(), (user) => callback(user ? toUserProfile(user) : null));
 };
-
-export const getCurrentUser = (): UserProfile | null => readStoredProfile();
 
 export const login = async (): Promise<UserProfile> => {
-  const [liveUser] = await Promise.all([fetchRealProfile(), wait(500)]);
-  const normalized = normalizeProfile(liveUser);
-  writeStoredProfile(normalized);
-  return normalized;
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
+  const result = await signInWithPopup(getFirebaseAuth(), provider);
+  return toUserProfile(result.user);
 };
 
 export const logout = async (): Promise<void> => {
-  await wait(250);
-  const storage = getStorage();
-  if (!storage) return;
-  storage.removeItem(STORAGE_KEY);
-};
-
-export const updateUserProfile = async (updates: Partial<UserProfile>): Promise<UserProfile> => {
-  const existing = readStoredProfile();
-  if (!existing) {
-    throw new Error('No active user session to update.');
-  }
-
-  const updated = normalizeProfile({
-    ...existing,
-    ...updates,
-    favorites: updates.favorites ?? existing.favorites,
-    myRecipes: updates.myRecipes ?? existing.myRecipes,
-  });
-
-  writeStoredProfile(updated);
-  return updated;
+  if (!isFirebaseConfigured()) return;
+  await signOut(getFirebaseAuth());
 };

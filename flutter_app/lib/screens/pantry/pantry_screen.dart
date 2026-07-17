@@ -43,9 +43,11 @@ class _PantryScreenState extends State<PantryScreen> {
             slivers: [
               _buildAppBar(context, scheme, provider),
               SliverToBoxAdapter(child: _buildStatsBar(scheme, provider)),
-              SliverToBoxAdapter(child: _buildSearchAndFilter(scheme, provider)),
+              SliverToBoxAdapter(
+                  child: _buildSearchAndFilter(scheme, provider)),
               SliverToBoxAdapter(child: _buildCategoryChips(scheme, provider)),
-              if (provider.expiringItems.isNotEmpty || provider.expiredItems.isNotEmpty)
+              if (provider.expiringItems.isNotEmpty ||
+                  provider.expiredItems.isNotEmpty)
                 SliverToBoxAdapter(child: _buildAlerts(scheme, provider)),
               _buildItemsList(scheme, provider),
               const SliverToBoxAdapter(child: SizedBox(height: 100)),
@@ -63,7 +65,8 @@ class _PantryScreenState extends State<PantryScreen> {
     );
   }
 
-  Widget _buildAppBar(BuildContext context, ColorScheme scheme, PantryProvider provider) {
+  Widget _buildAppBar(
+      BuildContext context, ColorScheme scheme, PantryProvider provider) {
     return SliverAppBar(
       expandedHeight: 120,
       floating: true,
@@ -87,7 +90,8 @@ class _PantryScreenState extends State<PantryScreen> {
           itemBuilder: (_) => [
             const PopupMenuItem(value: 'expiry', child: Text('Sort by Expiry')),
             const PopupMenuItem(value: 'name', child: Text('Sort by Name')),
-            const PopupMenuItem(value: 'category', child: Text('Sort by Category')),
+            const PopupMenuItem(
+                value: 'category', child: Text('Sort by Category')),
             const PopupMenuItem(value: 'recent', child: Text('Sort by Recent')),
           ],
         ),
@@ -109,7 +113,8 @@ class _PantryScreenState extends State<PantryScreen> {
         children: [
           _statItem('Total', '${provider.totalItems}', '📦', Colors.white),
           Container(width: 1, height: 40, color: Colors.white24),
-          _statItem('Expiring', '${provider.expiringCount}', '⚠️', Colors.white),
+          _statItem(
+              'Expiring', '${provider.expiringCount}', '⚠️', Colors.white),
           Container(width: 1, height: 40, color: Colors.white24),
           _statItem('Expired', '${provider.expiredCount}', '❌', Colors.white),
         ],
@@ -122,8 +127,12 @@ class _PantryScreenState extends State<PantryScreen> {
       children: [
         Text(emoji, style: const TextStyle(fontSize: 20)),
         const SizedBox(height: 4),
-        Text(value, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: color)),
-        Text(label, style: TextStyle(fontSize: 11, color: color.withValues(alpha: 0.8))),
+        Text(value,
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w700, color: color)),
+        Text(label,
+            style:
+                TextStyle(fontSize: 11, color: color.withValues(alpha: 0.8))),
       ],
     );
   }
@@ -165,15 +174,16 @@ class _PantryScreenState extends State<PantryScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         children: [
           _categoryChip(scheme, provider, null, 'All', '🏠'),
-          ...PantryCategory.values.map((cat) =>
-            _categoryChip(scheme, provider, cat, cat.label, cat.emoji),
+          ...PantryCategory.values.map(
+            (cat) => _categoryChip(scheme, provider, cat, cat.label, cat.emoji),
           ),
         ],
       ),
     );
   }
 
-  Widget _categoryChip(ColorScheme scheme, PantryProvider provider, PantryCategory? category, String label, String emoji) {
+  Widget _categoryChip(ColorScheme scheme, PantryProvider provider,
+      PantryCategory? category, String label, String emoji) {
     final isSelected = provider.selectedCategory == category;
     return Padding(
       padding: const EdgeInsets.only(right: 8),
@@ -214,7 +224,8 @@ class _PantryScreenState extends State<PantryScreen> {
               const SizedBox(width: 8),
               Text(
                 'Freshness Alerts',
-                style: TextStyle(fontWeight: FontWeight.w600, color: scheme.onSurface),
+                style: TextStyle(
+                    fontWeight: FontWeight.w600, color: scheme.onSurface),
               ),
             ],
           ),
@@ -251,7 +262,10 @@ class _PantryScreenState extends State<PantryScreen> {
                 const SizedBox(height: 16),
                 Text(
                   'Pantry is empty',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: scheme.onSurface),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: scheme.onSurface),
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -279,7 +293,8 @@ class _PantryScreenState extends State<PantryScreen> {
     );
   }
 
-  Widget _buildItemCard(ColorScheme scheme, PantryProvider provider, PantryItem item, int index) {
+  Widget _buildItemCard(
+      ColorScheme scheme, PantryProvider provider, PantryItem item, int index) {
     final statusColor = switch (item.freshnessStatus) {
       FreshnessStatus.fresh => AppColors.success,
       FreshnessStatus.good => AppColors.info,
@@ -304,26 +319,32 @@ class _PantryScreenState extends State<PantryScreen> {
         margin: const EdgeInsets.only(bottom: 8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           leading: Container(
-            width: 48, height: 48,
+            width: 48,
+            height: 48,
             decoration: BoxDecoration(
               color: statusColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
-              child: Text(item.emoji ?? item.category.emoji, style: const TextStyle(fontSize: 24)),
+              child: Text(item.emoji ?? item.category.emoji,
+                  style: const TextStyle(fontSize: 24)),
             ),
           ),
-          title: Text(item.name, style: const TextStyle(fontWeight: FontWeight.w600)),
+          title: Text(item.name,
+              style: const TextStyle(fontWeight: FontWeight.w600)),
           subtitle: Row(
             children: [
               Text('${item.quantity} ${item.unit}',
-                style: TextStyle(fontSize: 13, color: scheme.onSurfaceVariant)),
+                  style:
+                      TextStyle(fontSize: 13, color: scheme.onSurfaceVariant)),
               if (item.expiryDate != null) ...[
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
                     color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
@@ -334,7 +355,10 @@ class _PantryScreenState extends State<PantryScreen> {
                         : item.daysUntilExpiry == 0
                             ? 'Today'
                             : '${item.daysUntilExpiry}d left',
-                    style: TextStyle(fontSize: 11, color: statusColor, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                        fontSize: 11,
+                        color: statusColor,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
               ],
@@ -345,7 +369,9 @@ class _PantryScreenState extends State<PantryScreen> {
             ],
           ),
           trailing: item.location != null
-              ? Text(item.location!, style: TextStyle(fontSize: 11, color: scheme.onSurfaceVariant))
+              ? Text(item.location!,
+                  style:
+                      TextStyle(fontSize: 11, color: scheme.onSurfaceVariant))
               : null,
         ),
       ),
@@ -371,10 +397,13 @@ class _PantryScreenState extends State<PantryScreen> {
           return Container(
             decoration: BoxDecoration(
               color: scheme.surface,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(24)),
             ),
             padding: EdgeInsets.only(
-              left: 24, right: 24, top: 24,
+              left: 24,
+              right: 24,
+              top: 24,
               bottom: MediaQuery.of(ctx).viewInsets.bottom + 24,
             ),
             child: SingleChildScrollView(
@@ -382,16 +411,27 @@ class _PantryScreenState extends State<PantryScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: scheme.outline.withValues(alpha: 0.3), borderRadius: BorderRadius.circular(2)))),
+                  Center(
+                      child: Container(
+                          width: 40,
+                          height: 4,
+                          decoration: BoxDecoration(
+                              color: scheme.outline.withValues(alpha: 0.3),
+                              borderRadius: BorderRadius.circular(2)))),
                   const SizedBox(height: 20),
-                  Text('Add Pantry Item', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: scheme.onSurface)),
+                  Text('Add Pantry Item',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: scheme.onSurface)),
                   const SizedBox(height: 20),
                   TextField(
                     controller: nameCtrl,
                     decoration: InputDecoration(
                       labelText: 'Item name',
                       hintText: 'e.g., Chicken Breast',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)),
                       prefixIcon: const Icon(Iconsax.box_1),
                     ),
                   ),
@@ -404,7 +444,8 @@ class _PantryScreenState extends State<PantryScreen> {
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             labelText: 'Quantity',
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12)),
                           ),
                         ),
                       ),
@@ -415,7 +456,8 @@ class _PantryScreenState extends State<PantryScreen> {
                           decoration: InputDecoration(
                             labelText: 'Unit',
                             hintText: 'g, ml, pcs',
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12)),
                           ),
                         ),
                       ),
@@ -426,11 +468,15 @@ class _PantryScreenState extends State<PantryScreen> {
                     value: selectedCat,
                     decoration: InputDecoration(
                       labelText: 'Category',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)),
                     ),
-                    items: PantryCategory.values.map((c) =>
-                      DropdownMenuItem(value: c, child: Text('${c.emoji} ${c.label}')),
-                    ).toList(),
+                    items: PantryCategory.values
+                        .map(
+                          (c) => DropdownMenuItem(
+                              value: c, child: Text('${c.emoji} ${c.label}')),
+                        )
+                        .toList(),
                     onChanged: (v) => setSheetState(() => selectedCat = v!),
                   ),
                   const SizedBox(height: 16),
@@ -438,12 +484,15 @@ class _PantryScreenState extends State<PantryScreen> {
                     value: selectedLocation,
                     decoration: InputDecoration(
                       labelText: 'Location',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)),
                       prefixIcon: const Icon(Iconsax.home_2),
                     ),
-                    items: ['Fridge', 'Freezer', 'Pantry', 'Counter'].map((l) =>
-                      DropdownMenuItem(value: l, child: Text(l)),
-                    ).toList(),
+                    items: ['Fridge', 'Freezer', 'Pantry', 'Counter']
+                        .map(
+                          (l) => DropdownMenuItem(value: l, child: Text(l)),
+                        )
+                        .toList(),
                     onChanged: (v) => setSheetState(() => selectedLocation = v),
                   ),
                   const SizedBox(height: 16),
@@ -457,11 +506,13 @@ class _PantryScreenState extends State<PantryScreen> {
                     onTap: () async {
                       final picked = await showDatePicker(
                         context: ctx,
-                        initialDate: DateTime.now().add(const Duration(days: 7)),
+                        initialDate:
+                            DateTime.now().add(const Duration(days: 7)),
                         firstDate: DateTime.now(),
                         lastDate: DateTime.now().add(const Duration(days: 730)),
                       );
-                      if (picked != null) setSheetState(() => expiryDate = picked);
+                      if (picked != null)
+                        setSheetState(() => expiryDate = picked);
                     },
                   ),
                   SwitchListTile(
@@ -493,9 +544,12 @@ class _PantryScreenState extends State<PantryScreen> {
                         Navigator.pop(ctx);
                       },
                       style: FilledButton.styleFrom(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14)),
                       ),
-                      child: const Text('Add to Pantry', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                      child: const Text('Add to Pantry',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 16)),
                     ),
                   ),
                 ],

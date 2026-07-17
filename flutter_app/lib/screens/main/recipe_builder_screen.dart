@@ -35,6 +35,8 @@ class _RecipeBuilderScreenState extends State<RecipeBuilderScreen> {
       0; // 0: station, 1: tool, 2: ingredients, 3: action, 4: details
   Map<String, dynamic> _currentStep = {};
   List<Map<String, dynamic>> _selectedIngredients = [];
+  String _ingredientQuery = '';
+  String _ingredientCategory = 'all';
   KitchenDataRepository? _kitchenData;
 
   final _stages = ['Station', 'Tool', 'Ingredients', 'Action', 'Details'];
@@ -87,16 +89,15 @@ class _RecipeBuilderScreenState extends State<RecipeBuilderScreen> {
   List<Map<String, dynamic>> get _ingredients =>
       _kitchenData?.ingredients ?? const [];
 
-  List<Map<String, dynamic>> get _tools =>
-      _kitchenData?.tools ?? const [];
+  List<Map<String, dynamic>> get _tools => _kitchenData?.tools ?? const [];
 
-  List<Map<String, dynamic>> get _actions =>
-      _kitchenData?.actions ?? const [];
+  List<Map<String, dynamic>> get _actions => _kitchenData?.actions ?? const [];
 
   List<String> get _temperatures =>
       _kitchenData?.temperatures ?? const ['Low', 'Medium', 'High'];
 
-  List<String> get _times => _kitchenData?.times ?? const ['1 min', '5 mins', '10 mins'];
+  List<String> get _times =>
+      _kitchenData?.times ?? const ['1 min', '5 mins', '10 mins'];
 
   void _finishStep() {
     if (_currentStep['actionId'] != null) {
@@ -743,6 +744,18 @@ class _RecipeBuilderScreenState extends State<RecipeBuilderScreen> {
   }
 
   Widget _buildIngredientSelection() {
+    final categories = <String>{
+      'all',
+      ..._ingredients.map((ingredient) => ingredient['category'] as String? ?? 'other'),
+    }.toList();
+    final normalizedQuery = _ingredientQuery.trim().toLowerCase();
+    final filteredIngredients = _ingredients.where((ingredient) {
+      final category = ingredient['category'] as String? ?? 'other';
+      final name = ingredient['name'] as String? ?? '';
+      return (_ingredientCategory == 'all' || category == _ingredientCategory) &&
+          (normalizedQuery.isEmpty || name.toLowerCase().contains(normalizedQuery));
+    }).toList(growable: false);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -786,6 +799,43 @@ class _RecipeBuilderScreenState extends State<RecipeBuilderScreen> {
           const SizedBox(height: 24),
         ],
 
+        TextField(
+          onChanged: (value) => setState(() => _ingredientQuery = value),
+          decoration: InputDecoration(
+            hintText: 'Search the visual ingredient library…',
+            prefixIcon: const Icon(Iconsax.search_normal),
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: Colors.grey.shade200),
+            ),
+          ),
+        ),
+        const SizedBox(height: 12),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: categories.map((category) {
+              final selected = category == _ingredientCategory;
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: ChoiceChip(
+                  label: Text(category == 'all' ? 'All' : category.replaceAll('_', ' ')),
+                  selected: selected,
+                  onSelected: (_) => setState(() => _ingredientCategory = category),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          '${filteredIngredients.length} selectable ingredients — exact art when available; otherwise clearly generic.',
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+        const SizedBox(height: 12),
+
         // Ingredient grid
         GridView.builder(
           shrinkWrap: true,
@@ -796,9 +846,9 @@ class _RecipeBuilderScreenState extends State<RecipeBuilderScreen> {
             crossAxisSpacing: 12,
             childAspectRatio: 0.85,
           ),
-          itemCount: _ingredients.length,
+          itemCount: filteredIngredients.length,
           itemBuilder: (context, index) {
-            final ing = _ingredients[index];
+            final ing = filteredIngredients[index];
             final isSelected =
                 _selectedIngredients.any((i) => i['id'] == ing['id']);
 

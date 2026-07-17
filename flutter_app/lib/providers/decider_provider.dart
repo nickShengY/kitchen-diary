@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
+import '../data/kitchen_data_repository.dart';
+
 /// Model for a cuisine category with dishes
 class CuisineCategory {
   final String id;
@@ -84,7 +86,12 @@ class DeciderProvider extends ChangeNotifier {
         final List<dynamic> decoded = jsonDecode(cuisinesJson);
         _cuisines = decoded.map((e) => CuisineCategory.fromJson(e)).toList();
       } else {
-        _cuisines = [];
+        _cuisines = await _loadDefaultCuisines();
+        await _saveCuisines();
+      }
+
+      if (_cuisines.isEmpty) {
+        _cuisines = await _loadDefaultCuisines();
         await _saveCuisines();
       }
 
@@ -106,6 +113,26 @@ class DeciderProvider extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+  }
+
+  Future<List<CuisineCategory>> _loadDefaultCuisines() async {
+    try {
+      final repo = await KitchenDataRepository.load();
+      return repo.cuisineCategories
+          .map(
+            (item) => CuisineCategory(
+              id: item['id'] as String,
+              name: item['name'] as String,
+              emoji: item['emoji'] as String? ?? '🍽️',
+              dishes: List<String>.from(item['dishes'] as List? ?? const []),
+              isCustom: false,
+            ),
+          )
+          .toList(growable: false);
+    } catch (e) {
+      debugPrint('Error loading default cuisines: $e');
+      return const [];
+    }
   }
 
   Future<void> _saveCuisines() async {
@@ -160,7 +187,8 @@ class DeciderProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateDish(String cuisineId, int dishIndex, String newDish) async {
+  Future<void> updateDish(
+      String cuisineId, int dishIndex, String newDish) async {
     final index = _cuisines.indexWhere((c) => c.id == cuisineId);
     if (index != -1 && dishIndex < _cuisines[index].dishes.length) {
       _cuisines[index].dishes[dishIndex] = newDish;
@@ -186,7 +214,8 @@ class DeciderProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> reorderDishes(String cuisineId, int oldIndex, int newIndex) async {
+  Future<void> reorderDishes(
+      String cuisineId, int oldIndex, int newIndex) async {
     final index = _cuisines.indexWhere((c) => c.id == cuisineId);
     if (index != -1) {
       if (oldIndex < newIndex) newIndex--;

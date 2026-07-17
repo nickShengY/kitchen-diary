@@ -1,5 +1,5 @@
 /// Barrel file for animation widgets
-/// 
+///
 /// Export all animation-related widgets for easy importing.
 library;
 

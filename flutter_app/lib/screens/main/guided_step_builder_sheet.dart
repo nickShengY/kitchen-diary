@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -99,7 +99,8 @@ class _GuidedStepSheetState extends State<GuidedStepSheet> {
         return action['requiresHeat'] == true;
       }).toList();
 
-  List<Map<String, dynamic>> _toolOptionsForAction(Map<String, dynamic>? action) {
+  List<Map<String, dynamic>> _toolOptionsForAction(
+      Map<String, dynamic>? action) {
     final requiredToolId = action?['requiresToolId'] as String?;
     if (requiredToolId == null || requiredToolId.isEmpty) {
       return widget.tools;
@@ -196,13 +197,19 @@ class _GuidedStepSheetState extends State<GuidedStepSheet> {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.10)
+                    ? Theme.of(context)
+                        .colorScheme
+                        .primary
+                        .withValues(alpha: 0.10)
                     : Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(18),
                 border: Border.all(
                   color: isSelected
                       ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.outline.withValues(alpha: 0.12),
+                      : Theme.of(context)
+                          .colorScheme
+                          .outline
+                          .withValues(alpha: 0.12),
                   width: isSelected ? 2 : 1,
                 ),
               ),
@@ -238,8 +245,7 @@ class _GuidedStepSheetState extends State<GuidedStepSheet> {
     final hasCook = _includeCookStage && _selectedCookAction != null;
     final requiresNamedOutput = _selectedInputLotIds.length > 1;
     final hasNamedOutput = _resultNameController.text.trim().isNotEmpty;
-    final isValid =
-        _selectedInputLotIds.isNotEmpty &&
+    final isValid = _selectedInputLotIds.isNotEmpty &&
         (hasPrep || hasCook) &&
         (!requiresNamedOutput || hasNamedOutput);
 
@@ -263,7 +269,8 @@ class _GuidedStepSheetState extends State<GuidedStepSheet> {
                   const Expanded(
                     child: Text(
                       'Guided Animation Step',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                   ),
                   IconButton(
@@ -285,9 +292,11 @@ class _GuidedStepSheetState extends State<GuidedStepSheet> {
                       spacing: 8,
                       runSpacing: 8,
                       children: widget.lots.map((lot) {
-                        final isSelected = _selectedInputLotIds.contains(lot.id);
+                        final isSelected =
+                            _selectedInputLotIds.contains(lot.id);
                         return FilterChip(
-                          label: Text('${lot.emoji} ${lot.name} (${lot.state})'),
+                          label:
+                              Text('${lot.emoji} ${lot.name} (${lot.state})'),
                           selected: isSelected,
                           onSelected: (selected) {
                             setState(() {
@@ -321,9 +330,11 @@ class _GuidedStepSheetState extends State<GuidedStepSheet> {
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
-                        children: _toolOptionsForAction(_selectedPrepAction).map((tool) {
+                        children: _toolOptionsForAction(_selectedPrepAction)
+                            .map((tool) {
                           return ChoiceChip(
-                            label: Text('${tool['icon'] ?? ''} ${tool['name'] ?? ''}'),
+                            label: Text(
+                                '${tool['icon'] ?? ''} ${tool['name'] ?? ''}'),
                             selected: _selectedPrepTool?['id'] == tool['id'],
                             onSelected: (_) {
                               setState(() => _selectedPrepTool = tool);
@@ -391,9 +402,11 @@ class _GuidedStepSheetState extends State<GuidedStepSheet> {
                         Wrap(
                           spacing: 8,
                           runSpacing: 8,
-                          children: _toolOptionsForAction(_selectedCookAction).map((tool) {
+                          children: _toolOptionsForAction(_selectedCookAction)
+                              .map((tool) {
                             return ChoiceChip(
-                              label: Text('${tool['icon'] ?? ''} ${tool['name'] ?? ''}'),
+                              label: Text(
+                                  '${tool['icon'] ?? ''} ${tool['name'] ?? ''}'),
                               selected: _selectedCookTool?['id'] == tool['id'],
                               onSelected: (_) {
                                 setState(() => _selectedCookTool = tool);
@@ -457,7 +470,8 @@ class _GuidedStepSheetState extends State<GuidedStepSheet> {
                       controller: _resultNameController,
                       onChanged: (_) => setState(() {}),
                       decoration: InputDecoration(
-                        hintText: 'Example: Aromatic curry base or seared mushroom filling',
+                        hintText:
+                            'Example: Aromatic curry base or seared mushroom filling',
                         helperText: requiresNamedOutput
                             ? 'Name the combined result so animation assets and recipe playback stay readable.'
                             : 'Optional for single-ingredient steps.',
@@ -479,23 +493,30 @@ class _GuidedStepSheetState extends State<GuidedStepSheet> {
                                 context,
                                 GuidedStepResult(
                                   inputLotIds: _selectedInputLotIds.toList(),
-                                  prepActionId: _selectedPrepAction?['id'] as String?,
-                                  prepToolId: _selectedPrepTool?['id'] as String?,
+                                  prepActionId:
+                                      _selectedPrepAction?['id'] as String?,
+                                  prepToolId:
+                                      _selectedPrepTool?['id'] as String?,
                                   prepDuration: _prepDuration,
-                                  prepNotes: _prepNotesController.text.trim().isEmpty
-                                      ? null
-                                      : _prepNotesController.text.trim(),
-                                  cookActionId: _selectedCookAction?['id'] as String?,
-                                  cookToolId: _selectedCookTool?['id'] as String?,
+                                  prepNotes:
+                                      _prepNotesController.text.trim().isEmpty
+                                          ? null
+                                          : _prepNotesController.text.trim(),
+                                  cookActionId:
+                                      _selectedCookAction?['id'] as String?,
+                                  cookToolId:
+                                      _selectedCookTool?['id'] as String?,
                                   cookTemperature: _cookTemperature,
                                   cookDuration: _cookDuration,
                                   cookWaterLevel: _cookWaterLevel,
-                                  cookNotes: _cookNotesController.text.trim().isEmpty
-                                      ? null
-                                      : _cookNotesController.text.trim(),
-                                  resultName: _resultNameController.text.trim().isEmpty
-                                      ? null
-                                      : _resultNameController.text.trim(),
+                                  cookNotes:
+                                      _cookNotesController.text.trim().isEmpty
+                                          ? null
+                                          : _cookNotesController.text.trim(),
+                                  resultName:
+                                      _resultNameController.text.trim().isEmpty
+                                          ? null
+                                          : _resultNameController.text.trim(),
                                 ),
                               );
                             },
@@ -511,5 +532,3 @@ class _GuidedStepSheetState extends State<GuidedStepSheet> {
     );
   }
 }
-
-

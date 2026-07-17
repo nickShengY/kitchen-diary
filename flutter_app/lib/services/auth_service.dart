@@ -3,7 +3,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import '../models/user_model.dart';
-import 'user_neon_service.dart';
 
 class AuthService {
   FirebaseAuth get _auth => FirebaseAuth.instance;
@@ -82,55 +81,6 @@ class AuthService {
     }
   }
 
-  // Sign in with email and password
-  Future<UserCredential> signInWithEmailPassword(
-    String email,
-    String password,
-  ) async {
-    try {
-      final userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      // Update last active
-      await _updateLastActive(userCredential.user!.uid);
-
-      return userCredential;
-    } catch (e) {
-      debugPrint('Error signing in with email/password: $e');
-      rethrow;
-    }
-  }
-
-  // Register with email and password
-  Future<UserCredential> registerWithEmailPassword(
-    String email,
-    String password,
-    String displayName,
-  ) async {
-    try {
-      final userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-
-      // Update display name
-      await userCredential.user!.updateDisplayName(displayName);
-
-      // Create user document
-      await _createOrUpdateUserDocument(
-        userCredential.user!,
-        displayName: displayName,
-      );
-
-      return userCredential;
-    } catch (e) {
-      debugPrint('Error registering: $e');
-      rethrow;
-    }
-  }
-
   // Sign out
   Future<void> signOut() async {
     try {
@@ -138,16 +88,6 @@ class AuthService {
       await googleSignIn?.signOut();
     } catch (e) {
       debugPrint('Error signing out: $e');
-      rethrow;
-    }
-  }
-
-  // Password reset
-  Future<void> sendPasswordResetEmail(String email) async {
-    try {
-      await _auth.sendPasswordResetEmail(email: email);
-    } catch (e) {
-      debugPrint('Error sending password reset email: $e');
       rethrow;
     }
   }
@@ -255,21 +195,9 @@ class AuthService {
       );
 
       await userDoc.set(userData.toFirestore());
-
-      // Also create in Neon for extended features
-      await userNeonService.createUserProfile(
-        id: user.uid,
-        email: user.email ?? '',
-        displayName: name,
-        photoUrl: user.photoURL,
-        avatarEmoji: avatarEmoji,
-      );
     } else {
       // Update last active timestamp
       await _updateLastActive(user.uid);
-
-      // Also update in Neon
-      await userNeonService.updateLastActive(user.uid);
     }
   }
 

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -440,8 +440,7 @@ class _ExploreScreenState extends State<ExploreScreen>
                                   ),
                                   child: Text(
                                     'Cuisine filters will appear when real recipes with cuisine data are available.',
-                                    style:
-                                        theme.textTheme.bodyMedium?.copyWith(
+                                    style: theme.textTheme.bodyMedium?.copyWith(
                                       color: AppColors.textSecondary,
                                     ),
                                   ),

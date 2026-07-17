@@ -17,37 +17,63 @@ enum PantryCategory {
 extension PantryCategoryExt on PantryCategory {
   String get label {
     switch (this) {
-      case PantryCategory.produce: return 'Produce';
-      case PantryCategory.dairy: return 'Dairy';
-      case PantryCategory.meat: return 'Meat';
-      case PantryCategory.seafood: return 'Seafood';
-      case PantryCategory.grains: return 'Grains & Pasta';
-      case PantryCategory.spices: return 'Spices & Herbs';
-      case PantryCategory.condiments: return 'Condiments';
-      case PantryCategory.canned: return 'Canned Goods';
-      case PantryCategory.frozen: return 'Frozen';
-      case PantryCategory.beverages: return 'Beverages';
-      case PantryCategory.snacks: return 'Snacks';
-      case PantryCategory.baking: return 'Baking';
-      case PantryCategory.other: return 'Other';
+      case PantryCategory.produce:
+        return 'Produce';
+      case PantryCategory.dairy:
+        return 'Dairy';
+      case PantryCategory.meat:
+        return 'Meat';
+      case PantryCategory.seafood:
+        return 'Seafood';
+      case PantryCategory.grains:
+        return 'Grains & Pasta';
+      case PantryCategory.spices:
+        return 'Spices & Herbs';
+      case PantryCategory.condiments:
+        return 'Condiments';
+      case PantryCategory.canned:
+        return 'Canned Goods';
+      case PantryCategory.frozen:
+        return 'Frozen';
+      case PantryCategory.beverages:
+        return 'Beverages';
+      case PantryCategory.snacks:
+        return 'Snacks';
+      case PantryCategory.baking:
+        return 'Baking';
+      case PantryCategory.other:
+        return 'Other';
     }
   }
 
   String get emoji {
     switch (this) {
-      case PantryCategory.produce: return '🥬';
-      case PantryCategory.dairy: return '🧀';
-      case PantryCategory.meat: return '🥩';
-      case PantryCategory.seafood: return '🐟';
-      case PantryCategory.grains: return '🌾';
-      case PantryCategory.spices: return '🌶️';
-      case PantryCategory.condiments: return '🫙';
-      case PantryCategory.canned: return '🥫';
-      case PantryCategory.frozen: return '🧊';
-      case PantryCategory.beverages: return '🥤';
-      case PantryCategory.snacks: return '🍿';
-      case PantryCategory.baking: return '🧁';
-      case PantryCategory.other: return '📦';
+      case PantryCategory.produce:
+        return '🥬';
+      case PantryCategory.dairy:
+        return '🧀';
+      case PantryCategory.meat:
+        return '🥩';
+      case PantryCategory.seafood:
+        return '🐟';
+      case PantryCategory.grains:
+        return '🌾';
+      case PantryCategory.spices:
+        return '🌶️';
+      case PantryCategory.condiments:
+        return '🫙';
+      case PantryCategory.canned:
+        return '🥫';
+      case PantryCategory.frozen:
+        return '🧊';
+      case PantryCategory.beverages:
+        return '🥤';
+      case PantryCategory.snacks:
+        return '🍿';
+      case PantryCategory.baking:
+        return '🧁';
+      case PantryCategory.other:
+        return '📦';
     }
   }
 }
@@ -133,20 +159,20 @@ class PantryItem {
   }
 
   Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'emoji': emoji,
-    'category': category.name,
-    'quantity': quantity,
-    'unit': unit,
-    'purchaseDate': purchaseDate?.toIso8601String(),
-    'expiryDate': expiryDate?.toIso8601String(),
-    'location': location,
-    'brand': brand,
-    'notes': notes,
-    'barcode': barcode,
-    'isStaple': isStaple,
-  };
+        'id': id,
+        'name': name,
+        'emoji': emoji,
+        'category': category.name,
+        'quantity': quantity,
+        'unit': unit,
+        'purchaseDate': purchaseDate?.toIso8601String(),
+        'expiryDate': expiryDate?.toIso8601String(),
+        'location': location,
+        'brand': brand,
+        'notes': notes,
+        'barcode': barcode,
+        'isStaple': isStaple,
+      };
 
   factory PantryItem.fromJson(Map<String, dynamic> json) {
     return PantryItem(
@@ -159,8 +185,12 @@ class PantryItem {
       ),
       quantity: (json['quantity'] as num).toDouble(),
       unit: json['unit'] ?? '',
-      purchaseDate: json['purchaseDate'] != null ? DateTime.parse(json['purchaseDate']) : null,
-      expiryDate: json['expiryDate'] != null ? DateTime.parse(json['expiryDate']) : null,
+      purchaseDate: json['purchaseDate'] != null
+          ? DateTime.parse(json['purchaseDate'])
+          : null,
+      expiryDate: json['expiryDate'] != null
+          ? DateTime.parse(json['expiryDate'])
+          : null,
       location: json['location'],
       brand: json['brand'],
       notes: json['notes'],

@@ -1,5 +1,5 @@
 /// Barrel file for community widgets
-/// 
+///
 /// Export all community-related widgets for easy importing.
 library;
 

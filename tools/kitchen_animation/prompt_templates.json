@@ -1,0 +1,62 @@
+{
+  "stylePrefix": "cute Kitchen Diary pet chef illustration, soft pastel palette, rounded line art, cozy mobile-game cooking asset, fixed three-quarter top-down camera, centered subject, clean silhouette, consistent proportions, gentle soft lighting",
+  "negativePrompt": "photorealistic, text, watermark, logo, messy background, busy scene, dramatic shadows, extra limbs, duplicated tools, off-center character, cropped subject",
+  "alignmentRules": {
+    "canvas": "square master, transparent background",
+    "padding": "8 to 12 percent safe padding",
+    "characterBaseline": "paws and feet aligned to a fixed baseline near 92 percent of canvas height",
+    "toolGrip": "tool held in the same paw position across related frames",
+    "seedFamily": "reuse one seed family per pet character and one per ingredient family"
+  },
+  "cuisinePromptSuffixes": {
+    "italian": "Mediterranean warmth, olive oil sheen, rustic but polished plating, tomato and herb friendly accents",
+    "french": "refined bistro styling, butter gloss, delicate herb finish, elegant restraint",
+    "spanish": "warm saffron tones, tapas energy, paprika richness, ceramic serving cues",
+    "greek": "bright lemon and olive notes, airy mezze composition, feta and herb garnish cues",
+    "levantine": "mezze-friendly textures, tahini and herb accents, warm bread and grilled notes",
+    "turkish": "charred grill cues, copper and ceramic serving mood, savory pastry and kebab readiness",
+    "moroccan": "gentle tagine warmth, spice-market color harmony, preserved lemon and herb accents",
+    "ethiopian": "stew-forward richness, spoonable textures, aromatic spice warmth, communal platter cues",
+    "american": "comfort-food readability, golden browning, diner-to-home-kitchen familiarity",
+    "southern_us": "crispy crusts, gravy and braise readiness, warm cozy comfort-food styling",
+    "mexican": "fresh salsa colors, tortilla-friendly plating, roasted chili warmth, lime brightness",
+    "peruvian": "aji and citrus brightness, wok-and-ceviche versatility, fresh herb finish",
+    "brazilian": "grill-friendly warmth, rich stews, cassava and rice plate balance",
+    "chinese": "wok energy, glossy sauce finish, crisp vegetable edges, family-style plating",
+    "cantonese": "clean steam and roast cues, lacquered savory gloss, gentle balance",
+    "sichuan": "deep red chili oil cues, peppercorn sparkle, bold wok-char heat",
+    "japanese": "clean precision, subtle broths, neat rice and noodle composition, calm balance",
+    "korean": "gochujang color depth, grill and stew readiness, punchy garnish contrast",
+    "thai": "bright herbs, coconut and curry readiness, sweet-sour-salty balance, lively garnish",
+    "vietnamese": "fresh herb lift, broth clarity, crunchy soft contrast, lime and chili finish",
+    "filipino": "savory braise warmth, glossy adobo-style reduction, festive comfort plating",
+    "indonesian": "satay and sambal readiness, fried rice energy, layered aromatic depth",
+    "malaysian": "hawker-center richness, noodle and curry versatility, coconut-spice balance",
+    "indian_north": "tandoor and curry readiness, creamy gravies, butter and spice warmth",
+    "indian_south": "coconut, curry leaf, dosa and rice styling, bright spice aroma cues",
+    "pakistani": "karahi and kebab intensity, richer roast tones, spice-forward savory depth",
+    "persian": "saffron rice elegance, stew polish, herb and pomegranate accent cues",
+    "russian": "hearty stew textures, sour cream and dill finish readiness, winter comfort",
+    "polish": "dumpling and braise comfort, mushroom and onion warmth, rustic family table cues"
+  },
+  "dishFamilyPrompts": {
+    "stir_fry": "fast wok-cooked ingredients with readable vegetable and protein separation, glossy sauce, energetic but clean motion",
+    "curry": "saucy cohesive dish with layered aromatic garnishes, warm steam, spoonable texture",
+    "soup_stew": "brothy or hearty bowl with visible ingredients and gentle surface motion",
+    "rice_bowl": "centered plated bowl with grain base, tidy toppings, clear garnish hierarchy",
+    "noodle_bowl": "long noodle readability, broth or sauce cohesion, chopstick-friendly composition",
+    "dumpling": "soft plump forms with neat pleats and steam friendliness",
+    "grill_plate": "charred edges, caramelized highlights, composed side pairing readiness",
+    "flatbread_wrap": "folded or rolled bread with visible filling layers and warm toasted spots",
+    "mezze_salad": "fresh chopped textures, herb sparkle, olive oil sheen, light composition",
+    "baked_casserole": "golden oven finish, bubbling edges, cozy family-style serving surface",
+    "breakfast_plate": "comfort-forward composition with eggs, toast, grains, or breakfast proteins",
+    "dessert_pastry": "cute polished finish, clean sweetness cues, glaze or powdered accent restraint"
+  },
+  "templates": {
+    "characterMaster": "Create one cute pet chef character layer for Kitchen Diary. Keep the same animal species, face shape, hat, apron, outline thickness, paw size, and body proportions as the reference family. Transparent background. Full body visible. Paws posed naturally for holding kitchen tools. Fixed three-quarter top-down camera. Character centered and aligned to the same baseline used across the pet animation set.",
+    "toolLayer": "Create one isolated kitchen tool layer for Kitchen Diary. Transparent background. Centered. No hand attached. Same stylized line art and color language as the pet chef family. Keep the tool angle consistent with a three-quarter top-down cooking view.",
+    "foodLayer": "Create one isolated food or ingredient layer for Kitchen Diary. Transparent background. Centered single subject. Keep the silhouette clean and readable at mobile size. Match the same stylized cute cooking art direction as the pet chef family.",
+    "actionKeyframe": "Create one action keyframe for Kitchen Diary showing the same pet chef character with the same pose family and proportions, performing the cooking action naturally. Keep the character aligned to the same baseline and the tool aligned to the same grip position. Transparent background. No full kitchen scene. No text."
+  }
+}

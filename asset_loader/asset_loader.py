@@ -60,6 +60,13 @@ ASSET_CATEGORIES = {
     "transitions": ("State Transitions", "➡️")
 }
 
+ASSET_CATEGORIES.update({
+    "modular/ingredients": ("Ingredient Chips", "🥕"),
+    "modular/cut_shapes": ("Cut Shapes", "??"),
+    "modular/cook_methods": ("Cook Methods", "??"),
+    "modular/detail_chips": ("Detail Chips", "???"),
+})
+
 CUISINE_NAMES = {
     "1": "Italian", "2": "Chinese", "3": "Mexican", "4": "French",
     "5": "Japanese", "6": "American", "7": "Indian", "8": "Thai",
@@ -180,6 +187,17 @@ class KitchenDataParser:
                 ing = self.ingredients.get(parts[0])
                 if ing:
                     return {**ing, 'state': '_'.join(parts[1:]) if len(parts) > 1 else 'raw'}
+        elif category in ("modular/ingredients", "ingredients"):
+            return self.ingredients.get(clean_name)
+        elif category == "modular/cut_shapes":
+            clean_id = clean_name.replace('cut_', '')
+            return {'id': clean_id, 'name': clean_id.replace('_', ' ').title(), 'group': 'cut_shape'}
+        elif category == "modular/cook_methods":
+            clean_id = clean_name.replace('method_', '')
+            return {'id': clean_id, 'name': clean_id.replace('_', ' ').title(), 'group': 'cook_method'}
+        elif category == "modular/detail_chips":
+            clean_id = clean_name.replace('detail_', '')
+            return {'id': clean_id, 'name': clean_id.replace('_', ' ').title(), 'group': 'detail_chip'}
         elif category == "transitions":
             parts = clean_name.split('_')
             if 'to' in parts:

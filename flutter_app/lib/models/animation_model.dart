@@ -1,4 +1,4 @@
-﻿/// Modular Cooking Animation System Models
+/// Modular Cooking Animation System Models
 ///
 /// This file contains all the models needed for the composable cooking animation
 /// system that tracks ingredient transformations through cooking steps.
@@ -547,7 +547,9 @@ class RecipeAnimationBuilder {
   });
 
   void addIngredient(String ingredientId, String name, String emoji,
-      {String initialState = 'raw', List<Color> colors = const [], String? assetKey}) {
+      {String initialState = 'raw',
+      List<Color> colors = const [],
+      String? assetKey}) {
     _ingredientStates[ingredientId] = IngredientAnimationState(
       ingredientId: ingredientId,
       ingredientName: name,
@@ -626,4 +628,3 @@ class RecipeAnimationBuilder {
     );
   }
 }
-

@@ -1,9 +1,10 @@
 /// Service for managing sound effects in the animation system.
-/// 
+///
 /// This is a placeholder service that defines the interface for sound playback.
 /// Actual implementation would require adding an audio package like audioplayers.
 class AnimationSoundService {
-  static final AnimationSoundService _instance = AnimationSoundService._internal();
+  static final AnimationSoundService _instance =
+      AnimationSoundService._internal();
   factory AnimationSoundService() => _instance;
   AnimationSoundService._internal();
 
@@ -49,7 +50,7 @@ class AnimationSoundService {
   double get volume => _volume;
 
   /// Play a sound effect by ID
-  /// 
+  ///
   /// In a real implementation, this would load and play the audio file.
   /// For now, this is a stub that logs the sound that would be played.
   Future<void> play(String soundId, {double? atTime}) async {
@@ -66,14 +67,16 @@ class AnimationSoundService {
     // final player = AudioPlayer();
     // await player.play(AssetSource(soundPath.replaceFirst('assets/', '')));
     // await player.setVolume(_volume);
-    
+
     // For now, just log
     // ignore: avoid_print
-    print('[Sound] Playing $soundId at volume $_volume${atTime != null ? " starting at $atTime" : ""}');
+    print(
+        '[Sound] Playing $soundId at volume $_volume${atTime != null ? " starting at $atTime" : ""}');
   }
 
   /// Play sound for an action based on its timing configuration
-  Future<void> playForAction(Map<String, dynamic> actionData, {
+  Future<void> playForAction(
+    Map<String, dynamic> actionData, {
     required double animationProgress,
   }) async {
     if (!_enabled) return;
@@ -95,17 +98,23 @@ class AnimationSoundService {
     final sustain = soundTiming['sustain'] as double?;
 
     // Play at start time
-    if (animationProgress >= startTime && animationProgress < startTime + 0.05) {
+    if (animationProgress >= startTime &&
+        animationProgress < startTime + 0.05) {
       await play(soundId);
     }
 
     // Play at peak time
-    if (peakTime != null && animationProgress >= peakTime && animationProgress < peakTime + 0.05) {
+    if (peakTime != null &&
+        animationProgress >= peakTime &&
+        animationProgress < peakTime + 0.05) {
       await play(soundId);
     }
 
     // Handle sustained sounds (would need looping implementation)
-    if (sustain != null && sustain > 0 && animationProgress >= startTime && animationProgress <= endTime) {
+    if (sustain != null &&
+        sustain > 0 &&
+        animationProgress >= startTime &&
+        animationProgress <= endTime) {
       // TODO: Implement looping sound for sustained effects
     }
   }
@@ -142,6 +151,7 @@ class AnimationSoundService {
 /// Extension to easily trigger sounds from action maps
 extension SoundActionExtension on Map<String, dynamic> {
   Future<void> playSound({double progress = 0.0}) async {
-    await AnimationSoundService().playForAction(this, animationProgress: progress);
+    await AnimationSoundService()
+        .playForAction(this, animationProgress: progress);
   }
 }

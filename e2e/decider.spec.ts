@@ -34,12 +34,12 @@ const ensureDishPhaseWithDishes = async (page: Page) => {
 test.describe('Decider Wheel', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('button', { name: 'Decider', exact: true }).click();
+    await page.getByRole('button', { name: 'Decide', exact: true }).click();
     await waitForLiveCuisines(page);
   });
 
   test('should display decider header', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'Decider' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Decide' })).toBeVisible();
   });
 
   test('should display mode toggle', async ({ page }) => {
@@ -85,7 +85,7 @@ test.describe('Decider Wheel', () => {
   test('should disable spin button while spinning', async ({ page }) => {
     const spinButton = page.getByRole('button', { name: /spin cuisine/i });
     await spinButton.click();
-    await expect(spinButton).toBeDisabled();
+    await expect(page.getByRole('button', { name: /rolling/i })).toBeDisabled();
   });
 
   test('should select cuisine after spinning', async ({ page }) => {
@@ -123,7 +123,7 @@ test.describe('Decider Wheel', () => {
 
   test('should show cuisine list in edit modal', async ({ page }) => {
     await page.getByText('Customize Wheel').click();
-    await expect(page.locator('span.text-xs.bg-gray-100').first()).toContainText('dishes');
+    await expect(page.getByText(/\d+ dishes/).first()).toBeVisible();
   });
 
   test('should add new cuisine', async ({ page }) => {
@@ -148,10 +148,10 @@ test.describe('Decider Wheel', () => {
     await page.locator('.cursor-pointer').first().click();
 
     const input = page.getByPlaceholder('Add a new dish...');
-    await input.fill('Tiramisu');
+    await input.fill('E2E Test Dish');
     await input.press('Enter');
 
-    await expect(page.getByText('Tiramisu')).toBeVisible();
+    await expect(page.getByText('E2E Test Dish')).toBeVisible();
   });
 
   test('should switch to scan mode', async ({ page }) => {

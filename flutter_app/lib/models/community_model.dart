@@ -49,8 +49,8 @@ class CommentModel {
       parentCommentId: data['parentCommentId'],
       repliesCount: data['repliesCount'] ?? 0,
       createdAt: (data['createdAt'] as Timestamp).toDate(),
-      editedAt: data['editedAt'] != null 
-          ? (data['editedAt'] as Timestamp).toDate() 
+      editedAt: data['editedAt'] != null
+          ? (data['editedAt'] as Timestamp).toDate()
           : null,
       isDeleted: data['isDeleted'] ?? false,
     );
@@ -141,8 +141,8 @@ class ForumPostModel {
       isPinned: data['isPinned'] ?? false,
       isClosed: data['isClosed'] ?? false,
       createdAt: (data['createdAt'] as Timestamp).toDate(),
-      editedAt: data['editedAt'] != null 
-          ? (data['editedAt'] as Timestamp).toDate() 
+      editedAt: data['editedAt'] != null
+          ? (data['editedAt'] as Timestamp).toDate()
           : null,
       linkedRecipeId: data['linkedRecipeId'],
       mentions: List<String>.from(data['mentions'] ?? []),
@@ -173,10 +173,8 @@ class ForumPostModel {
     };
   }
 
-  /// Create a ForumPostModel from Neon/PostgREST JSON (snake_case fields).
-  ///
-  /// This is used when loading posts from the Neon Data API.
-  factory ForumPostModel.fromNeonJson(Map<String, dynamic> data) {
+  /// Create a ForumPostModel from a snake_case API payload.
+  factory ForumPostModel.fromApiJson(Map<String, dynamic> data) {
     DateTime parseDate(dynamic value) {
       if (value == null) return DateTime.now();
       if (value is DateTime) return value;
@@ -198,12 +196,16 @@ class ForumPostModel {
       tags: List<String>.from(data['tags'] ?? const []),
       imageUrls: List<String>.from(data['image_urls'] ?? const []),
       category: data['category']?.toString() ?? 'discussion',
-      likes: data['likes'] is int ? data['likes'] as int : int.tryParse('${data['likes']}') ?? 0,
+      likes: data['likes'] is int
+          ? data['likes'] as int
+          : int.tryParse('${data['likes']}') ?? 0,
       likedBy: List<String>.from(data['liked_by'] ?? const []),
       commentsCount: data['comments_count'] is int
           ? data['comments_count'] as int
           : int.tryParse('${data['comments_count']}') ?? 0,
-      views: data['views'] is int ? data['views'] as int : int.tryParse('${data['views']}') ?? 0,
+      views: data['views'] is int
+          ? data['views'] as int
+          : int.tryParse('${data['views']}') ?? 0,
       isPinned: data['is_pinned'] as bool? ?? false,
       isClosed: data['is_closed'] as bool? ?? false,
       createdAt: parseDate(data['created_at']),
@@ -213,8 +215,8 @@ class ForumPostModel {
     );
   }
 
-  /// Convert this post to Neon/PostgREST JSON (snake_case fields).
-  Map<String, dynamic> toNeonJson() {
+  /// Convert this post to a snake_case API payload.
+  Map<String, dynamic> toApiJson() {
     final map = <String, dynamic>{
       'author_id': authorId,
       'author_name': authorName,
@@ -243,7 +245,6 @@ class ForumPostModel {
 
     return map;
   }
-
 }
 
 // Cooking challenge

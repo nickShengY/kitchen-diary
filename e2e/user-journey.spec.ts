@@ -1,10 +1,13 @@
 import { test, expect, Page } from '@playwright/test';
 
+test.describe.configure({ mode: 'serial' });
+test.setTimeout(60000);
+
 const recipeCards = (page: Page) =>
-  page.locator('div.break-inside-avoid').filter({ has: page.getByRole('button', { name: 'Like post' }) });
+  page.locator('article.break-inside-avoid').filter({ has: page.getByRole('button', { name: 'Like post' }) });
 
 const waitForLiveFeed = async (page: Page) => {
-  const feedError = page.getByText('Unable to load live community data right now.');
+  const feedError = page.getByText('Unable to load community recipes right now.');
   await Promise.race([
     recipeCards(page).first().waitFor({ state: 'visible', timeout: 15000 }),
     feedError.waitFor({ state: 'visible', timeout: 15000 }),
@@ -27,11 +30,11 @@ const waitForLiveCuisines = async (page: Page) => {
 };
 
 const signInWithLiveProfile = async (page: Page) => {
-  await page.getByRole('button', { name: /sign in with google/i }).click();
+  await page.getByRole('button', { name: /create live profile/i }).click();
   const signOut = page.getByRole('button', { name: /sign out/i });
   await Promise.race([
     signOut.waitFor({ state: 'visible', timeout: 12000 }),
-    page.getByRole('button', { name: /sign in with google/i }).waitFor({ state: 'visible', timeout: 12000 }),
+    page.getByRole('button', { name: /create live profile/i }).waitFor({ state: 'visible', timeout: 12000 }),
   ]).catch(() => undefined);
 
   const loggedIn = await signOut.isVisible().catch(() => false);
@@ -41,7 +44,7 @@ const signInWithLiveProfile = async (page: Page) => {
 const ensureDishPhaseWithDishes = async (page: Page) => {
   for (let attempt = 0; attempt < 4; attempt += 1) {
     await page.getByRole('button', { name: /spin cuisine/i }).click();
-    await page.waitForTimeout(3500);
+    await expect(page.getByRole('button', { name: /find a dish/i })).toBeVisible({ timeout: 10000 });
     await page.getByRole('button', { name: /find a dish/i }).click();
 
     const spinDishButton = page.getByRole('button', { name: /spin dish/i });
@@ -76,26 +79,25 @@ test.describe('Complete User Journey', () => {
     await searchInput.press('Enter');
     expect(await recipeCards(page).count()).toBeGreaterThan(0);
 
-    await page.getByRole('button', { name: 'Decider', exact: true }).click();
+    await page.getByRole('button', { name: 'Decide', exact: true }).click();
     await waitForLiveCuisines(page);
     await expect(page.getByText('Spin Cuisine')).toBeVisible();
     await page.getByRole('button', { name: /spin cuisine/i }).click();
-    await page.waitForTimeout(3500);
-    await expect(page.getByRole('button', { name: /find a dish/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /find a dish/i })).toBeVisible({ timeout: 10000 });
 
-    await page.getByRole('button', { name: 'Me', exact: true }).click();
+    await page.getByRole('button', { name: 'Profile', exact: true }).click();
     await expect(page.getByText('CookToon')).toBeVisible();
     await signInWithLiveProfile(page);
     await expect(page.getByRole('button', { name: /sign out/i })).toBeVisible();
 
-    await page.getByRole('button', { name: 'Home', exact: true }).click({ force: true });
-    await page.getByRole('button', { name: /create recipe/i }).click();
+    await page.getByRole('button', { name: 'Explore', exact: true }).click({ force: true });
+    await page.getByRole('button', { name: 'Build', exact: true }).click();
     await expect(page.getByPlaceholder(/name your recipe/i)).toBeVisible();
   });
 
   test('should create recipe from start to finish', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('button', { name: /create recipe/i }).click();
+    await page.getByRole('button', { name: 'Build', exact: true }).click();
 
     const nameInput = page.getByPlaceholder(/name your recipe/i);
     await nameInput.clear();
@@ -111,53 +113,54 @@ test.describe('Complete User Journey', () => {
     await page.getByText('Add Step to Recipe').click({ force: true });
 
     await expect(page.getByText('Chopped')).toBeVisible();
-    await expect(page.getByText(/step/i)).toBeVisible();
+    await expect(page.getByText(/1 steps/)).toBeVisible();
   });
 
   test('should use Cook This feature', async ({ page }) => {
     await page.goto('/');
     await waitForLiveFeed(page);
 
-    const expectedTitle = ((await recipeCards(page).first().locator('h3').first().textContent()) ?? '').trim();
-    await recipeCards(page).first().getByRole('button', { name: 'Cook This' }).click({ force: true });
+    const firstCard = recipeCards(page).first();
+    const expectedTitle = ((await firstCard.locator('h3').first().textContent()) ?? '').trim();
+    await firstCard.hover();
+    await firstCard.getByRole('button', { name: 'Cook This' }).click();
     await expect(page.getByPlaceholder(/name your recipe/i)).toHaveValue(expectedTitle);
   });
 
   test('should complete meal decision flow', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('button', { name: 'Decider', exact: true }).click();
+    await page.getByRole('button', { name: 'Decide', exact: true }).click();
     await waitForLiveCuisines(page);
 
     await ensureDishPhaseWithDishes(page);
     await page.getByRole('button', { name: /spin dish/i }).click();
-    await page.waitForTimeout(3500);
 
-    await expect(page.getByText(/Bon App/i)).toBeVisible();
+    await expect(page.getByText(/Bon App/i)).toBeVisible({ timeout: 10000 });
     await expect(page.getByRole('button', { name: 'Respin Dish' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'New Cuisine' })).toBeVisible();
   });
 
   test('should customize decider wheel', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('button', { name: 'Decider', exact: true }).click();
+    await page.getByRole('button', { name: 'Decide', exact: true }).click();
     await waitForLiveCuisines(page);
 
     await page.getByText('Customize Wheel').click();
     const input = page.getByPlaceholder('Add new cuisine...');
-    await input.fill('Thai');
+    await input.fill('E2E Cuisine');
     await input.press('Enter');
 
     const cuisineList = page.locator('div.fixed.inset-0').locator('.overflow-y-auto');
-    await expect(cuisineList).toContainText('Thai');
+    await expect(cuisineList).toContainText('E2E Cuisine');
 
-    const thaiItem = cuisineList.getByText('Thai').first();
-    await thaiItem.scrollIntoViewIfNeeded();
-    await thaiItem.click();
+    const cuisineItem = cuisineList.locator('.cursor-pointer').filter({ hasText: 'E2E Cuisine' }).first();
+    await cuisineItem.scrollIntoViewIfNeeded();
+    await cuisineItem.click();
 
     const dishInput = page.getByPlaceholder('Add a new dish...');
-    await dishInput.fill('Pad Thai');
+    await dishInput.fill('E2E Dish');
     await dishInput.press('Enter');
-    await expect(page.getByText('Pad Thai')).toBeVisible();
+    await expect(page.getByText('E2E Dish')).toBeVisible();
   });
 
   test('should handle like interactions', async ({ page }) => {
@@ -200,9 +203,10 @@ test.describe('Mobile Responsive Tests', () => {
   test('should display navigation on mobile', async ({ page }) => {
     await page.goto('/');
 
-    await expect(page.getByRole('button', { name: 'Home', exact: true })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Decider', exact: true })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Me', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Explore', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Build', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Decide', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Profile', exact: true })).toBeVisible();
   });
 
   test('should navigate between views on mobile', async ({ page }) => {
@@ -210,14 +214,14 @@ test.describe('Mobile Responsive Tests', () => {
     await waitForLiveFeed(page);
     await expect(page.getByRole('heading', { name: 'Explore' })).toBeVisible();
 
-    await page.getByRole('button', { name: 'Decider', exact: true }).click();
+    await page.getByRole('button', { name: 'Decide', exact: true }).click();
     await waitForLiveCuisines(page);
     await expect(page.getByText('Spin Cuisine')).toBeVisible();
 
-    await page.getByRole('button', { name: 'Me', exact: true }).click();
+    await page.getByRole('button', { name: 'Profile', exact: true }).click();
     await expect(page.getByText('CookToon')).toBeVisible();
 
-    await page.getByRole('button', { name: 'Home', exact: true }).click();
+    await page.getByRole('button', { name: 'Explore', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Explore' })).toBeVisible();
   });
 
@@ -229,7 +233,7 @@ test.describe('Mobile Responsive Tests', () => {
 
   test('should open recipe builder on mobile', async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('button', { name: /create recipe/i }).click();
+    await page.getByRole('button', { name: 'Build', exact: true }).click();
     await expect(page.getByPlaceholder(/name your recipe/i)).toBeVisible();
   });
 });
@@ -258,11 +262,11 @@ test.describe('Error Handling', () => {
   test('should handle rapid navigation', async ({ page }) => {
     await page.goto('/');
 
-    await page.getByRole('button', { name: 'Decider', exact: true }).click();
-    await page.getByRole('button', { name: 'Me', exact: true }).click();
-    await page.getByRole('button', { name: 'Home', exact: true }).click();
-    await page.getByRole('button', { name: 'Decider', exact: true }).click();
-    await page.getByRole('button', { name: 'Home', exact: true }).click();
+    await page.getByRole('button', { name: 'Decide', exact: true }).click();
+    await page.getByRole('button', { name: 'Profile', exact: true }).click();
+    await page.getByRole('button', { name: 'Explore', exact: true }).click();
+    await page.getByRole('button', { name: 'Decide', exact: true }).click();
+    await page.getByRole('button', { name: 'Explore', exact: true }).click();
 
     await expect(page.getByRole('heading', { name: 'Explore' })).toBeVisible();
   });
@@ -272,7 +276,7 @@ test.describe('Accessibility', () => {
   test('should have accessible buttons', async ({ page }) => {
     await page.goto('/');
 
-    const homeButton = page.getByRole('button', { name: 'Home' });
+    const homeButton = page.getByRole('button', { name: 'Explore' });
     await expect(homeButton).toBeVisible();
     await expect(homeButton).toBeEnabled();
   });

@@ -3,9 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Recipe Builder', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
-    // Navigate to builder by clicking the center plus button
-    const centerButton = page.locator('button').filter({ has: page.locator('svg') }).nth(1);
-    await centerButton.click();
+    await page.getByRole('button', { name: 'Build', exact: true }).click();
   });
 
   test('should display empty recipe state', async ({ page }) => {
@@ -30,15 +28,13 @@ test.describe('Recipe Builder', () => {
 
   test('should open step editor when add button clicked', async ({ page }) => {
     // Find and click the add step button
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
 
     await expect(page.getByText('Select Station')).toBeVisible();
   });
 
   test('should show station options', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
 
     await expect(page.getByText('Prep Station')).toBeVisible();
     await expect(page.getByText('Hot Station')).toBeVisible();
@@ -46,8 +42,7 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should navigate to tool selection after selecting station', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
 
     await page.getByText('Prep Station').click();
 
@@ -56,8 +51,7 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should show prep tools for prep station', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
 
     await expect(page.getByText('Chef Knife')).toBeVisible();
@@ -66,19 +60,17 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should show cook tools for hot station', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Hot Station').click();
 
     await expect(page.getByText('Frying Pan')).toBeVisible();
     await expect(page.getByText('Stock Pot')).toBeVisible();
-    await expect(page.getByText('Oven')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Oven', exact: true })).toBeVisible();
     await expect(page.getByText('Grill')).toBeVisible();
   });
 
   test('should navigate to ingredient selection after selecting tool', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
     await page.getByText('Chef Knife').click();
 
@@ -86,8 +78,7 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should display ingredients grid', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
     await page.getByText('Chef Knife').click();
 
@@ -98,8 +89,7 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should select ingredient', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
     await page.getByText('Chef Knife').click();
     await page.getByText('Tomato').click();
@@ -109,8 +99,7 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should enable Done button when ingredient selected', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
     await page.getByText('Chef Knife').click();
 
@@ -122,8 +111,7 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should navigate to action selection after ingredients', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
     await page.getByText('Chef Knife').click();
     await page.getByText('Tomato').click();
@@ -134,8 +122,7 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should show compatible actions for selected ingredients', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
     await page.getByText('Chef Knife').click();
     await page.getByText('Tomato').click();
@@ -149,8 +136,7 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should navigate to details after action selection', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
     await page.getByText('Chef Knife').click();
     await page.getByText('Tomato').click();
@@ -162,8 +148,7 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should show temperature options for cooking actions', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Hot Station').click();
     await page.getByText('Frying Pan').click();
     await page.getByText('Chicken').click();
@@ -171,14 +156,13 @@ test.describe('Recipe Builder', () => {
     await page.getByText('Stir Fry').click();
 
     await expect(page.getByText('Heat Level')).toBeVisible();
-    await expect(page.getByText('Low')).toBeVisible();
-    await expect(page.getByText('Medium')).toBeVisible();
-    await expect(page.getByText('High')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Low', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Medium', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'High', exact: true })).toBeVisible();
   });
 
   test('should complete full recipe step creation', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
     await page.getByText('Chef Knife').click();
     await page.getByText('Tomato').click();
@@ -193,8 +177,7 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should show step timeline after adding steps', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
     await page.getByText('Chef Knife').click();
     await page.getByText('Tomato').click();
@@ -210,21 +193,21 @@ test.describe('Recipe Builder', () => {
   });
 
   test('should show progress bar in editor', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
 
-    await expect(page.locator('.h-1.bg-gray-100')).toBeVisible();
+    await expect(page.getByRole('progressbar', { name: /step editor progress/i })).toBeVisible();
   });
 
   test('should allow going back in editor', async ({ page }) => {
-    const addButton = page.locator('button.bg-toon-primary').last();
-    await addButton.click();
+    await page.getByRole('button', { name: /add step/i }).click();
     await page.getByText('Prep Station').click();
 
-    // Click back button
-    await page.locator('button').filter({ has: page.locator('svg') }).first().click();
+    // Back returns to the previous wizard stage first
+    await page.getByRole('button', { name: /go back a step/i }).click();
+    await expect(page.getByText('Select Station')).toBeVisible();
 
-    // Should close editor
+    // Backing out of the first stage closes the editor
+    await page.getByRole('button', { name: /close step editor/i }).click();
     await expect(page.getByPlaceholder(/name your recipe/i)).toBeVisible();
   });
 });

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -74,7 +74,7 @@ class _EnhancedActionCardState extends State<EnhancedActionCard>
       HapticFeedback.heavyImpact();
       return;
     }
-    
+
     // Trigger haptic based on action type
     _triggerHaptic();
     widget.onTap?.call();
@@ -122,7 +122,7 @@ class _EnhancedActionCardState extends State<EnhancedActionCard>
           animation: _hoverController,
           builder: (context, child) {
             final scale = 1.0 + (_hoverController.value * 0.02);
-            
+
             return Transform.scale(
               scale: scale,
               child: Opacity(
@@ -182,7 +182,7 @@ class _EnhancedActionCardState extends State<EnhancedActionCard>
                             ),
                           ),
                           const SizedBox(width: 12),
-                          
+
                           // Title and verb
                           Expanded(
                             child: Column(
@@ -212,7 +212,7 @@ class _EnhancedActionCardState extends State<EnhancedActionCard>
                               ],
                             ),
                           ),
-                          
+
                           // Difficulty indicator
                           _DifficultyBadge(
                             difficulty: widget.difficulty,
@@ -220,9 +220,9 @@ class _EnhancedActionCardState extends State<EnhancedActionCard>
                           ),
                         ],
                       ),
-                      
+
                       const SizedBox(height: 12),
-                      
+
                       // Info row
                       Row(
                         children: [
@@ -233,7 +233,7 @@ class _EnhancedActionCardState extends State<EnhancedActionCard>
                             color: _accentColor,
                           ),
                           const SizedBox(width: 8),
-                          
+
                           // Visual cue count
                           if (widget.visualCues.isNotEmpty)
                             _InfoChip(
@@ -241,9 +241,9 @@ class _EnhancedActionCardState extends State<EnhancedActionCard>
                               label: '${widget.visualCues.length} effects',
                               color: _accentColor,
                             ),
-                          
+
                           const Spacer(),
-                          
+
                           // Selected indicator
                           if (widget.isSelected)
                             Container(
@@ -261,7 +261,7 @@ class _EnhancedActionCardState extends State<EnhancedActionCard>
                             ),
                         ],
                       ),
-                      
+
                       // Visual cues preview (on hover or selected)
                       if ((_isHovered || widget.isSelected) &&
                           widget.visualCues.isNotEmpty) ...[
@@ -462,7 +462,8 @@ class TimelineConnector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lineColor = color ?? (isActive ? AppColors.primary : AppColors.divider);
+    final lineColor =
+        color ?? (isActive ? AppColors.primary : AppColors.divider);
 
     return SizedBox(
       width: 40,
@@ -475,7 +476,7 @@ class TimelineConnector extends StatelessWidget {
             height: 2,
             color: lineColor.withValues(alpha: isActive ? 1.0 : 0.3),
           ),
-          
+
           // Animated pulse if animating
           if (isAnimating)
             Positioned.fill(
@@ -610,4 +611,3 @@ class AnimationPreviewFAB extends StatelessWidget {
         );
   }
 }
-

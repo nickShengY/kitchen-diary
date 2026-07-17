@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --toon-bg: #fff5f0;
+  --toon-cream: #fffaf6;
+  --toon-primary: #ff8e72;
+  --toon-primary-deep: #f2704f;
+  --toon-secondary: #ffc482;
+  --toon-accent: #6ec6ca;
+  --toon-dark: #4a403a;
+  --toon-shadow: 74, 64, 58;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--toon-bg);
+  font-family: 'Quicksand', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Warm layered atmosphere behind the whole app */
+.toon-atmosphere {
+  background-color: var(--toon-bg);
+  background-image:
+    radial-gradient(38rem 38rem at 110% -10%, rgba(255, 196, 130, 0.28), transparent 60%),
+    radial-gradient(30rem 30rem at -20% 20%, rgba(255, 142, 114, 0.14), transparent 55%),
+    radial-gradient(26rem 26rem at 50% 115%, rgba(110, 198, 202, 0.12), transparent 60%),
+    radial-gradient(rgba(255, 142, 114, 0.055) 1px, transparent 1.5px);
+  background-size: auto, auto, auto, 22px 22px;
+  background-attachment: fixed;
+}
+
+:where(button, a, input, select, textarea, [role='button']):focus-visible {
+  outline: 3px solid #6ec6ca;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffc482;
+  border-radius: 10px;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ---------- Reusable surface & interaction recipes ---------- */
+
+.toon-card {
+  background: #ffffff;
+  border: 1px solid rgba(255, 196, 130, 0.35);
+  box-shadow:
+    0 1px 2px rgba(var(--toon-shadow), 0.05),
+    0 10px 30px -12px rgba(var(--toon-shadow), 0.18);
+}
+
+.press-springy {
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+
+.press-springy:active {
+  transform: scale(0.96);
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes toon-pop-in {
+  0% { opacity: 0; transform: scale(0.92) translateY(10px); }
+  60% { opacity: 1; transform: scale(1.02) translateY(-2px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes toon-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toon-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes toon-float {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-9px) rotate(3deg); }
+}
+
+@keyframes toon-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes toon-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 142, 114, 0.45); }
+  70% { box-shadow: 0 0 0 14px rgba(255, 142, 114, 0); }
+}
+
+@keyframes toon-confetti-fall {
+  0% { opacity: 1; transform: translate3d(0, -10px, 0) rotate(0deg) scale(1); }
+  100% { opacity: 0; transform: translate3d(var(--confetti-x, 0px), 190px, 0) rotate(var(--confetti-spin, 320deg)) scale(0.7); }
+}
+
+@keyframes toon-drum-roll {
+  0%, 100% { transform: rotate(-4deg) scale(1); }
+  50% { transform: rotate(4deg) scale(1.08); }
+}
+
+.animate-pop-in { animation: toon-pop-in 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.animate-rise { animation: toon-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade { animation: toon-fade 0.4s ease both; }
+.animate-float { animation: toon-float 4s ease-in-out infinite; }
+.animate-drum-roll { animation: toon-drum-roll 0.5s ease-in-out infinite; }
+.animate-glow-pulse { animation: toon-glow-pulse 2.2s ease-out infinite; }
+
+.skeleton-shimmer {
+  background: linear-gradient(100deg, #fff1e6 40%, #ffe4d1 50%, #fff1e6 60%);
+  background-size: 200% 100%;
+  animation: toon-shimmer 1.4s linear infinite;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: 0;
+  width: 9px;
+  height: 13px;
+  border-radius: 2px;
+  animation: toon-confetti-fall 1.1s cubic-bezier(0.25, 0.9, 0.45, 1) forwards;
+  pointer-events: none;
+}
+
+/* Stagger helper: apply to a parent, children reveal in order */
+.stagger-children > * {
+  animation: toon-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 60ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 120ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 180ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 360ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 420ms; }
+.stagger-children > *:nth-child(n + 9) { animation-delay: 480ms; }
+
+/* ---------- Legacy barrel picker ---------- */
+
+.barrel-container {
+  perspective: 1000px;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+}
+
+.barrel-inner {
+  transform-style: preserve-3d;
+  transition: transform 3s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.barrel-item {
+  backface-visibility: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ---------- Accessibility: respect reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

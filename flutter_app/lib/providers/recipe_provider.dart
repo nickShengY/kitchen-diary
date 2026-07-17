@@ -1,15 +1,13 @@
-﻿import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../main.dart' show firebaseInitialized;
 import '../models/recipe_model.dart';
 import '../models/community_model.dart';
 import '../services/gemini_service.dart';
-import '../services/user_neon_service.dart';
 
 class RecipeProvider extends ChangeNotifier {
   FirebaseFirestore? _firestoreInstance;
   final GeminiService _geminiService = geminiService;
-  final UserNeonService _neonUserService = userNeonService;
 
   FirebaseFirestore get firestore {
     _firestoreInstance ??= FirebaseFirestore.instance;
@@ -319,20 +317,7 @@ class RecipeProvider extends ChangeNotifier {
         if (data != null) {
           List<String> followers = [];
 
-          if (NeonUserConfig.isConfigured) {
-            try {
-              final neonFollowers =
-                  await _neonUserService.getFollowers(recipe.authorId);
-              followers = neonFollowers
-                  .map((f) => f['id'] as String?)
-                  .whereType<String>()
-                  .toList();
-            } catch (e) {
-              debugPrint('Error fetching Neon followers: $e');
-            }
-          } else {
-            followers = List<String>.from(data['followers'] ?? const []);
-          }
+          followers = List<String>.from(data['followers'] ?? const []);
 
           final authorName = data['displayName'] as String?;
           final authorAvatar = data['avatarEmoji'] as String?;
@@ -481,18 +466,6 @@ class RecipeProvider extends ChangeNotifier {
   // Save/unsave recipe
   Future<void> toggleSave(String recipeId, String userId, bool isSaved) async {
     try {
-      if (NeonUserConfig.isConfigured) {
-        try {
-          if (isSaved) {
-            await _neonUserService.unsaveRecipe(userId, recipeId);
-          } else {
-            await _neonUserService.saveRecipe(userId, recipeId);
-          }
-        } catch (e) {
-          debugPrint('Error toggling save via Neon: $e');
-        }
-      }
-
       await firestore.collection('users').doc(userId).update({
         'savedRecipes': isSaved
             ? FieldValue.arrayRemove([recipeId])
@@ -590,6 +563,4 @@ class RecipeProvider extends ChangeNotifier {
     _aiSuggestions = [];
     notifyListeners();
   }
-
 }
-

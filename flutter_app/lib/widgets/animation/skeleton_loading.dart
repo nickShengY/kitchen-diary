@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../core/theme/app_theme.dart';
@@ -20,9 +20,7 @@ class ShimmerEffect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return child
-        .animate(onPlay: (controller) => controller.repeat())
-        .shimmer(
+    return child.animate(onPlay: (controller) => controller.repeat()).shimmer(
           duration: duration,
           color: highlightColor,
         );
@@ -408,18 +406,18 @@ class ComposerScreenSkeleton extends StatelessWidget {
             ],
           ),
         ),
-        
+
         const Divider(height: 1),
-        
+
         // Timeline skeleton
         const SizedBox(height: 16),
         const SizedBox(
           height: 80,
           child: TimelineSkeleton(stepCount: 4),
         ),
-        
+
         const SizedBox(height: 24),
-        
+
         // Ingredients section
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
@@ -432,9 +430,9 @@ class ComposerScreenSkeleton extends StatelessWidget {
             ],
           ),
         ),
-        
+
         const SizedBox(height: 24),
-        
+
         // Actions section
         const Expanded(
           child: Padding(
@@ -522,4 +520,3 @@ class _AnimatedSkeletonLoaderState extends State<AnimatedSkeletonLoader> {
     );
   }
 }
-

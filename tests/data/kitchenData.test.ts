@@ -6,6 +6,7 @@ import {
   TEMPERATURES,
   TIMES,
   WATER_LEVELS,
+  CUISINE_CATEGORIES,
 } from '../../data/kitchenData';
 import { Category, PhysicalProperty } from '../../types';
 
@@ -87,6 +88,7 @@ describe('kitchenData', () => {
         'dairy',
         'spice',
         'grain',
+        'legume',
         'fruit',
         'liquid',
         'seafood',
@@ -316,7 +318,7 @@ describe('kitchenData', () => {
     });
 
     describe('tool types', () => {
-      const validTypes = ['prep', 'cook', 'appliance'];
+      const validTypes = ['prep', 'cook', 'appliance', 'finish'];
 
       it('all tools should have valid types', () => {
         TOOLS.forEach((tool) => {
@@ -636,10 +638,10 @@ describe('kitchenData', () => {
     });
 
     it('should include specific temperatures', () => {
-      expect(TEMPERATURES).toContain('300°F');
-      expect(TEMPERATURES).toContain('350°F');
-      expect(TEMPERATURES).toContain('400°F');
-      expect(TEMPERATURES).toContain('450°F');
+      expect(TEMPERATURES).toContain('160C / 325F');
+      expect(TEMPERATURES).toContain('180C / 350F');
+      expect(TEMPERATURES).toContain('200C / 400F');
+      expect(TEMPERATURES).toContain('220C / 425F');
     });
 
     it('all temperatures should be non-empty strings', () => {
@@ -700,7 +702,7 @@ describe('kitchenData', () => {
       expect(WATER_LEVELS).toContain('1/4 cup');
       expect(WATER_LEVELS).toContain('1 cup');
       expect(WATER_LEVELS).toContain('2 cups');
-      expect(WATER_LEVELS).toContain('Covered');
+      expect(WATER_LEVELS).toContain('Fully covered');
     });
 
     it('all water levels should be non-empty strings', () => {
@@ -712,6 +714,13 @@ describe('kitchenData', () => {
   });
 
   describe('data consistency', () => {
+    it('should expose a broad cuisine catalog', () => {
+      expect(CUISINE_CATEGORIES.length).toBeGreaterThanOrEqual(25);
+      expect(CUISINE_CATEGORIES.find((cuisine) => cuisine.id === 'italian')).toBeDefined();
+      expect(CUISINE_CATEGORIES.find((cuisine) => cuisine.id === 'japanese')).toBeDefined();
+      expect(CUISINE_CATEGORIES.find((cuisine) => cuisine.id === 'north-indian')).toBeDefined();
+    });
+
     it('all action tool requirements should reference existing tools', () => {
       const toolIds = new Set(TOOLS.map((t) => t.id));
       ACTIONS.forEach((action) => {

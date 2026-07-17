@@ -81,8 +81,8 @@ void main() {
       expect(streak.cuisineBreakdown, isEmpty);
     });
 
-    test('ForumPostModel.fromNeonJson with entirely empty map', () {
-      final post = ForumPostModel.fromNeonJson({});
+    test('ForumPostModel.fromApiJson with entirely empty map', () {
+      final post = ForumPostModel.fromApiJson({});
       expect(post.id, '');
       expect(post.authorName, 'Chef');
       expect(post.likes, 0);
@@ -451,8 +451,8 @@ void main() {
       expect(item.quantity, 2.5);
     });
 
-    test('ForumPostModel.fromNeonJson with string numeric likes', () {
-      final post = ForumPostModel.fromNeonJson({
+    test('ForumPostModel.fromApiJson with string numeric likes', () {
+      final post = ForumPostModel.fromApiJson({
         'id': '1', 'likes': '42', 'views': '100',
         'comments_count': '5', 'created_at': '2025-01-01T00:00:00Z',
       });
@@ -461,8 +461,8 @@ void main() {
       expect(post.commentsCount, 5);
     });
 
-    test('ForumPostModel.fromNeonJson with non-numeric likes defaults to 0', () {
-      final post = ForumPostModel.fromNeonJson({
+    test('ForumPostModel.fromApiJson with non-numeric likes defaults to 0', () {
+      final post = ForumPostModel.fromApiJson({
         'id': '1', 'likes': 'not_a_number',
         'created_at': '2025-01-01T00:00:00Z',
       });

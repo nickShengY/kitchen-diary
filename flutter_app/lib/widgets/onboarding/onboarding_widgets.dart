@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -233,12 +233,22 @@ class CuisinePreferenceSelector extends StatelessWidget {
 
   static const cuisines = [
     {'id': 'italian', 'name': 'Italian', 'emoji': '🍝'},
-    {'id': 'asian', 'name': 'Asian', 'emoji': '🍜'},
+    {'id': 'chinese', 'name': 'Chinese', 'emoji': '🥡'},
+    {'id': 'japanese', 'name': 'Japanese', 'emoji': '🍣'},
+    {'id': 'korean', 'name': 'Korean', 'emoji': '🍲'},
+    {'id': 'thai', 'name': 'Thai', 'emoji': '🍜'},
+    {'id': 'vietnamese', 'name': 'Vietnamese', 'emoji': '🍜'},
     {'id': 'mexican', 'name': 'Mexican', 'emoji': '🌮'},
     {'id': 'american', 'name': 'American', 'emoji': '🍔'},
-    {'id': 'indian', 'name': 'Indian', 'emoji': '🍛'},
+    {'id': 'southern_us', 'name': 'Southern US', 'emoji': '🍗'},
+    {'id': 'indian_north', 'name': 'North Indian', 'emoji': '🍛'},
+    {'id': 'indian_south', 'name': 'South Indian', 'emoji': '🥥'},
     {'id': 'mediterranean', 'name': 'Mediterranean', 'emoji': '🥗'},
-    {'id': 'healthy', 'name': 'Healthy', 'emoji': '🥗'},
+    {'id': 'greek', 'name': 'Greek', 'emoji': '🫒'},
+    {'id': 'levantine', 'name': 'Levantine', 'emoji': '🥙'},
+    {'id': 'french', 'name': 'French', 'emoji': '🥐'},
+    {'id': 'spanish', 'name': 'Spanish', 'emoji': '🥘'},
+    {'id': 'brazilian', 'name': 'Brazilian', 'emoji': '🥩'},
     {'id': 'desserts', 'name': 'Desserts', 'emoji': '🍰'},
   ];
 

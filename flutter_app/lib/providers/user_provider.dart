@@ -2,303 +2,113 @@ import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../main.dart' show firebaseInitialized;
 import '../models/user_model.dart';
-import '../services/user_neon_service.dart';
+import '../services/user_firestore_service.dart';
 
 class UserProvider extends ChangeNotifier {
-  FirebaseFirestore? _firestoreInstance;
-  final UserNeonService _neonService = userNeonService;
-
-  FirebaseFirestore get _firestore {
-    _firestoreInstance ??= FirebaseFirestore.instance;
-    return _firestoreInstance!;
-  }
-
+  FirebaseFirestore get _db => FirebaseFirestore.instance;
+  final UserFirestoreService _profiles = userFirestoreService;
   UserModel? _viewedUser;
-  Map<String, dynamic>? _viewedUserNeonProfile; // Extended data from Neon
-  List<UserModel> _searchResults = [];
-  List<UserModel> _topChefs = [];
+  Map<String, dynamic>? _viewedUserProfile;
+  List<UserModel> _searchResults = [], _topChefs = [];
   bool _isLoading = false;
-
   UserModel? get viewedUser => _viewedUser;
-  Map<String, dynamic>? get viewedUserNeonProfile => _viewedUserNeonProfile;
+  Map<String, dynamic>? get viewedUserProfile => _viewedUserProfile;
   List<UserModel> get searchResults => _searchResults;
   List<UserModel> get topChefs => _topChefs;
   bool get isLoading => _isLoading;
-
-  // Extended Neon profile getters for viewed user
-  int get viewedUserXP => _viewedUserNeonProfile?['xp'] as int? ?? 0;
-  int get viewedUserLevel => _viewedUserNeonProfile?['level'] as int? ?? 1;
-  int get viewedUserStreak =>
-      _viewedUserNeonProfile?['streak_days'] as int? ?? 0;
+  int get viewedUserXP => _viewedUserProfile?['xp'] as int? ?? 0;
+  int get viewedUserLevel => _viewedUserProfile?['level'] as int? ?? 1;
+  int get viewedUserStreak => _viewedUserProfile?['streakDays'] as int? ?? 0;
   int get viewedUserFollowersCount =>
-      _viewedUserNeonProfile?['followers_count'] as int? ?? 0;
+      (_viewedUserProfile?['followers'] as List?)?.length ?? 0;
   int get viewedUserFollowingCount =>
-      _viewedUserNeonProfile?['following_count'] as int? ?? 0;
-
-  // Get user by ID (Firestore + Neon)
-  Future<UserModel?> getUser(String userId) async {
-    if (!firebaseInitialized) {
-      _isLoading = false;
-      _viewedUser = null;
-      _viewedUserNeonProfile = null;
-      notifyListeners();
-      return null;
-    }
-
+      (_viewedUserProfile?['following'] as List?)?.length ?? 0;
+  Future<UserModel?> getUser(String id) async {
+    if (!firebaseInitialized) return null;
     _isLoading = true;
-    _viewedUserNeonProfile = null;
     notifyListeners();
-
     try {
-      // Get basic profile from Firestore
-      final doc = await _firestore.collection('users').doc(userId).get();
-      if (doc.exists) {
-        _viewedUser = UserModel.fromFirestore(doc);
-
-        // Also fetch extended profile from Neon
-        _viewedUserNeonProfile = await _neonService.getUserProfile(userId);
-
-        _isLoading = false;
-        notifyListeners();
-        return _viewedUser;
-      }
-    } catch (e) {
-      debugPrint('Error getting user: $e');
+      final doc = await _db.collection('users').doc(id).get();
+      _viewedUser = doc.exists ? UserModel.fromFirestore(doc) : null;
+      _viewedUserProfile = await _profiles.getUserProfile(id);
+      return _viewedUser;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-
-    _isLoading = false;
-    notifyListeners();
-    return null;
   }
 
-  /// Get only the Neon profile for a user (for quick stats)
-  Future<Map<String, dynamic>?> getNeonProfile(String userId) async {
-    return await _neonService.getUserProfile(userId);
-  }
-
-  /// Check if current user is following the viewed user
-  Future<bool> isFollowingViewedUser(String currentUserId) async {
-    if (_viewedUser == null) return false;
-    return await _neonService.isFollowing(currentUserId, _viewedUser!.id);
-  }
-
-  /// Get followers of viewed user
-  Future<List<Map<String, dynamic>>> getViewedUserFollowers() async {
-    if (_viewedUser == null) return [];
-    return await _neonService.getFollowers(_viewedUser!.id);
-  }
-
-  /// Get following of viewed user
-  Future<List<Map<String, dynamic>>> getViewedUserFollowing() async {
-    if (_viewedUser == null) return [];
-    return await _neonService.getFollowing(_viewedUser!.id);
-  }
-
-  /// Get cooking history of viewed user
-  Future<List<Map<String, dynamic>>> getViewedUserCookingHistory() async {
-    if (_viewedUser == null) return [];
-    return await _neonService.getCookingHistory(_viewedUser!.id);
-  }
-
-  /// Get badges of viewed user
-  Future<List<String>> getViewedUserBadges() async {
-    if (_viewedUser == null) return [];
-    return await _neonService.getUserBadges(_viewedUser!.id);
-  }
-
-  // Search users
+  Future<bool> isFollowingViewedUser(String id) async =>
+      _viewedUser != null && await _profiles.isFollowing(id, _viewedUser!.id);
+  Future<List<Map<String, dynamic>>> getViewedUserFollowers() async =>
+      _viewedUser == null ? [] : await _profiles.getFollowers(_viewedUser!.id);
+  Future<List<Map<String, dynamic>>> getViewedUserFollowing() async =>
+      _viewedUser == null ? [] : await _profiles.getFollowing(_viewedUser!.id);
+  Future<List<Map<String, dynamic>>> getViewedUserCookingHistory() async =>
+      _viewedUser == null
+          ? []
+          : await _profiles.getCookingHistory(_viewedUser!.id);
+  Future<List<String>> getViewedUserBadges() async =>
+      _viewedUser == null ? [] : await _profiles.getUserBadges(_viewedUser!.id);
   Future<void> searchUsers(String query) async {
-    if (query.isEmpty) {
+    if (query.isEmpty || !firebaseInitialized) {
       _searchResults = [];
       notifyListeners();
       return;
     }
-
-    if (!firebaseInitialized) {
-      _isLoading = false;
-      _searchResults = [];
-      notifyListeners();
-      return;
-    }
-
-    _isLoading = true;
-    notifyListeners();
-
-    try {
-      final snapshot = await _firestore
-          .collection('users')
-          .orderBy('displayName')
-          .startAt([query])
-          .endAt(['$query\uf8ff'])
-          .limit(20)
-          .get();
-
-      _searchResults =
-          snapshot.docs.map((doc) => UserModel.fromFirestore(doc)).toList();
-    } catch (e) {
-      debugPrint('Error searching users: $e');
-    }
-
-    _isLoading = false;
+    final data = await _db
+        .collection('users')
+        .orderBy('displayName')
+        .startAt([query])
+        .endAt(['$query\uf8ff'])
+        .limit(20)
+        .get();
+    _searchResults = data.docs.map(UserModel.fromFirestore).toList();
     notifyListeners();
   }
 
-  // Load top chefs (users with most followers/recipes)
   Future<void> loadTopChefs() async {
-    if (!firebaseInitialized) {
-      _topChefs = [];
-      notifyListeners();
-      return;
-    }
-
-    try {
-      final snapshot = await _firestore
-          .collection('users')
-          .orderBy('recipesCount', descending: true)
-          .limit(10)
-          .get();
-
-      _topChefs =
-          snapshot.docs.map((doc) => UserModel.fromFirestore(doc)).toList();
-
-      notifyListeners();
-    } catch (e) {
-      debugPrint('Error loading top chefs: $e');
-    }
+    if (!firebaseInitialized) return;
+    final data = await _db
+        .collection('users')
+        .orderBy('recipesCount', descending: true)
+        .limit(10)
+        .get();
+    _topChefs = data.docs.map(UserModel.fromFirestore).toList();
+    notifyListeners();
   }
 
-  // Update user profile (Firestore + Neon)
-  Future<bool> updateUserProfile(
-      String userId, Map<String, dynamic> data) async {
-    if (!firebaseInitialized) {
-      return false;
-    }
-
-    try {
-      // Update Firestore
-      await _firestore.collection('users').doc(userId).update({
-        ...data,
-        'lastActiveAt': FieldValue.serverTimestamp(),
-      });
-
-      // Also update Neon for extended data sync
-      await _neonService.updateUserProfile(userId, data);
-
-      return true;
-    } catch (e) {
-      debugPrint('Error updating profile: $e');
-      return false;
-    }
-  }
-
-  // Get followers
-  Future<List<UserModel>> getFollowers(String userId) async {
-    if (!firebaseInitialized) {
-      return [];
-    }
-
-    try {
-      List<String> followerIds = [];
-
-      if (NeonUserConfig.isConfigured) {
-        try {
-          final neonFollowers = await _neonService.getFollowers(userId);
-          followerIds = neonFollowers
-              .map((f) => f['id'] as String?)
-              .whereType<String>()
-              .toList();
-        } catch (e) {
-          debugPrint('Error getting Neon followers: $e');
-        }
-      } else {
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-        followerIds = List<String>.from(userDoc.data()?['followers'] ?? []);
-      }
-
-      if (followerIds.isEmpty) return [];
-
-      final chunks = <List<String>>[];
-      for (var i = 0; i < followerIds.length; i += 10) {
-        chunks.add(followerIds.sublist(
-          i,
-          i + 10 > followerIds.length ? followerIds.length : i + 10,
-        ));
-      }
-
-      final List<UserModel> followers = [];
-      for (final chunk in chunks) {
-        final snapshot = await _firestore
-            .collection('users')
-            .where(FieldPath.documentId, whereIn: chunk)
-            .get();
-
-        followers.addAll(
-          snapshot.docs.map((doc) => UserModel.fromFirestore(doc)),
-        );
-      }
-
-      return followers;
-    } catch (e) {
-      debugPrint('Error getting followers: $e');
-      return [];
-    }
-  }
-
-  // Get following
-  Future<List<UserModel>> getFollowing(String userId) async {
-    if (!firebaseInitialized) {
-      return [];
-    }
-
-    try {
-      List<String> followingIds = [];
-
-      if (NeonUserConfig.isConfigured) {
-        try {
-          final neonFollowing = await _neonService.getFollowing(userId);
-          followingIds = neonFollowing
-              .map((f) => f['id'] as String?)
-              .whereType<String>()
-              .toList();
-        } catch (e) {
-          debugPrint('Error getting Neon following: $e');
-        }
-      } else {
-        final userDoc = await _firestore.collection('users').doc(userId).get();
-        followingIds = List<String>.from(userDoc.data()?['following'] ?? []);
-      }
-
-      if (followingIds.isEmpty) return [];
-
-      final chunks = <List<String>>[];
-      for (var i = 0; i < followingIds.length; i += 10) {
-        chunks.add(followingIds.sublist(
-          i,
-          i + 10 > followingIds.length ? followingIds.length : i + 10,
-        ));
-      }
-
-      final List<UserModel> following = [];
-      for (final chunk in chunks) {
-        final snapshot = await _firestore
-            .collection('users')
-            .where(FieldPath.documentId, whereIn: chunk)
-            .get();
-
-        following.addAll(
-          snapshot.docs.map((doc) => UserModel.fromFirestore(doc)),
-        );
-      }
-
-      return following;
-    } catch (e) {
-      debugPrint('Error getting following: $e');
-      return [];
-    }
-  }
-
+  Future<bool> updateUserProfile(String id, Map<String, dynamic> data) =>
+      _profiles.updateUserProfile(id, data);
+  Future<List<UserModel>> _people(List<Map<String, dynamic>> records) async =>
+      records
+          .map((data) => UserModel(
+              id: data['id'] as String? ?? '',
+              email: data['email'] as String? ?? '',
+              displayName: data['displayName'] as String? ?? 'Chef',
+              photoUrl: data['photoUrl'] as String?,
+              bio: data['bio'] as String?,
+              avatarEmoji: data['avatarEmoji'] as String? ?? '🍳',
+              followers: List<String>.from(data['followers'] ?? const []),
+              following: List<String>.from(data['following'] ?? const []),
+              savedRecipes: List<String>.from(data['savedRecipes'] ?? const []),
+              favoriteRecipes:
+                  List<String>.from(data['favoriteRecipes'] ?? const []),
+              badges: List<String>.from(data['badges'] ?? const []),
+              recipesCount: data['recipesCount'] as int? ?? 0,
+              likesReceived: data['likesReceived'] as int? ?? 0,
+              createdAt:
+                  (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
+              lastActiveAt: (data['lastActiveAt'] as Timestamp?)?.toDate() ??
+                  DateTime.now()))
+          .toList();
+  Future<List<UserModel>> getFollowers(String id) async =>
+      _people(await _profiles.getFollowers(id));
+  Future<List<UserModel>> getFollowing(String id) async =>
+      _people(await _profiles.getFollowing(id));
   void clearViewedUser() {
     _viewedUser = null;
+    _viewedUserProfile = null;
     notifyListeners();
   }
 

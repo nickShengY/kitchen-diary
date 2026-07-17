@@ -1,93 +1,66 @@
-import { describe, it, expect, vi, beforeEach, afterEach, Mock } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('../../services/liveDataService', () => ({
-  fetchRealProfile: vi.fn(),
+const firebaseMocks = vi.hoisted(() => ({
+  auth: { currentUser: null as any },
+  onAuthStateChanged: vi.fn(),
+  signInWithPopup: vi.fn(),
+  signOut: vi.fn(),
+  setCustomParameters: vi.fn(),
 }));
 
-import { login, logout, updateUserProfile, getCurrentUser } from '../../services/authService';
-import { fetchRealProfile } from '../../services/liveDataService';
+vi.mock('firebase/auth', () => ({
+  GoogleAuthProvider: class { setCustomParameters = firebaseMocks.setCustomParameters; },
+  onAuthStateChanged: firebaseMocks.onAuthStateChanged,
+  signInWithPopup: firebaseMocks.signInWithPopup,
+  signOut: firebaseMocks.signOut,
+}));
+
+vi.mock('../../services/firebase', () => ({
+  getFirebaseAuth: vi.fn(() => firebaseMocks.auth),
+  isFirebaseConfigured: vi.fn(() => true),
+}));
+
+import { getCurrentUser, login, logout, subscribeToAuthState } from '../../services/authService';
+
+const firebaseUser = {
+  uid: 'google-user-1',
+  displayName: 'Google Chef',
+  photoURL: 'https://example.com/chef.png',
+};
 
 describe('authService', () => {
-  const mockLiveProfile = {
-    id: 'live-user-1',
-    name: 'Live Chef',
-    avatar: '👩‍🍳',
-    bio: 'Cooking with real data.',
-    favorites: [],
-    myRecipes: [],
-  };
-
   beforeEach(() => {
-    vi.useFakeTimers();
-    const storage = (() => {
-      const store = new Map<string, string>();
-      return {
-        getItem: (key: string) => store.get(key) ?? null,
-        setItem: (key: string, value: string) => {
-          store.set(key, value);
-        },
-        removeItem: (key: string) => {
-          store.delete(key);
-        },
-        clear: () => {
-          store.clear();
-        },
-      };
-    })();
-    (globalThis as any).localStorage = storage;
-    if (typeof window !== 'undefined') {
-      (window as any).localStorage = storage;
-    }
-    (fetchRealProfile as Mock).mockReset();
-    (fetchRealProfile as Mock).mockResolvedValue(mockLiveProfile);
+    firebaseMocks.auth.currentUser = null;
+    firebaseMocks.onAuthStateChanged.mockReset();
+    firebaseMocks.signInWithPopup.mockReset();
+    firebaseMocks.signOut.mockReset();
+    firebaseMocks.setCustomParameters.mockReset();
   });
 
-  afterEach(() => {
-    vi.useRealTimers();
+  it('signs in only through the Firebase Google popup', async () => {
+    firebaseMocks.signInWithPopup.mockResolvedValue({ user: firebaseUser });
+
+    await expect(login()).resolves.toMatchObject({ id: 'google-user-1', name: 'Google Chef' });
+    expect(firebaseMocks.setCustomParameters).toHaveBeenCalledWith({ prompt: 'select_account' });
+    expect(firebaseMocks.signInWithPopup).toHaveBeenCalledWith(firebaseMocks.auth, expect.anything());
   });
 
-  it('should fetch and persist live user profile on login', async () => {
-    const promise = login();
-    await vi.advanceTimersByTimeAsync(500);
-    const user = await promise;
-
-    expect(fetchRealProfile).toHaveBeenCalledTimes(1);
-    expect(user.name).toBe('Live Chef');
-    expect(user.followersCount).toBeUndefined();
-    expect(user.likesReceived).toBeUndefined();
-    expect(getCurrentUser()?.id).toBe('live-user-1');
+  it('maps the active Firebase user without browser storage', () => {
+    firebaseMocks.auth.currentUser = firebaseUser;
+    expect(getCurrentUser()).toMatchObject({ id: 'google-user-1', avatar: 'https://example.com/chef.png' });
   });
 
-  it('should clear persisted session on logout', async () => {
-    const loginPromise = login();
-    await vi.advanceTimersByTimeAsync(500);
-    await loginPromise;
-
-    const logoutPromise = logout();
-    await vi.advanceTimersByTimeAsync(250);
-    await logoutPromise;
-
-    expect(getCurrentUser()).toBeNull();
+  it('subscribes to Firebase session changes', () => {
+    const callback = vi.fn();
+    subscribeToAuthState(callback);
+    expect(firebaseMocks.onAuthStateChanged).toHaveBeenCalledWith(firebaseMocks.auth, expect.any(Function));
+    const listener = firebaseMocks.onAuthStateChanged.mock.calls[0][1];
+    listener(firebaseUser);
+    expect(callback).toHaveBeenCalledWith(expect.objectContaining({ id: 'google-user-1' }));
   });
 
-  it('should update and persist the active user profile', async () => {
-    const loginPromise = login();
-    await vi.advanceTimersByTimeAsync(500);
-    await loginPromise;
-
-    const updated = await updateUserProfile({
-      name: 'Updated Chef',
-      favorites: ['recipe-1'],
-    });
-
-    expect(updated.name).toBe('Updated Chef');
-    expect(updated.favorites).toEqual(['recipe-1']);
-    expect(getCurrentUser()?.name).toBe('Updated Chef');
-  });
-
-  it('should throw when updating profile without an active session', async () => {
-    await expect(updateUserProfile({ name: 'No Session' })).rejects.toThrow(
-      'No active user session to update.',
-    );
+  it('signs out through Firebase', async () => {
+    await logout();
+    expect(firebaseMocks.signOut).toHaveBeenCalledWith(firebaseMocks.auth);
   });
 });

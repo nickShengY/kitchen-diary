@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -394,14 +394,9 @@ class _ProfileScreenState extends State<ProfileScreen>
     final recipesCount = user.recipesCount;
     final likesCount = user.likesReceived;
 
-    int followersCount;
-    if (isOwnProfile && auth.neonProfile != null) {
-      followersCount = auth.followersCount;
-    } else if (!isOwnProfile && userProvider.viewedUserNeonProfile != null) {
-      followersCount = userProvider.viewedUserFollowersCount;
-    } else {
-      followersCount = user.followers.length;
-    }
+    final followersCount = isOwnProfile
+        ? auth.followersCount
+        : userProvider.viewedUserFollowersCount;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),

@@ -1,4 +1,4 @@
-﻿import 'dart:math' as math;
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -37,7 +37,7 @@ class _IngredientTransformationWidgetState
   late AnimationController _transformController;
   late AnimationController _particleController;
   late AnimationController _glowController;
-  
+
   late Animation<double> _scaleAnimation;
   late Animation<double> _rotateAnimation;
   late Animation<double> _fadeAnimation;
@@ -45,17 +45,17 @@ class _IngredientTransformationWidgetState
   @override
   void initState() {
     super.initState();
-    
+
     _transformController = AnimationController(
       vsync: this,
       duration: widget.duration,
     );
-    
+
     _particleController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 2000),
     )..repeat();
-    
+
     _glowController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1000),
@@ -149,7 +149,7 @@ class _IngredientTransformationWidgetState
               );
             },
           ),
-          
+
           // Glow effect
           AnimatedBuilder(
             animation: _glowController,
@@ -161,8 +161,8 @@ class _IngredientTransformationWidgetState
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 
-                        0.2 + (_glowController.value * 0.1),
+                      color: AppColors.primary.withValues(
+                        alpha: 0.2 + (_glowController.value * 0.1),
                       ),
                       blurRadius: 30 + (_glowController.value * 10),
                       spreadRadius: 5,
@@ -172,7 +172,7 @@ class _IngredientTransformationWidgetState
               );
             },
           ),
-          
+
           // Main transformation content
           AnimatedBuilder(
             animation: _transformController,
@@ -193,7 +193,7 @@ class _IngredientTransformationWidgetState
                           isFrom: true,
                         ),
                       ),
-                      
+
                       // To state (fading in)
                       Opacity(
                         opacity: 1 - _fadeAnimation.value,
@@ -209,7 +209,7 @@ class _IngredientTransformationWidgetState
               );
             },
           ),
-          
+
           // State labels
           Positioned(
             bottom: 0,
@@ -308,45 +308,46 @@ class _TransformationParticlesPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final random = math.Random(42);
-    
+
     // Draw particles in a spiral pattern
     for (int i = 0; i < 20; i++) {
       final baseAngle = (i / 20) * math.pi * 2;
       final spiralOffset = progress * math.pi * 2;
       final angle = baseAngle + spiralOffset;
-      
+
       final radiusBase = 60 + (random.nextDouble() * 30);
       final radiusPulse = math.sin(progress * math.pi * 2 + i) * 10;
       final radius = radiusBase + radiusPulse;
-      
+
       final x = center.dx + math.cos(angle) * radius;
       final y = center.dy + math.sin(angle) * radius;
-      
+
       final particleSize = 2 + random.nextDouble() * 3;
       final opacity = 0.3 + (math.sin(progress * math.pi * 4 + i) * 0.3);
-      
+
       final paint = Paint()
-        ..color = color.withValues(alpha: opacity * (1 - transformProgress * 0.5))
+        ..color =
+            color.withValues(alpha: opacity * (1 - transformProgress * 0.5))
         ..style = PaintingStyle.fill;
-      
+
       canvas.drawCircle(Offset(x, y), particleSize, paint);
     }
-    
+
     // Draw burst particles during transformation peak
     if (transformProgress > 0.3 && transformProgress < 0.7) {
       final burstIntensity = 1 - ((transformProgress - 0.5).abs() * 5);
-      
+
       for (int i = 0; i < 12; i++) {
         final angle = (i / 12) * math.pi * 2;
         final distance = 50 + (burstIntensity * 30);
-        
+
         final x = center.dx + math.cos(angle) * distance;
         final y = center.dy + math.sin(angle) * distance;
-        
+
         final paint = Paint()
           ..color = color.withValues(alpha: burstIntensity * 0.6)
           ..style = PaintingStyle.fill;
-        
+
         canvas.drawCircle(Offset(x, y), 4 * burstIntensity, paint);
       }
     }
@@ -450,7 +451,7 @@ class StateFlowVisualization extends StatelessWidget {
             // Arrow connector
             final stateIndex = index ~/ 2;
             final isPast = stateIndex < currentIndex;
-            
+
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Icon(
@@ -466,12 +467,15 @@ class StateFlowVisualization extends StatelessWidget {
             final stateIndex = index ~/ 2;
             final isActive = stateIndex == currentIndex;
             final isPast = stateIndex < currentIndex;
-            
+
             return StateBadge(
               state: states[stateIndex],
               isActive: isActive || isPast,
               onTap: onStateTap != null ? () => onStateTap!(stateIndex) : null,
-            ).animate(delay: Duration(milliseconds: index * 50)).fadeIn().slideX(
+            )
+                .animate(delay: Duration(milliseconds: index * 50))
+                .fadeIn()
+                .slideX(
                   begin: 0.2,
                   end: 0,
                 );
@@ -481,4 +485,3 @@ class StateFlowVisualization extends StatelessWidget {
     );
   }
 }
-

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { beforeEach, describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Navigation } from '../../components/Navigation';
 import { AppView } from '../../types';
@@ -14,52 +14,50 @@ describe('Navigation Component', () => {
     it('should render navigation bar', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      expect(screen.getByRole('button', { name: /home/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /explore/i })).toBeInTheDocument();
     });
 
     it('should render all navigation items', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      // The navigation has 4 buttons (Home, Builder/Plus, Decider, Profile)
+      // The navigation has 4 consistent buttons (Explore, Build, Decide, Profile)
       const buttons = screen.getAllByRole('button');
       expect(buttons.length).toBeGreaterThanOrEqual(4);
     });
 
-    it('should render Home button', () => {
+    it('should render Explore button', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      const homeButton = screen.getByText('Home');
+      const homeButton = screen.getByText('Explore');
       expect(homeButton).toBeInTheDocument();
     });
 
-    it('should render Decider button', () => {
+    it('should render Decide button', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      const deciderButton = screen.getByText('Decider');
+      const deciderButton = screen.getByText('Decide');
       expect(deciderButton).toBeInTheDocument();
     });
 
-    it('should render Me/Profile button', () => {
+    it('should render Profile button', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      const profileButton = screen.getByText('Me');
+      const profileButton = screen.getByText('Profile');
       expect(profileButton).toBeInTheDocument();
     });
 
-    it('should render central plus/create button', () => {
+    it('should render Build button', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      // The center button navigates to BUILDER
-      const buttons = screen.getAllByRole('button');
-      expect(buttons.length).toBeGreaterThanOrEqual(4);
+      expect(screen.getByRole('button', { name: 'Build' })).toBeInTheDocument();
     });
   });
 
   describe('navigation actions', () => {
-    it('should call setView with COMMUNITY when Home is clicked', () => {
+    it('should call setView with COMMUNITY when Explore is clicked', () => {
       render(<Navigation currentView={AppView.BUILDER} setView={mockSetView} />);
 
-      const homeButton = screen.getByText('Home').closest('button');
+      const homeButton = screen.getByText('Explore').closest('button');
       fireEvent.click(homeButton!);
 
       expect(mockSetView).toHaveBeenCalledWith(AppView.COMMUNITY);
@@ -68,35 +66,26 @@ describe('Navigation Component', () => {
     it('should call setView with DECIDER when Decider is clicked', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      const deciderButton = screen.getByText('Decider').closest('button');
+      const deciderButton = screen.getByText('Decide').closest('button');
       fireEvent.click(deciderButton!);
 
       expect(mockSetView).toHaveBeenCalledWith(AppView.DECIDER);
     });
 
-    it('should call setView with PROFILE when Me is clicked', () => {
+    it('should call setView with PROFILE when Profile is clicked', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      const profileButton = screen.getByText('Me').closest('button');
+      const profileButton = screen.getByText('Profile').closest('button');
       fireEvent.click(profileButton!);
 
       expect(mockSetView).toHaveBeenCalledWith(AppView.PROFILE);
     });
 
-    it('should call setView with BUILDER when center button is clicked', () => {
+    it('should call setView with BUILDER when Build is clicked', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      // Find the center button (the one with PlusCircle icon)
-      const buttons = screen.getAllByRole('button');
-      // The center button is typically the second one or has specific styling
-      const centerButton = buttons.find(
-        (btn) => btn.className.includes('w-14') || btn.className.includes('mx-2')
-      );
-
-      if (centerButton) {
-        fireEvent.click(centerButton);
-        expect(mockSetView).toHaveBeenCalledWith(AppView.BUILDER);
-      }
+      fireEvent.click(screen.getByRole('button', { name: 'Build' }));
+      expect(mockSetView).toHaveBeenCalledWith(AppView.BUILDER);
     });
   });
 
@@ -104,62 +93,52 @@ describe('Navigation Component', () => {
     it('should highlight Home when current view is COMMUNITY', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      const homeButton = screen.getByText('Home').closest('button');
-      expect(homeButton?.className).toContain('text-toon-primary');
+      const homeButton = screen.getByText('Explore').closest('button');
+      expect(homeButton?.className).toContain('bg-toon-dark');
     });
 
     it('should highlight Decider when current view is DECIDER', () => {
       render(<Navigation currentView={AppView.DECIDER} setView={mockSetView} />);
 
-      const deciderButton = screen.getByText('Decider').closest('button');
-      expect(deciderButton?.className).toContain('text-toon-primary');
+      const deciderButton = screen.getByText('Decide').closest('button');
+      expect(deciderButton?.className).toContain('bg-toon-dark');
     });
 
     it('should highlight Me when current view is PROFILE', () => {
       render(<Navigation currentView={AppView.PROFILE} setView={mockSetView} />);
 
-      const profileButton = screen.getByText('Me').closest('button');
-      expect(profileButton?.className).toContain('text-toon-primary');
+      const profileButton = screen.getByText('Profile').closest('button');
+      expect(profileButton?.className).toContain('bg-toon-dark');
     });
 
     it('should not highlight inactive items', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      const deciderButton = screen.getByText('Decider').closest('button');
-      const profileButton = screen.getByText('Me').closest('button');
+      const deciderButton = screen.getByText('Decide').closest('button');
+      const profileButton = screen.getByText('Profile').closest('button');
 
-      expect(deciderButton?.className).toContain('text-gray-300');
-      expect(profileButton?.className).toContain('text-gray-300');
+      expect(deciderButton?.className).toContain('text-gray-400');
+      expect(profileButton?.className).toContain('text-gray-400');
     });
 
-    it('should show label for active item', () => {
+    it('should show all labels consistently', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      const homeLabel = screen.getByText('Home');
-      expect(homeLabel.className).toContain('opacity-100');
-    });
-
-    it('should hide label for inactive items', () => {
-      render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
-
-      const deciderLabel = screen.getByText('Decider');
-      expect(deciderLabel.className).toContain('opacity-0');
+      expect(screen.getByText('Explore')).toBeVisible();
+      expect(screen.getByText('Build')).toBeVisible();
+      expect(screen.getByText('Decide')).toBeVisible();
+      expect(screen.getByText('Profile')).toBeVisible();
     });
   });
 
   describe('visual scaling', () => {
-    it('should scale up active navigation item', () => {
+    it('should use the same dimensions for every item', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      const homeButton = screen.getByText('Home').closest('button');
-      expect(homeButton?.className).toContain('scale-110');
-    });
-
-    it('should not scale inactive navigation items', () => {
-      render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
-
-      const deciderButton = screen.getByText('Decider').closest('button');
-      expect(deciderButton?.className).not.toContain('scale-110');
+      screen.getAllByRole('button').forEach((button) => {
+        expect(button.className).toContain('h-16');
+        expect(button.className).toContain('flex-1');
+      });
     });
   });
 
@@ -176,8 +155,8 @@ describe('Navigation Component', () => {
     it('should respond to multiple clicks', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
-      const homeButton = screen.getByText('Home').closest('button');
-      const deciderButton = screen.getByText('Decider').closest('button');
+      const homeButton = screen.getByText('Explore').closest('button');
+      const deciderButton = screen.getByText('Decide').closest('button');
 
       fireEvent.click(homeButton!);
       fireEvent.click(deciderButton!);
@@ -195,7 +174,7 @@ describe('Navigation Component', () => {
 
       const nav = container.firstChild as HTMLElement;
       expect(nav.className).toContain('fixed');
-      expect(nav.className).toContain('bottom-6');
+      expect(nav.className).toContain('bottom-4');
     });
 
     it('should be centered horizontally', () => {
@@ -235,14 +214,14 @@ describe('Navigation Component', () => {
       );
 
       // Click Decider from Community
-      fireEvent.click(screen.getByText('Decider').closest('button')!);
+      fireEvent.click(screen.getByText('Decide').closest('button')!);
       expect(mockSetView).toHaveBeenLastCalledWith(AppView.DECIDER);
 
       // Re-render with Decider view
       rerender(<Navigation currentView={AppView.DECIDER} setView={mockSetView} />);
 
       // Click Profile from Decider
-      fireEvent.click(screen.getByText('Me').closest('button')!);
+      fireEvent.click(screen.getByText('Profile').closest('button')!);
       expect(mockSetView).toHaveBeenLastCalledWith(AppView.PROFILE);
     });
   });

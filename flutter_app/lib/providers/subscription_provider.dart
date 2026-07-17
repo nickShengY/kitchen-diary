@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import '../main.dart' show firebaseInitialized;
 import '../services/subscription_service.dart';
 
 class SubscriptionProvider extends ChangeNotifier {
   final SubscriptionService _subscriptionService = subscriptionService;
-  
+
   bool _isLoading = false;
   bool _isVip = false;
   DateTime? _vipExpiresAt;
@@ -31,20 +30,20 @@ class SubscriptionProvider extends ChangeNotifier {
       notifyListeners();
       return;
     }
-    
+
     try {
       await _subscriptionService.initialize();
-      
+
       _isVip = _subscriptionService.isVip;
       _vipExpiresAt = _subscriptionService.vipExpiresAt;
-      
+
       // Listen for subscription changes
       _subscription = _subscriptionService.subscriptionStream.listen((isVip) {
         _isVip = isVip;
         _vipExpiresAt = _subscriptionService.vipExpiresAt;
         notifyListeners();
       });
-      
+
       // Load products
       await loadProducts();
     } catch (e) {
@@ -52,20 +51,20 @@ class SubscriptionProvider extends ChangeNotifier {
         debugPrint('⚠️ Subscription initialization failed: $e');
       }
     }
-    
+
     notifyListeners();
   }
 
   Future<void> loadProducts() async {
     _isLoading = true;
     notifyListeners();
-    
+
     try {
       _products = await _subscriptionService.getProducts();
     } catch (e) {
       _errorMessage = 'Failed to load subscription options';
     }
-    
+
     _isLoading = false;
     notifyListeners();
   }
@@ -82,7 +81,7 @@ class SubscriptionProvider extends ChangeNotifier {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-    
+
     try {
       final success = await _subscriptionService.purchaseVip(yearly: yearly);
       _isVip = success;
@@ -101,15 +100,15 @@ class SubscriptionProvider extends ChangeNotifier {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
-    
+
     try {
       final success = await _subscriptionService.restorePurchases();
       _isVip = success;
-      
+
       if (!success) {
         _errorMessage = 'No active subscriptions found.';
       }
-      
+
       _isLoading = false;
       notifyListeners();
       return success;

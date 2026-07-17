@@ -1,4 +1,4 @@
-﻿enum ProcedureStation { prep, cook, finish }
+enum ProcedureStation { prep, cook, finish }
 
 class MaterialLot {
   final String id;
@@ -89,7 +89,8 @@ class MaterialLot {
       amount: json['amount'] ?? '1',
       unit: json['unit'] ?? 'pcs',
       state: json['state'] ?? 'raw',
-      assetKey: json['assetKey'] ?? ((json['ingredientId'] ?? '') + '_' + (json['state'] ?? 'raw')),
+      assetKey: json['assetKey'] ??
+          ((json['ingredientId'] ?? '') + '_' + (json['state'] ?? 'raw')),
       componentLotIds: json['componentLotIds'] != null
           ? List<String>.from(json['componentLotIds'] as List)
           : null,
@@ -253,4 +254,3 @@ class RecipeProcedure {
     );
   }
 }
-

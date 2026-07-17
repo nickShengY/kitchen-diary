@@ -38,7 +38,8 @@ class _ShareRecipeScreenState extends State<ShareRecipeScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        title: const Text('Share Recipe', style: TextStyle(fontWeight: FontWeight.w700)),
+        title: const Text('Share Recipe',
+            style: TextStyle(fontWeight: FontWeight.w700)),
         backgroundColor: scheme.surface,
         elevation: 0,
       ),
@@ -48,12 +49,19 @@ class _ShareRecipeScreenState extends State<ShareRecipeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Preview card
-            _buildShareCard(scheme).animate().fadeIn().scale(begin: const Offset(0.95, 0.95)),
+            _buildShareCard(scheme)
+                .animate()
+                .fadeIn()
+                .scale(begin: const Offset(0.95, 0.95)),
 
             const SizedBox(height: 24),
 
             // Style selector
-            Text('Card Style', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: scheme.onSurface)),
+            Text('Card Style',
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: scheme.onSurface)),
             const SizedBox(height: 12),
             Row(
               children: List.generate(_cardStyles.length, (index) {
@@ -72,14 +80,21 @@ class _ShareRecipeScreenState extends State<ShareRecipeScreen> {
                       decoration: BoxDecoration(
                         gradient: style['gradient'] as LinearGradient,
                         borderRadius: BorderRadius.circular(12),
-                        border: isSelected ? Border.all(color: Colors.white, width: 2) : null,
-                        boxShadow: isSelected ? [
-                          BoxShadow(
-                            color: (style['gradient'] as LinearGradient).colors.first.withValues(alpha: 0.4),
-                            blurRadius: 12,
-                            offset: const Offset(0, 4),
-                          ),
-                        ] : null,
+                        border: isSelected
+                            ? Border.all(color: Colors.white, width: 2)
+                            : null,
+                        boxShadow: isSelected
+                            ? [
+                                BoxShadow(
+                                  color: (style['gradient'] as LinearGradient)
+                                      .colors
+                                      .first
+                                      .withValues(alpha: 0.4),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ]
+                            : null,
                       ),
                       child: Center(
                         child: Text(
@@ -100,25 +115,36 @@ class _ShareRecipeScreenState extends State<ShareRecipeScreen> {
             const SizedBox(height: 32),
 
             // Share options
-            Text('Share via', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: scheme.onSurface)),
+            Text('Share via',
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: scheme.onSurface)),
             const SizedBox(height: 16),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _shareOption(scheme, 'Copy Link', Iconsax.link, AppColors.primary, () {
-                  Clipboard.setData(ClipboardData(text: 'https://kitchendiary.app/recipe/${widget.recipeId}'));
+                _shareOption(
+                    scheme, 'Copy Link', Iconsax.link, AppColors.primary, () {
+                  Clipboard.setData(ClipboardData(
+                      text:
+                          'https://kitchendiary.app/recipe/${widget.recipeId}'));
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: const Text('Link copied! 🔗'),
                       behavior: SnackBarBehavior.floating,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
                     ),
                   );
                 }),
-                _shareOption(scheme, 'Message', Iconsax.message, AppColors.accent, () => _shareText()),
-                _shareOption(scheme, 'Social', Iconsax.share, AppColors.secondary, () => _shareText()),
-                _shareOption(scheme, 'More', Iconsax.more, scheme.onSurfaceVariant, () => _shareText()),
+                _shareOption(scheme, 'Message', Iconsax.message,
+                    AppColors.accent, () => _shareText()),
+                _shareOption(scheme, 'Social', Iconsax.share,
+                    AppColors.secondary, () => _shareText()),
+                _shareOption(scheme, 'More', Iconsax.more,
+                    scheme.onSurfaceVariant, () => _shareText()),
               ],
             ),
 
@@ -131,9 +157,12 @@ class _ShareRecipeScreenState extends State<ShareRecipeScreen> {
               child: FilledButton.icon(
                 onPressed: () => _shareText(),
                 icon: const Icon(Iconsax.share),
-                label: const Text('Share Recipe', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
+                label: const Text('Share Recipe',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
                 style: FilledButton.styleFrom(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
                 ),
               ),
             ),
@@ -166,12 +195,14 @@ class _ShareRecipeScreenState extends State<ShareRecipeScreen> {
           Row(
             children: [
               Container(
-                width: 32, height: 32,
+                width: 32,
+                height: 32,
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Center(child: Text('🍳', style: TextStyle(fontSize: 18))),
+                child: const Center(
+                    child: Text('🍳', style: TextStyle(fontSize: 18))),
               ),
               const SizedBox(width: 8),
               Text(
@@ -218,13 +249,15 @@ class _ShareRecipeScreenState extends State<ShareRecipeScreen> {
     );
   }
 
-  Widget _shareOption(ColorScheme scheme, String label, IconData icon, Color color, VoidCallback onTap) {
+  Widget _shareOption(ColorScheme scheme, String label, IconData icon,
+      Color color, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Column(
         children: [
           Container(
-            width: 56, height: 56,
+            width: 56,
+            height: 56,
             decoration: BoxDecoration(
               color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(16),
@@ -232,7 +265,8 @@ class _ShareRecipeScreenState extends State<ShareRecipeScreen> {
             child: Icon(icon, color: color),
           ),
           const SizedBox(height: 6),
-          Text(label, style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
+          Text(label,
+              style: TextStyle(fontSize: 12, color: scheme.onSurfaceVariant)),
         ],
       ),
     );

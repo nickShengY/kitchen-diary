@@ -51,8 +51,8 @@ class UserModel {
       bio: data['bio'],
       avatarEmoji: data['avatarEmoji'] ?? '👨‍🍳',
       isVip: data['isVip'] ?? false,
-      vipExpiresAt: data['vipExpiresAt'] != null 
-          ? (data['vipExpiresAt'] as Timestamp).toDate() 
+      vipExpiresAt: data['vipExpiresAt'] != null
+          ? (data['vipExpiresAt'] as Timestamp).toDate()
           : null,
       followers: List<String>.from(data['followers'] ?? []),
       following: List<String>.from(data['following'] ?? []),
@@ -75,7 +75,8 @@ class UserModel {
       'bio': bio,
       'avatarEmoji': avatarEmoji,
       'isVip': isVip,
-      'vipExpiresAt': vipExpiresAt != null ? Timestamp.fromDate(vipExpiresAt!) : null,
+      'vipExpiresAt':
+          vipExpiresAt != null ? Timestamp.fromDate(vipExpiresAt!) : null,
       'followers': followers,
       'following': following,
       'favoriteRecipes': favoriteRecipes,
@@ -131,5 +132,6 @@ class UserModel {
     );
   }
 
-  bool get hasValidVip => isVip && vipExpiresAt != null && vipExpiresAt!.isAfter(DateTime.now());
+  bool get hasValidVip =>
+      isVip && vipExpiresAt != null && vipExpiresAt!.isAfter(DateTime.now());
 }

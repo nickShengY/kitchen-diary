@@ -84,7 +84,8 @@ class _RecipeScalerWidgetState extends State<RecipeScalerWidget> {
               ),
               if (_scaleFactor != 1.0)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                   decoration: BoxDecoration(
                     color: AppColors.accent.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
@@ -157,7 +158,10 @@ class _RecipeScalerWidgetState extends State<RecipeScalerWidget> {
                     width: 40,
                     height: 32,
                     decoration: BoxDecoration(
-                      color: isSelected ? scheme.primary : scheme.surfaceContainerHighest.withValues(alpha: 0.5),
+                      color: isSelected
+                          ? scheme.primary
+                          : scheme.surfaceContainerHighest
+                              .withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Center(
@@ -166,7 +170,9 @@ class _RecipeScalerWidgetState extends State<RecipeScalerWidget> {
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: isSelected ? scheme.onPrimary : scheme.onSurfaceVariant,
+                          color: isSelected
+                              ? scheme.onPrimary
+                              : scheme.onSurfaceVariant,
                         ),
                       ),
                     ),
@@ -234,12 +240,16 @@ class _RecipeScalerWidgetState extends State<RecipeScalerWidget> {
         width: 44,
         height: 44,
         decoration: BoxDecoration(
-          color: enabled ? scheme.primary.withValues(alpha: 0.1) : scheme.surfaceContainerHighest,
+          color: enabled
+              ? scheme.primary.withValues(alpha: 0.1)
+              : scheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Icon(
           icon,
-          color: enabled ? scheme.primary : scheme.onSurfaceVariant.withValues(alpha: 0.3),
+          color: enabled
+              ? scheme.primary
+              : scheme.onSurfaceVariant.withValues(alpha: 0.3),
           size: 20,
         ),
       ),

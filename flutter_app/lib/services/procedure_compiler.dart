@@ -1,4 +1,4 @@
-﻿import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid.dart';
 
 import '../data/kitchen_data_repository.dart';
 import '../models/animation_model.dart';
@@ -258,4 +258,3 @@ class ProcedureCompiler {
     );
   }
 }
-

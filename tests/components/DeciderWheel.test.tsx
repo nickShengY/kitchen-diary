@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
 import { render, screen, waitFor, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { DeciderWheel } from '../../components/DeciderWheel';
+import { CUISINE_CATEGORIES } from '../../data/kitchenData';
 
 vi.mock('../../services/geminiService', () => ({
   analyzeMenuImage: vi.fn(),
@@ -77,11 +78,25 @@ describe('DeciderWheel Component', () => {
     });
   });
 
+  it('falls back to the built-in cuisine catalog when live loading fails', async () => {
+    (fetchCuisineWheelData as Mock).mockRejectedValueOnce(new Error('network down'));
+
+    render(<DeciderWheel />);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText('Using the built-in cuisine library right now.'),
+      ).toBeInTheDocument();
+    });
+
+    expect(screen.getByText(CUISINE_CATEGORIES[0].name)).toBeInTheDocument();
+  });
+
   it('supports scan mode result flow', async () => {
     const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
     render(<DeciderWheel />);
 
-    await user.click(screen.getByRole('button', { name: 'Scan', exact: true }));
+    await user.click(screen.getByRole('button', { name: /^Scan$/ }));
     const input = document.querySelector('input[type="file"]') as HTMLInputElement;
     const file = new File(['test'], 'menu.jpg', { type: 'image/jpeg' });
     Object.defineProperty(input, 'files', { value: [file] });

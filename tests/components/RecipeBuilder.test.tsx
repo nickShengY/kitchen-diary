@@ -35,10 +35,11 @@ describe('RecipeBuilder Component', () => {
       expect(screen.getByText(/tap the big plus button/i)).toBeInTheDocument();
     });
 
-    it('should show chef emoji in empty state', () => {
+    it('should show the animation asset readiness panel in empty state', () => {
       render(<RecipeBuilder />);
 
-      expect(screen.getByText('🧑‍🍳')).toBeInTheDocument();
+      expect(screen.getByText(/visual pantry stocked/i)).toBeInTheDocument();
+      expect(screen.getByText(/motion previews ready/i)).toBeInTheDocument();
     });
 
     it('should display step count', () => {
@@ -263,6 +264,40 @@ describe('RecipeBuilder Component', () => {
       }
     });
 
+    it('should render generated kitchen asset pack images for recipe pieces', async () => {
+      const user = userEvent.setup();
+      const { container } = render(<RecipeBuilder />);
+
+      const plusButtons = screen.getAllByRole('button');
+      const addButton = plusButtons.find((btn) => btn.className.includes('bg-toon-primary'));
+
+      if (addButton) {
+        await user.click(addButton);
+        await user.click(screen.getByText('Prep Station'));
+        await user.click(screen.getByText('Chef Knife'));
+
+        const producedPackImage = container.querySelector(
+          'img[src*="generated/kitchen_asset_pack_v1"]',
+        );
+        expect(producedPackImage).toBeInTheDocument();
+      }
+    });
+
+    it('should filter the large ingredient library by search', async () => {
+      const user = userEvent.setup();
+      render(<RecipeBuilder />);
+
+      const addButton = screen.getByRole('button', { name: /add step/i });
+      await user.click(addButton);
+      await user.click(screen.getByText('Prep Station'));
+      await user.click(screen.getByText('Chef Knife'));
+
+      await user.type(screen.getByPlaceholderText(/search ingredients/i), 'tomato');
+
+      expect(screen.getByText('Tomato')).toBeInTheDocument();
+      expect(screen.queryByText('Chicken')).not.toBeInTheDocument();
+    });
+
     it('should allow removing ingredients', async () => {
       const user = userEvent.setup();
       render(<RecipeBuilder />);
@@ -277,7 +312,7 @@ describe('RecipeBuilder Component', () => {
         await user.click(screen.getByText('Tomato'));
 
         // Find remove button in selection chip
-        const chip = screen.getByText('🍅 Tomato').closest('div');
+        const chip = screen.getAllByText('Tomato')[0].closest('div');
         const removeButton = chip?.querySelector('button');
         if (removeButton) {
           await user.click(removeButton);
@@ -318,6 +353,18 @@ describe('RecipeBuilder Component', () => {
         const doneButton = screen.getByText('Done with Ingredients');
         expect(doneButton).not.toBeDisabled();
       }
+    });
+
+    it('should keep a clear next action visible after selecting ingredients', async () => {
+      const user = userEvent.setup();
+      render(<RecipeBuilder />);
+
+      await user.click(screen.getByRole('button', { name: /add step/i }));
+      await user.click(screen.getByText('Prep Station'));
+      await user.click(screen.getByText('Chef Knife'));
+      await user.click(screen.getByText('Tomato'));
+
+      expect(screen.getByRole('button', { name: /done with ingredients/i })).toBeEnabled();
     });
   });
 
@@ -383,6 +430,38 @@ describe('RecipeBuilder Component', () => {
         expect(screen.getByText('Medium')).toBeInTheDocument();
         expect(screen.getByText('High')).toBeInTheDocument();
       }
+    });
+
+    it('should show a motion preview for a completed action choice', async () => {
+      const user = userEvent.setup();
+      render(<RecipeBuilder />);
+
+      const addButton = screen.getByRole('button', { name: /add step/i });
+      await user.click(addButton);
+      await user.click(screen.getByText('Prep Station'));
+      await user.click(screen.getByText('Chef Knife'));
+      await user.click(screen.getByText('Tomato'));
+      await user.click(screen.getByText('Done with Ingredients'));
+      await user.click(screen.getByText('Chop'));
+
+      expect(screen.getByText(/step animation/i)).toBeInTheDocument();
+      expect(screen.getByAltText(/chop motion preview/i)).toBeInTheDocument();
+    });
+
+    it('should show only details that match the chosen prep action', async () => {
+      const user = userEvent.setup();
+      render(<RecipeBuilder />);
+
+      await user.click(screen.getByRole('button', { name: /add step/i }));
+      await user.click(screen.getByText('Prep Station'));
+      await user.click(screen.getByText('Chef Knife'));
+      await user.click(screen.getByText('Tomato'));
+      await user.click(screen.getByText('Done with Ingredients'));
+      await user.click(screen.getByText('Chop'));
+
+      expect(screen.getByRole('button', { name: /chopped/i })).toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /diced/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /peeled/i })).not.toBeInTheDocument();
     });
 
     it('should show duration options', async () => {
@@ -470,6 +549,19 @@ describe('RecipeBuilder Component', () => {
       }
     });
 
+    it('should label plating steps with a serving plate tool', async () => {
+      const user = userEvent.setup();
+      render(<RecipeBuilder />);
+
+      await user.click(screen.getByRole('button', { name: /add step/i }));
+      await user.click(screen.getByText('Plating'));
+      await user.click(screen.getByText('Plate'));
+      await user.click(screen.getByText('Add Step to Recipe'));
+
+      expect(screen.getByText('Plated')).toBeInTheDocument();
+      expect(screen.getByText(/using Serving Plate/i)).toBeInTheDocument();
+    });
+
     it('should update step count after adding step', async () => {
       const user = userEvent.setup();
       render(<RecipeBuilder />);
@@ -550,8 +642,9 @@ describe('RecipeBuilder Component', () => {
         await user.click(addButton);
 
         // Find progress bar
-        const progressContainer = document.querySelector('.h-1.bg-gray-100');
+        const progressContainer = screen.getByRole('progressbar', { name: /step editor progress/i });
         expect(progressContainer).toBeInTheDocument();
+        expect(progressContainer).toHaveAttribute('aria-valuenow', '1');
       }
     });
   });

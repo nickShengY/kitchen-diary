@@ -1,8 +1,26 @@
+export type Category =
+  | 'vegetable'
+  | 'meat'
+  | 'dairy'
+  | 'spice'
+  | 'grain'
+  | 'legume'
+  | 'fruit'
+  | 'liquid'
+  | 'seafood'
+  | 'condiment'
+  | 'herb';
 
-
-export type Category = 'vegetable' | 'meat' | 'dairy' | 'spice' | 'grain' | 'fruit' | 'liquid' | 'seafood' | 'condiment' | 'herb';
-
-export type PhysicalProperty = 'peelable' | 'choppable' | 'liquid' | 'solid' | 'mixable' | 'cookable' | 'grateable' | 'meat' | 'vegetable';
+export type PhysicalProperty =
+  | 'peelable'
+  | 'choppable'
+  | 'liquid'
+  | 'solid'
+  | 'mixable'
+  | 'cookable'
+  | 'grateable'
+  | 'meat'
+  | 'vegetable';
 
 export interface Ingredient {
   id: string;
@@ -17,7 +35,7 @@ export interface Tool {
   id: string;
   name: string;
   icon: any; // Lucide icon component
-  type: 'prep' | 'cook' | 'appliance';
+  type: 'prep' | 'cook' | 'appliance' | 'finish';
 }
 
 export interface CookingAction {
@@ -30,18 +48,26 @@ export interface CookingAction {
   validProperties?: PhysicalProperty[]; // What kind of ingredient can this be done to?
 }
 
+export interface RecipeStepSettings {
+  temperature?: string;
+  duration?: string;
+  waterLevel?: string;
+  speed?: string;
+  cutShape?: string;
+  cookMethod?: string;
+  oil?: string;
+  liquid?: string;
+  garnish?: string;
+  texture?: string;
+}
+
 export interface RecipeStep {
   id: string;
   station: 'prep' | 'cook' | 'finish';
   ingredients: { id: string; amount: string; unit: string }[];
   toolId: string;
   actionId: string;
-  settings?: {
-    temperature?: string; // e.g., "350°F" or "High"
-    duration?: string;    // e.g., "10 mins"
-    waterLevel?: string;  // e.g., "1 cup"
-    speed?: string;       // e.g., "Low"
-  };
+  settings?: RecipeStepSettings;
   notes?: string;
 }
 
@@ -74,7 +100,7 @@ export enum AppView {
 export interface UserProfile {
   id: string;
   name: string;
-  avatar: string; // Emoji
+  avatar: string; // Image URL or emoji fallback
   bio: string;
   favorites: string[];
   myRecipes: Recipe[];
@@ -83,12 +109,11 @@ export interface UserProfile {
   likesReceived?: number;
 }
 
-// Decider Wheel Types
 export interface CuisineCategory {
   id: string;
   name: string;
   emoji: string;
-  dishes: string[]; // List of dish names
+  dishes: string[];
 }
 
 export interface MenuItem {
