@@ -27,15 +27,20 @@ const CONFETTI_COLORS = ['#FF8E72', '#FFC482', '#6EC6CA', '#F9DC5C', '#FF9EAA'];
 
 const ConfettiBurst: React.FC = () => (
   <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-0 overflow-visible">
-    {Array.from({ length: 16 }).map((_, index) => (
+    {Array.from({ length: 26 }).map((_, index) => (
       <span
         key={index}
         className="confetti-piece"
         style={{
-          left: `${6 + index * 5.8}%`,
+          left: `${3 + index * 3.7}%`,
           backgroundColor: CONFETTI_COLORS[index % CONFETTI_COLORS.length],
-          animationDelay: `${(index % 5) * 90}ms`,
-          ['--confetti-x' as string]: `${(index % 2 === 0 ? 1 : -1) * (10 + (index % 4) * 14)}px`,
+          // Mix of ribbons, dots, and squares so the burst reads hand-tossed
+          borderRadius: index % 3 === 0 ? '9999px' : index % 3 === 1 ? '2px' : '40% 60% 55% 45%',
+          width: index % 3 === 0 ? '7px' : '9px',
+          height: index % 3 === 0 ? '7px' : '13px',
+          animationDelay: `${(index % 7) * 80}ms`,
+          animationDuration: `${1 + (index % 4) * 0.15}s`,
+          ['--confetti-x' as string]: `${(index % 2 === 0 ? 1 : -1) * (10 + (index % 5) * 16)}px`,
           ['--confetti-spin' as string]: `${200 + (index % 6) * 70}deg`,
         }}
       />
@@ -77,12 +82,12 @@ export const DeciderWheel: React.FC = () => {
           setCuisines(liveCuisines);
         } else {
           setCuisines(CUISINE_CATEGORIES);
-          setCuisineError('Using the built-in cuisine library right now.');
+          setCuisineError('Spinning with our starter cuisines today!');
         }
       } catch {
         if (cancelled) return;
         setCuisines(CUISINE_CATEGORIES);
-        setCuisineError('Using the built-in cuisine library right now.');
+        setCuisineError('Spinning with our starter cuisines today!');
       } finally {
         if (!cancelled) setIsLoadingCuisines(false);
       }
@@ -228,8 +233,8 @@ export const DeciderWheel: React.FC = () => {
         });
       } else {
         setScanResult({
-          name: 'Menu scan is off for now',
-          desc: 'This keeps AI keys and unexpected usage costs out of the app.',
+          name: "We couldn't read that menu",
+          desc: 'Try a brighter photo with the dish names in focus.',
         });
       }
     };
@@ -241,8 +246,14 @@ export const DeciderWheel: React.FC = () => {
     <div className="min-h-screen overflow-hidden px-4 pb-32">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-[#FFF5F0]/90 py-6 backdrop-blur">
         <div className="animate-rise">
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-toon-primary">Can't choose?</p>
-          <h1 className="font-display text-3xl font-semibold text-toon-dark leading-tight">Decide</h1>
+          <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-toon-primary">
+            <span aria-hidden="true" className="toon-twinkle inline-block">✦</span>
+            Can't choose?
+          </p>
+          <h1 className="font-display text-3xl font-semibold leading-tight">
+            <span className="text-candy">Decide</span>{' '}
+            <span aria-hidden="true" className="inline-block animate-bob text-2xl">🎲</span>
+          </h1>
         </div>
         <div className="flex rounded-full border border-orange-100 bg-white p-1 shadow-toon-soft">
           <button
@@ -278,7 +289,11 @@ export const DeciderWheel: React.FC = () => {
             </span>
           </div>
 
-          <div className="relative mb-8 h-[320px] w-full overflow-y-auto rounded-3xl toon-card p-4">
+          <div
+            className={`relative mb-8 h-[320px] w-full overflow-y-auto rounded-3xl toon-card p-4 transition-shadow ${
+              isSpinning ? 'animate-pulse-ring' : ''
+            }`}
+          >
             {selectedDish && <ConfettiBurst />}
             {isLoadingCuisines && (
               <div className="flex h-full flex-col justify-center text-gray-500">
@@ -346,13 +361,18 @@ export const DeciderWheel: React.FC = () => {
                     })}
                   </div>
                 ) : selectedDish ? (
-                  <div aria-live="polite" className="flex h-full flex-col items-center justify-center animate-pop-in">
-                    <div className="mb-4 text-8xl animate-float">{selectedCuisine?.emoji}</div>
-                    <h2 className="mb-2 text-center font-display text-4xl font-semibold text-toon-dark">
+                  <div aria-live="polite" className="relative flex h-full flex-col items-center justify-center animate-pop-in">
+                    <span aria-hidden="true" className="toon-sunburst absolute left-1/2 top-8 h-52 w-52 ml-[-6.5rem] rounded-full" />
+                    <div className="relative mb-4 text-8xl animate-float drop-shadow-[0_10px_16px_rgba(242,112,79,0.25)]">
+                      {selectedCuisine?.emoji}
+                    </div>
+                    <h2 className="animate-tada relative mb-2 text-center font-display text-4xl font-semibold text-toon-dark">
                       {selectedDish}
                     </h2>
-                    <p className="text-sm font-bold uppercase tracking-widest text-toon-primary">
+                    <p className="relative flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-toon-primary">
+                      <span aria-hidden="true" className="toon-twinkle">✦</span>
                       Bon Appetit
+                      <span aria-hidden="true" className="toon-twinkle" style={{ animationDelay: '0.6s' }}>✦</span>
                     </p>
                   </div>
                 ) : (
@@ -363,7 +383,7 @@ export const DeciderWheel: React.FC = () => {
                     </h2>
                     <button
                       onClick={handlePhase2Start}
-                      className="press-springy rounded-2xl bg-toon-primary px-8 py-3 font-bold text-white shadow-lg hover:bg-toon-primary-deep transition-colors"
+                      className="press-springy btn-candy rounded-2xl px-8 py-3 font-bold text-white"
                     >
                       Find a Dish <ChevronRight className="ml-1 inline" aria-hidden="true" />
                     </button>
@@ -393,7 +413,7 @@ export const DeciderWheel: React.FC = () => {
             {selectedCuisine && phase === 'CATEGORY' && !selectedDish && !isSpinning && (
               <button
                 onClick={handlePhase2Start}
-                className="press-springy w-full rounded-2xl bg-toon-primary py-3 font-bold text-white shadow-sm hover:bg-toon-primary-deep transition-colors animate-rise"
+                className="press-springy btn-candy w-full rounded-2xl py-3 font-bold text-white animate-rise"
               >
                 Move to Dishes
               </button>
@@ -406,7 +426,7 @@ export const DeciderWheel: React.FC = () => {
                     setSelectedDish(null);
                     spin();
                   }}
-                  className="press-springy flex-1 rounded-2xl bg-toon-primary py-3 font-bold text-white shadow-sm hover:bg-toon-primary-deep transition-colors"
+                  className="press-springy btn-candy flex-1 rounded-2xl py-3 font-bold text-white"
                 >
                   Respin Dish
                 </button>

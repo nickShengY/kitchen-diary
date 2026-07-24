@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Heart, MessageCircle, Star, Search, Filter, Share2, PlayCircle } from 'lucide-react';
+import { Heart, MessageCircle, Star, Search, Filter, Share2, PlayCircle, Trash2 } from 'lucide-react';
 import { SocialPost, Recipe } from '../types';
 import { searchSmartRecipes } from '../services/geminiService';
 import { fetchCommunityFeed } from '../services/liveDataService';
+import { getSharedPosts, removeSharedPost } from '../services/communityStore';
 
 interface CommunityProps {
   onCookThis: (recipe: Recipe) => void;
@@ -17,6 +18,26 @@ const mapRecipeToSocialPost = (recipe: Recipe): SocialPost => ({
   description: recipe.description || 'Fresh ideas from today\'s recipe search.',
 });
 
+const LIKED_POSTS_KEY = 'kitchendiary.likedPosts.v1';
+
+// Liked recipes back the "Saved" tab, so they need to survive reloads.
+const readLikedPosts = (): string[] => {
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(LIKED_POSTS_KEY) ?? '[]');
+    return Array.isArray(parsed) ? parsed.filter((id): id is string => typeof id === 'string') : [];
+  } catch {
+    return [];
+  }
+};
+
+const writeLikedPosts = (ids: string[]) => {
+  try {
+    window.localStorage.setItem(LIKED_POSTS_KEY, JSON.stringify(ids));
+  } catch {
+    // Storage may be blocked; likes still work for this session.
+  }
+};
+
 export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
   const [activeTab, setActiveTab] = useState('Popular');
   const [activeTag, setActiveTag] = useState('All');
@@ -26,9 +47,17 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [isLoadingFeed, setIsLoadingFeed] = useState(true);
   const [feedError, setFeedError] = useState<string | null>(null);
-  const [likedPosts, setLikedPosts] = useState<string[]>([]);
+  const [likedPosts, setLikedPosts] = useState<string[]>(() => readLikedPosts());
+  const [burstPostId, setBurstPostId] = useState<string | null>(null);
   const [shareStatus, setShareStatus] = useState<string | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const burstTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (burstTimerRef.current) window.clearTimeout(burstTimerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -36,16 +65,27 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
     const loadFeed = async () => {
       setIsLoadingFeed(true);
       setFeedError(null);
+      const sharedPosts = getSharedPosts();
+
+      // Celebrate a share that just happened before landing on this screen.
+      const newestShared = sharedPosts[0];
+      if (newestShared && Date.now() - newestShared.createdAt < 8_000) {
+        setShareStatus('Your recipe is live in the community! 🎉');
+      }
+
       try {
         const livePosts = await fetchCommunityFeed();
         if (cancelled) return;
-        setBasePosts(livePosts);
-        setPosts(livePosts);
+        const merged = [...sharedPosts, ...livePosts];
+        setBasePosts(merged);
+        setPosts(merged);
       } catch (error) {
         if (cancelled) return;
-        setBasePosts([]);
-        setPosts([]);
-        setFeedError('Unable to load community recipes right now.');
+        setBasePosts(sharedPosts);
+        setPosts(sharedPosts);
+        if (sharedPosts.length === 0) {
+          setFeedError('Unable to load community recipes right now.');
+        }
       } finally {
         if (!cancelled) {
           setIsLoadingFeed(false);
@@ -67,11 +107,25 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
   }, [shareStatus]);
 
   const toggleLike = (id: string) => {
-    if (likedPosts.includes(id)) {
-      setLikedPosts(likedPosts.filter((postId) => postId !== id));
-      return;
+    setLikedPosts((current) => {
+      const next = current.includes(id)
+        ? current.filter((postId) => postId !== id)
+        : [...current, id];
+      writeLikedPosts(next);
+      return next;
+    });
+    if (!likedPosts.includes(id)) {
+      setBurstPostId(id);
+      if (burstTimerRef.current) window.clearTimeout(burstTimerRef.current);
+      burstTimerRef.current = window.setTimeout(() => setBurstPostId(null), 650);
     }
-    setLikedPosts([...likedPosts, id]);
+  };
+
+  const deleteOwnPost = (post: SocialPost) => {
+    removeSharedPost(post.id);
+    setBasePosts((current) => current.filter((p) => p.id !== post.id));
+    setPosts((current) => current.filter((p) => p.id !== post.id));
+    setShareStatus(`Removed "${post.title}" from the community.`);
   };
 
   const performSearch = async (query: string) => {
@@ -144,6 +198,10 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
     });
 
     return [...filtered].sort((a, b) => {
+      // Your own shared recipes stay on top so they never sink under
+      // high-like live posts right after publishing.
+      const mineDelta = Number(b.authorId === 'local-chef') - Number(a.authorId === 'local-chef');
+      if (mineDelta !== 0) return mineDelta;
       if (activeTab === 'Recent') return b.createdAt - a.createdAt;
       return (b.likes ?? 0) - (a.likes ?? 0);
     });
@@ -154,8 +212,14 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
       <header className="sticky top-0 bg-[#FFF5F0]/90 backdrop-blur-md z-20 pt-6 pb-2 px-4 shadow-[0_10px_30px_-18px_rgba(74,64,58,0.25)]">
         <div className="flex justify-between items-center mb-4">
           <div className="animate-rise">
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-toon-primary">Kitchen Diary</p>
-            <h1 className="font-display text-3xl font-semibold text-toon-dark leading-tight">Explore</h1>
+            <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-toon-primary">
+              <span aria-hidden="true" className="toon-twinkle inline-block">✦</span>
+              Kitchen Diary
+            </p>
+            <h1 className="font-display text-3xl font-semibold leading-tight">
+              <span className="text-candy">Explore</span>{' '}
+              <span aria-hidden="true" className="inline-block animate-bob text-2xl">🧁</span>
+            </h1>
           </div>
           <button
             type="button"
@@ -235,21 +299,24 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
       </div>
 
       <div className="px-4 mt-4 columns-2 gap-4 space-y-4">
-        <div className="break-inside-avoid relative overflow-hidden bg-gradient-to-br from-toon-secondary to-toon-primary rounded-3xl shadow-lg p-6 text-white text-center mb-4 animate-pop-in">
+        <div className="break-inside-avoid relative overflow-hidden bg-gradient-to-br from-toon-secondary via-toon-primary to-toon-primary-deep rounded-3xl shadow-[inset_0_2px_0_rgba(255,255,255,0.35),0_16px_34px_-12px_rgba(242,112,79,0.6)] p-6 text-white text-center mb-4 animate-pop-in">
+          <span aria-hidden="true" className="toon-sprinkles absolute inset-0 opacity-60" />
           <span aria-hidden="true" className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-white/15" />
           <span aria-hidden="true" className="absolute -left-6 bottom-2 h-20 w-20 rounded-full bg-white/10" />
-          <div className="bg-white/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 backdrop-blur-sm">
-            <Star className="text-white fill-current animate-spin-slow" size={24} />
+          <span aria-hidden="true" className="toon-twinkle absolute left-5 top-5 text-sm text-white/90">✦</span>
+          <span aria-hidden="true" className="toon-twinkle absolute right-7 bottom-9 text-xs text-white/80" style={{ animationDelay: '0.7s' }}>✧</span>
+          <div className="relative bg-white/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 backdrop-blur-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]">
+            <Star className="text-white fill-current animate-spin-slow drop-shadow" size={24} />
           </div>
-          <h3 className="font-display text-lg font-semibold mb-1">Daily Wish</h3>
-          <p className="text-xs opacity-90 mb-4 font-medium">What are you craving today?</p>
+          <h3 className="relative font-display text-lg font-semibold mb-1 drop-shadow-sm">Daily Wish</h3>
+          <p className="relative text-xs opacity-90 mb-4 font-medium">What are you craving today?</p>
           <button
             type="button"
             onClick={handleMakeWish}
             disabled={isSearching}
-            className="press-springy min-h-11 bg-white text-toon-primary font-bold px-4 py-2 rounded-full text-xs shadow-sm hover:shadow-md transition-shadow disabled:opacity-70"
+            className="press-springy relative min-h-11 bg-white text-toon-primary font-bold px-5 py-2 rounded-full text-xs shadow-[0_4px_0_rgba(180,70,40,0.25)] hover:shadow-[0_6px_14px_rgba(180,70,40,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-70"
           >
-            Make a Wish
+            {isSearching ? 'Wishing...' : 'Make a Wish'}
           </button>
         </div>
 
@@ -301,6 +368,16 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
                 loading="lazy"
                 className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
               />
+              {post.steps.length > 0 && (
+                <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-[10px] font-bold text-toon-primary shadow-sm backdrop-blur-sm">
+                  <PlayCircle size={11} /> {post.steps.length} steps
+                </span>
+              )}
+              {post.authorId === 'local-chef' && (
+                <span className="absolute top-2 left-2 flex items-center gap-1 rounded-full bg-gradient-to-r from-toon-secondary to-toon-primary px-2.5 py-1 text-[10px] font-bold text-white shadow-md">
+                  <span aria-hidden="true">✦</span> You
+                </span>
+              )}
               {typeof post.likes === 'number' ? (
                 <button
                   type="button"
@@ -343,11 +420,24 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
                   aria-label="Like post"
                   aria-pressed={likedPosts.includes(post.id)}
                   onClick={() => toggleLike(post.id)}
-                  className={`press-springy flex h-11 w-11 items-center justify-center gap-1 rounded-full transition-colors ${
+                  className={`press-springy heart-burst ${burstPostId === post.id ? 'is-bursting' : ''} flex h-11 w-11 items-center justify-center gap-1 rounded-full transition-colors ${
                     likedPosts.includes(post.id) ? 'text-pink-500' : 'text-gray-300 hover:text-pink-400'
                   }`}
                 >
-                  <Heart size={16} className={likedPosts.includes(post.id) ? 'fill-current animate-pop-in' : ''} />
+                  {['#FF9EAA', '#FF8E72', '#FFC482', '#6EC6CA', '#F9DC5C'].map((color, i) => (
+                    <span
+                      key={color}
+                      aria-hidden="true"
+                      className="burst-particle"
+                      style={{
+                        backgroundColor: color,
+                        ['--burst-x' as string]: `${Math.cos((i / 5) * Math.PI * 2) * 20}px`,
+                        ['--burst-y' as string]: `${Math.sin((i / 5) * Math.PI * 2) * 20}px`,
+                        animationDelay: `${i * 25}ms`,
+                      }}
+                    />
+                  ))}
+                  <Heart size={16} className={likedPosts.includes(post.id) ? 'fill-current animate-tada' : ''} />
                 </button>
                 <div
                   aria-label="Comment count"
@@ -366,6 +456,16 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
                 >
                   <Share2 size={16} />
                 </button>
+                {post.authorId === 'local-chef' && (
+                  <button
+                    type="button"
+                    aria-label={`Delete ${post.title}`}
+                    onClick={() => deleteOwnPost(post)}
+                    className="press-springy flex h-11 w-11 items-center justify-center rounded-full text-gray-300 hover:text-red-400 transition-colors"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                )}
               </div>
             </div>
           </article>

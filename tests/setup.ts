@@ -10,6 +10,37 @@ afterEach(() => {
 // Mock environment variables
 vi.stubEnv('API_KEY', 'test-api-key');
 
+// This jsdom setup exposes a localStorage object with no working methods, so
+// give tests a real in-memory implementation, reset between tests.
+const createStorageMock = (): Storage => {
+  let store = new Map<string, string>();
+  return {
+    get length() {
+      return store.size;
+    },
+    key: (index: number) => Array.from(store.keys())[index] ?? null,
+    getItem: (key: string) => (store.has(key) ? store.get(key)! : null),
+    setItem: (key: string, value: string) => {
+      store.set(String(key), String(value));
+    },
+    removeItem: (key: string) => {
+      store.delete(key);
+    },
+    clear: () => {
+      store = new Map();
+    },
+  };
+};
+
+Object.defineProperty(window, 'localStorage', {
+  writable: true,
+  value: createStorageMock(),
+});
+
+afterEach(() => {
+  window.localStorage.clear();
+});
+
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

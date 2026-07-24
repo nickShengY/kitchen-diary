@@ -85,7 +85,7 @@ describe('DeciderWheel Component', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('Using the built-in cuisine library right now.'),
+        screen.getByText('Spinning with our starter cuisines today!'),
       ).toBeInTheDocument();
     });
 

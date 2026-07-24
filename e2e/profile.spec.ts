@@ -1,12 +1,18 @@
 import { test, expect, Page } from '@playwright/test';
 
 const signInWithLiveProfile = async (page: Page) => {
-  await page.getByRole('button', { name: /create live profile/i }).click();
-
+  // Sign-in is Google-only; without configured Firebase credentials the
+  // attempt cannot complete, so this helper skips instead of failing.
+  const loginButton = page.getByRole('button', { name: /continue with google/i });
   const signOut = page.getByRole('button', { name: /sign out/i });
+
+  const canAttempt = await loginButton.isVisible().catch(() => false);
+  test.skip(!canAttempt, 'Google sign-in is not available in this run.');
+
+  await loginButton.click();
   await Promise.race([
     signOut.waitFor({ state: 'visible', timeout: 12000 }),
-    page.getByRole('button', { name: /create live profile/i }).waitFor({ state: 'visible', timeout: 12000 }),
+    loginButton.waitFor({ state: 'visible', timeout: 12000 }),
   ]).catch(() => undefined);
 
   const loggedIn = await signOut.isVisible().catch(() => false);
@@ -24,21 +30,22 @@ test.describe('Profile View', () => {
   });
 
   test('should display welcome message', async ({ page }) => {
-    await expect(page.getByText(/join the cooking community/i)).toBeVisible();
+    await expect(page.getByText(/sign in securely with your google account/i)).toBeVisible();
   });
 
   test('should display sign in button', async ({ page }) => {
-    await expect(page.getByRole('button', { name: /create live profile/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /continue with google/i })).toBeVisible();
   });
 
   test('should display live identity note', async ({ page }) => {
-    await expect(page.getByText(/profile data is saved in this browser/i)).toBeVisible();
+    await expect(page.getByText(/google sign-in is the only supported login method/i)).toBeVisible();
   });
 
-  test('should show loading state when signing in', async ({ page }) => {
-    const signInButton = page.getByRole('button', { name: /create live profile/i });
-    await signInButton.click();
-    await expect(page.getByRole('button', { name: /creating profile/i })).toBeVisible();
+  test('should surface feedback when signing in', async ({ page }) => {
+    // Without configured Firebase credentials the click must surface a clear
+    // alert instead of silently doing nothing.
+    await page.getByRole('button', { name: /continue with google/i }).click();
+    await expect(page.getByRole('alert').first()).toBeVisible();
   });
 
   test('should show profile after login', async ({ page }) => {
@@ -78,7 +85,7 @@ test.describe('Profile View', () => {
   test('should sign out and return to login', async ({ page }) => {
     await signInWithLiveProfile(page);
     await page.getByRole('button', { name: /sign out/i }).click();
-    await expect(page.getByRole('button', { name: /create live profile/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /continue with google/i })).toBeVisible();
   });
 
   test('should have settings button when logged in', async ({ page }) => {
@@ -121,7 +128,7 @@ test.describe('Profile Authentication Flow', () => {
 
     await signInWithLiveProfile(page);
     await page.getByRole('button', { name: /sign out/i }).click();
-    await expect(page.getByRole('button', { name: /create live profile/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /continue with google/i })).toBeVisible();
 
     await signInWithLiveProfile(page);
     await expect(page.getByRole('button', { name: /sign out/i })).toBeVisible();

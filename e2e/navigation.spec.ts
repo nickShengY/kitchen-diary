@@ -24,7 +24,7 @@ test.describe('Navigation', () => {
   test('should navigate to Profile view', async ({ page }) => {
     await page.getByRole('button', { name: 'Profile', exact: true }).click();
     await expect(page.getByText('CookToon')).toBeVisible();
-    await expect(page.getByRole('button', { name: /create live profile/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /continue with google/i })).toBeVisible();
   });
 
   test('should navigate back to Community view', async ({ page }) => {
@@ -35,7 +35,7 @@ test.describe('Navigation', () => {
 
   test('should highlight active navigation item', async ({ page }) => {
     const homeButton = page.getByRole('button', { name: 'Explore', exact: true });
-    await expect(homeButton).toHaveClass(/bg-toon-dark/);
+    await expect(homeButton).toHaveClass(/from-toon-primary/);
   });
 
   test('should navigate through all views', async ({ page }) => {
@@ -48,7 +48,7 @@ test.describe('Navigation', () => {
 
     // Go to Profile
     await page.getByRole('button', { name: 'Profile', exact: true }).click();
-    await expect(page.getByRole('button', { name: /create live profile/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /continue with google/i })).toBeVisible();
 
     // Go back to Community
     await page.getByRole('button', { name: 'Explore', exact: true }).click();

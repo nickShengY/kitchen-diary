@@ -657,7 +657,7 @@ const CORE_ACTIONS: CookingAction[] = [
     requiresToolId: 'bowl',
     validProperties: ['solid', 'cookable'],
   }),
-  action('stir_fry', 'Stir Fry', 'Fried', '\u{1F373}', {
+  action('stir_fry', 'Stir Fry', 'Stir Fried', '\u{1F373}', {
     requiresToolId: 'pan',
     requiresHeat: true,
     validProperties: ['cookable', 'solid'],
@@ -754,8 +754,9 @@ export const INGREDIENTS: Ingredient[] = mergeById(
     item.emoji,
     categoryForVisual(item.category),
     item.defaultUnit,
-    item.physicalProperties.filter((property): property is PhysicalProperty =>
-      visualProperties.includes(property as PhysicalProperty),
+    (item.physicalProperties as readonly string[]).filter(
+      (property): property is PhysicalProperty =>
+        (visualProperties as readonly string[]).includes(property),
     ),
   )),
 );

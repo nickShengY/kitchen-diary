@@ -91,7 +91,7 @@ describe('Profile Component', () => {
     await user.click(screen.getByRole('button', { name: /profile settings/i }));
 
     expect(screen.getByRole('dialog', { name: /profile settings/i })).toBeInTheDocument();
-    expect(screen.getByText('Connected through Google with Firebase.')).toBeInTheDocument();
+    expect(screen.getByText('Signed in with your Google account.')).toBeInTheDocument();
   });
 
   it('returns to signed-out state after logout', async () => {

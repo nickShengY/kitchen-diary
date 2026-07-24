@@ -30,11 +30,18 @@ const waitForLiveCuisines = async (page: Page) => {
 };
 
 const signInWithLiveProfile = async (page: Page) => {
-  await page.getByRole('button', { name: /create live profile/i }).click();
+  // Sign-in is Google-only; without configured Firebase credentials the
+  // attempt cannot complete, so this helper skips instead of failing.
+  const loginButton = page.getByRole('button', { name: /continue with google/i });
   const signOut = page.getByRole('button', { name: /sign out/i });
+
+  const canAttempt = await loginButton.isVisible().catch(() => false);
+  test.skip(!canAttempt, 'Google sign-in is not available in this run.');
+
+  await loginButton.click();
   await Promise.race([
     signOut.waitFor({ state: 'visible', timeout: 12000 }),
-    page.getByRole('button', { name: /create live profile/i }).waitFor({ state: 'visible', timeout: 12000 }),
+    loginButton.waitFor({ state: 'visible', timeout: 12000 }),
   ]).catch(() => undefined);
 
   const loggedIn = await signOut.isVisible().catch(() => false);
@@ -66,7 +73,7 @@ test.describe('Complete User Journey', () => {
     await waitForLiveFeed(page);
 
     await expect(page.getByRole('heading', { name: 'Explore' })).toBeVisible();
-    await page.getByRole('button', { name: 'Breakfast' }).click();
+    await page.getByRole('button', { name: 'Breakfast', exact: true }).click();
     if ((await recipeCards(page).count()) === 0) {
       await page.getByRole('button', { name: 'All' }).click();
     }
@@ -104,11 +111,9 @@ test.describe('Complete User Journey', () => {
     await nameInput.fill('My Test Recipe');
 
     await page.getByRole('button', { name: /add step/i }).click();
-    await page.getByText('Prep Station').click();
-    await page.getByRole('button', { name: 'Chef Knife' }).click();
-    await page.getByRole('button', { name: 'Tomato' }).click();
-    await page.getByRole('button', { name: 'Done with Ingredients' }).click({ force: true });
-    await page.getByRole('button', { name: 'Chop' }).click();
+    await page.getByRole('button', { name: 'Tomato', exact: true }).click();
+    await page.getByRole('button', { name: /cook with/i }).click({ force: true });
+    await page.getByText('Chop', { exact: true }).click();
     await page.getByRole('button', { name: '5 mins', exact: true }).click();
     await page.getByText('Add Step to Recipe').click({ force: true });
 

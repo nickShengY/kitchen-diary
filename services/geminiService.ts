@@ -2,10 +2,18 @@ import { MenuItem, Recipe } from '../types';
 
 const MEAL_DB_BASE_URL = 'https://www.themealdb.com/api/json/v1/1';
 
+const API_TIMEOUT_MS = 5_000;
+
 const fetchJson = async <T>(url: string): Promise<T> => {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
-  return (await response.json()) as T;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+    return (await response.json()) as T;
+  } finally {
+    clearTimeout(timeoutId);
+  }
 };
 
 // AI image analysis is deliberately unavailable in the public client. It can

@@ -15,6 +15,19 @@ const formatCount = (value: number | undefined): string => {
 
 const FLOATING_TREATS = ['🥞', '🍜', '🧁', '🥑', '🍕', '🍓'];
 
+/** Google accounts give a photo URL; guests get an emoji. Render each properly. */
+const Avatar: React.FC<{ avatar: string; name: string }> = ({ avatar, name }) =>
+  /^https:\/\//i.test(avatar) ? (
+    <img
+      src={avatar}
+      alt={`${name}'s avatar`}
+      referrerPolicy="no-referrer"
+      className="h-full w-full rounded-full object-cover"
+    />
+  ) : (
+    <span aria-hidden="true">{avatar}</span>
+  );
+
 export const Profile: React.FC = () => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(false);
@@ -98,7 +111,7 @@ export const Profile: React.FC = () => {
           role="dialog"
           aria-modal="true"
           aria-labelledby="profile-panel-title"
-          className="mx-auto w-full max-w-md rounded-[2rem] bg-white p-5 shadow-2xl animate-pop-in"
+          className="mx-auto w-full max-w-md rounded-[2rem] bg-white p-5 shadow-2xl animate-sheet-up"
         >
           <div aria-hidden="true" className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-orange-100" />
           <div className="mb-4 flex items-center justify-between gap-4">
@@ -166,9 +179,9 @@ export const Profile: React.FC = () => {
                 <p className="mt-1 font-bold text-toon-dark">{user.name}</p>
               </div>
               <div className="rounded-2xl bg-gray-50 p-4">
-                <p className="text-xs font-bold uppercase tracking-wider text-gray-400">Profile storage</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-gray-400">Account</p>
                 <p className="mt-1 text-sm font-semibold text-gray-600">
-                  Connected through Google with Firebase.
+                  Signed in with your Google account.
                 </p>
               </div>
               <div className="rounded-2xl border border-orange-100 bg-orange-50/60 p-4">
@@ -183,7 +196,7 @@ export const Profile: React.FC = () => {
                   {checkoutLoading ? 'Opening checkout...' : 'Get Kitchen Diary Plus'}
                 </button>
                 {!isStripeCheckoutConfigured() && (
-                  <p className="mt-2 text-xs text-gray-500">Web billing is not configured yet.</p>
+                  <p className="mt-2 text-xs text-gray-500">Subscriptions are coming soon.</p>
                 )}
                 {billingError && <p role="alert" className="mt-2 text-xs font-medium text-red-500">{billingError}</p>}
               </div>
@@ -222,12 +235,15 @@ export const Profile: React.FC = () => {
           ))}
         </div>
 
-        <div className="animate-pop-in w-24 h-24 bg-white rounded-full shadow-toon-glow flex items-center justify-center mb-6 [&>span:last-child]:hidden">
-          <span className="text-5xl" aria-hidden="true">{'\u{1F9D1}‍\u{1F373}'}</span>
-          <span className="text-5xl">🍳</span>
+        <div className="relative mb-6">
+          <span aria-hidden="true" className="toon-sunburst absolute -inset-14 rounded-full" />
+          <div className="animate-pop-in toon-sticker relative w-24 h-24 bg-gradient-to-br from-white to-orange-50 rounded-full flex items-center justify-center [&>span:last-child]:hidden">
+            <span className="text-5xl" aria-hidden="true">{'\u{1F9D1}‍\u{1F373}'}</span>
+            <span className="text-5xl">🍳</span>
+          </div>
         </div>
-        <h1 className="animate-rise font-display text-4xl font-semibold text-toon-dark mb-2" style={{ animationDelay: '100ms' }}>
-          CookToon
+        <h1 className="animate-rise font-display text-4xl font-semibold mb-2" style={{ animationDelay: '100ms' }}>
+          <span className="text-candy">CookToon</span>
         </h1>
         <p className="animate-rise text-gray-500 mb-8 text-center max-w-xs" style={{ animationDelay: '180ms' }}>
           Sign in securely with your Google account to save your Kitchen Diary.
@@ -236,7 +252,7 @@ export const Profile: React.FC = () => {
         <button
           onClick={handleLogin}
           disabled={loading}
-          className="press-springy animate-rise w-full max-w-xs bg-gradient-to-r from-toon-primary to-toon-primary-deep text-white font-bold py-4 rounded-2xl shadow-toon-glow hover:brightness-105 disabled:opacity-70 transition-all"
+          className="press-springy btn-candy animate-rise w-full max-w-xs text-white font-bold py-4 rounded-2xl disabled:opacity-70"
           style={{ animationDelay: '260ms' }}
         >
           {loading ? 'Opening Google...' : 'Continue with Google'}
@@ -268,8 +284,8 @@ export const Profile: React.FC = () => {
       </header>
 
       <div className="toon-card rounded-[2rem] p-6 mb-6 relative mt-10 animate-pop-in">
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-gradient-to-br from-orange-100 to-toon-secondary/50 rounded-full border-4 border-white flex items-center justify-center text-4xl shadow-md animate-float">
-          {user.avatar}
+        <div className="toon-sticker absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 overflow-hidden bg-gradient-to-br from-orange-100 to-toon-secondary/50 rounded-full flex items-center justify-center text-4xl animate-float">
+          <Avatar avatar={user.avatar} name={user.name} />
         </div>
 
         <div className="mt-12 text-center">
@@ -284,11 +300,6 @@ export const Profile: React.FC = () => {
               </div>
             ))}
           </div>
-          {stats.length === 1 && (
-            <p className="mt-4 text-xs text-gray-400">
-              Social totals will appear once your connected backend provides them.
-            </p>
-          )}
         </div>
       </div>
 
@@ -296,9 +307,9 @@ export const Profile: React.FC = () => {
         <button
           type="button"
           onClick={() => setActivePanel('favorites')}
-          className="press-springy toon-card p-4 rounded-2xl hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col items-center gap-2"
+          className="press-springy toon-card group p-4 rounded-2xl hover:shadow-toon-lift hover:-translate-y-1 transition-all flex flex-col items-center gap-2"
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-pink-50">
+          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-pink-50 to-pink-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
             <Heart className="text-pink-400" aria-hidden="true" />
           </span>
           <span className="font-bold text-sm text-gray-600">Favorites</span>
@@ -306,9 +317,9 @@ export const Profile: React.FC = () => {
         <button
           type="button"
           onClick={() => setActivePanel('cookbook')}
-          className="press-springy toon-card p-4 rounded-2xl hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col items-center gap-2"
+          className="press-springy toon-card group p-4 rounded-2xl hover:shadow-toon-lift hover:-translate-y-1 transition-all flex flex-col items-center gap-2"
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-50">
+          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-blue-50 to-blue-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6">
             <BookOpen className="text-blue-400" aria-hidden="true" />
           </span>
           <span className="font-bold text-sm text-gray-600">My Cookbook</span>

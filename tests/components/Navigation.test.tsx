@@ -94,21 +94,21 @@ describe('Navigation Component', () => {
       render(<Navigation currentView={AppView.COMMUNITY} setView={mockSetView} />);
 
       const homeButton = screen.getByText('Explore').closest('button');
-      expect(homeButton?.className).toContain('bg-toon-dark');
+      expect(homeButton?.className).toContain('from-toon-primary');
     });
 
     it('should highlight Decider when current view is DECIDER', () => {
       render(<Navigation currentView={AppView.DECIDER} setView={mockSetView} />);
 
       const deciderButton = screen.getByText('Decide').closest('button');
-      expect(deciderButton?.className).toContain('bg-toon-dark');
+      expect(deciderButton?.className).toContain('from-toon-primary');
     });
 
     it('should highlight Me when current view is PROFILE', () => {
       render(<Navigation currentView={AppView.PROFILE} setView={mockSetView} />);
 
       const profileButton = screen.getByText('Profile').closest('button');
-      expect(profileButton?.className).toContain('bg-toon-dark');
+      expect(profileButton?.className).toContain('from-toon-primary');
     });
 
     it('should not highlight inactive items', () => {

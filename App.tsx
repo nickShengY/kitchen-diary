@@ -33,6 +33,7 @@ function App() {
                 key={importRecipe?.id || 'new'}
                 initialRecipe={importRecipe}
                 onExit={() => setCurrentView(AppView.COMMUNITY)}
+                onShared={() => setCurrentView(AppView.COMMUNITY)}
             />
         );
       case AppView.DECIDER:

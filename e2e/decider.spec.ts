@@ -161,7 +161,7 @@ test.describe('Decider Wheel', () => {
 
   test('should show camera upload in scan mode', async ({ page }) => {
     await page.getByRole('button', { name: 'Scan', exact: true }).click();
-    await expect(page.getByText('AI will pick for you')).toBeVisible();
+    await expect(page.getByText('Secure menu scanning is coming soon')).toBeVisible();
   });
 
   test('should have file input in scan mode', async ({ page }) => {

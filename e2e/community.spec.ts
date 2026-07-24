@@ -89,7 +89,11 @@ test.describe('Community View', () => {
   });
 
   test('should display like counters', async ({ page }) => {
-    await expect(recipeCards(page).first().getByText('Live')).toBeVisible();
+    // Live API posts show a "Live" pill; offline fallback posts show a
+    // numeric like badge instead. Either proves the counter UI renders.
+    await expect(
+      recipeCards(page).first().getByText(/^(Live|\d+)$/).first(),
+    ).toBeVisible();
   });
 
   test('should display comment counters', async ({ page }) => {

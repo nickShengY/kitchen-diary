@@ -382,12 +382,15 @@ export const kitchenAssetPack = {
     ]);
   },
 
+  // Note: gif/sprites/* sheets use irregular grids and are unusable as
+  // previews, so motion lookups intentionally skip them. The remaining
+  // gif/transitions + gif/actions files are 3x2 storyboard sheets that the
+  // MotionScene component animates panel by panel.
   actionMotion(id: string): KitchenAssetRef | undefined {
     const assetId = normalizeAction(id);
     return firstAssetRef([
       `animations/actions/action_${assetId}.webp`,
       `gif/actions/action_${assetId}.gif`,
-      `gif/sprites/actions/action_${assetId}.gif`,
     ]);
   },
 
@@ -400,9 +403,7 @@ export const kitchenAssetPack = {
       `animations/ingredients/${ingredientIdForAsset}_raw_to_${resultState}.webp`,
       `gif/transitions/${ingredientIdForAsset}_raw_to_${resultState}.gif`,
       `gif/transitions/${ingredientIdForAsset}_chopped_to_${resultState}.gif`,
-      `gif/sprites/ingredients/${ingredientIdForAsset}_transform_raw_${resultState}.gif`,
       `gif/actions/action_${actionIdForAsset}.gif`,
-      `gif/sprites/actions/action_${actionIdForAsset}.gif`,
     ]);
   },
 
