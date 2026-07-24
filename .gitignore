@@ -27,5 +27,3 @@ __pycache__/
 *.sln
 *.sw?
 
-# Local agent/tool artifacts
-.codex/

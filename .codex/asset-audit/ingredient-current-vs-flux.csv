@@ -1,0 +1,52 @@
+id,name,category,current,better_flux
+tomato,Tomato,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/tomato.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/tomato__raw.webp
+carrot,Carrot,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/carrot.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/carrot__raw.webp
+potato,Potato,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/potato.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/potato__raw.webp
+onion,Onion,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/onion.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/onion__raw.webp
+garlic,Garlic,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/garlic.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/garlic__raw.webp
+broccoli,Broccoli,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/broccoli.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/broccoli__raw.webp
+spinach,Spinach,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/spinach.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/spinach__raw.webp
+mushroom,Mushroom,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/mushroom.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/mushroom__raw.webp
+bell_pepper,Bell Pepper,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/bell_pepper.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/bell_pepper__raw.webp
+eggplant,Eggplant,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/eggplant.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/eggplant__raw.webp
+zucchini,Zucchini,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/zucchini.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/zucchini__raw.webp
+corn,Corn,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/corn.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/corn__raw.webp
+cabbage,Cabbage,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/cabbage.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/cabbage__raw.webp
+lettuce,Lettuce,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/lettuce.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/lettuce__raw.webp
+green_beans,Green Beans,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/green_bean.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/green_beans__raw.webp
+peas,Peas,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/peas.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/peas__raw.webp
+chickpeas,Chickpeas,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/chickpea.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/chickpeas__raw.webp
+lentils,Lentils,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/lentil.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/lentils__raw.webp
+black_beans,Black Beans,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/black_bean.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/black_beans__raw.webp
+tofu,Tofu,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/tofu.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/tofu__raw.webp
+salt,Salt,spice,generated/kitchen_asset_pack_v1/png/ingredient_states/salt.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/salt__raw.webp
+pepper,Pepper,spice,generated/kitchen_asset_pack_v1/png/ingredient_states/pepper.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/black_pepper__raw.webp
+beef,Beef,meat,generated/kitchen_asset_pack_v1/png/modular/ingredients/beef.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/beef_slice__raw.webp
+chicken,Chicken,meat,generated/kitchen_asset_pack_v1/png/modular/ingredients/chicken.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/chicken_breast__raw.webp
+pork,Pork,meat,generated/kitchen_asset_pack_v1/png/modular/ingredients/pork.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/pork_chop__raw.webp
+sausage,Sausage,meat,generated/kitchen_asset_pack_v1/png/modular/ingredients/sausage.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/sausage__raw.webp
+bacon,Bacon,meat,generated/kitchen_asset_pack_v1/png/modular/ingredients/bacon.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/bacon__raw.webp
+fish,Fish,seafood,generated/kitchen_asset_pack_v1/png/ingredient_states/fish.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/white_fish__raw.webp
+salmon,Salmon,seafood,generated/kitchen_asset_pack_v1/png/modular/ingredients/salmon.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/salmon__raw.webp
+shrimp,Shrimp,seafood,generated/kitchen_asset_pack_v1/png/modular/ingredients/shrimp.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/shrimp__raw.webp
+egg,Egg,dairy,generated/kitchen_asset_pack_v1/png/modular/ingredients/egg.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/egg__raw.webp
+milk,Milk,dairy,generated/kitchen_asset_pack_v1/png/modular/ingredients/milk.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/milk__raw.webp
+cheese,Cheese,dairy,generated/kitchen_asset_pack_v1/png/modular/ingredients/cheese.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/cheddar__raw.webp
+butter,Butter,dairy,generated/kitchen_asset_pack_v1/png/modular/ingredients/butter.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/butter__raw.webp
+cream,Cream,dairy,generated/kitchen_asset_pack_v1/png/ingredient_states/cream.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/cream__raw.webp
+yogurt,Yogurt,dairy,generated/kitchen_asset_pack_v1/png/modular/ingredients/yogurt.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/yogurt__raw.webp
+rice,Rice,grain,generated/kitchen_asset_pack_v1/png/modular/ingredients/rice.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/white_rice__raw.webp
+noodles,Noodles,grain,generated/kitchen_asset_pack_v1/png/modular/ingredients/noodle.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/ramen_noodles__raw.webp
+bread,Bread,grain,generated/kitchen_asset_pack_v1/png/modular/ingredients/bread.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/bread_slice__raw.webp
+flour,Flour,grain,generated/kitchen_asset_pack_v1/png/modular/ingredients/flour.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/flour__raw.webp
+oil,Oil,liquid,generated/kitchen_asset_pack_v1/png/ingredient_states/oil.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/vegetable_oil__raw.webp
+soy_sauce,Soy Sauce,condiment,generated/kitchen_asset_pack_v1/png/ingredient_states/soysauce.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/soy_sauce__raw.webp
+broth,Broth,liquid,generated/kitchen_asset_pack_v1/png/ingredient_states/broth.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/broth__raw.webp
+apple,Apple,fruit,generated/kitchen_asset_pack_v1/png/modular/ingredients/apple.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/apple__raw.webp
+lemon,Lemon,fruit,generated/kitchen_asset_pack_v1/png/modular/ingredients/lemon.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/lemon__raw.webp
+banana,Banana,fruit,generated/kitchen_asset_pack_v1/png/modular/ingredients/banana.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/banana__raw.webp
+strawberry,Strawberry,fruit,generated/kitchen_asset_pack_v1/png/modular/ingredients/strawberry.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/strawberry__raw.webp
+avocado,Avocado,fruit,generated/kitchen_asset_pack_v1/png/modular/ingredients/avocado.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/avocado__raw.webp
+steak,Steak,meat,generated/kitchen_asset_pack_v1/png/modular/ingredients/steak.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/steak__raw.webp
+cauliflower,Cauliflower,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/cauliflower.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/cauliflower__raw.webp
+celery,Celery,vegetable,generated/kitchen_asset_pack_v1/png/modular/ingredients/celery.png,generated/kitchen_asset_pack_flux2_v1/webp/ingredient_states/celery__raw.webp
