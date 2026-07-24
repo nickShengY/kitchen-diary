@@ -16,6 +16,12 @@ playwright-report/
 test-results/
 __pycache__/
 
+# Generated art pack. Only the ~600 files the app's asset resolver can
+# actually reach are tracked (the rest is ~2GB of imagegen sources, unused
+# state variants, and dead-code dirs). Tracked files stay tracked; to add a
+# newly needed sprite, use: git add -f generated/<path>
+/generated/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
