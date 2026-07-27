@@ -380,9 +380,13 @@ describe('types', () => {
       expect(AppView.PROFILE).toBe('PROFILE');
     });
 
-    it('should have exactly 4 views', () => {
+    it('should have KITCHEN view', () => {
+      expect(AppView.KITCHEN).toBe('KITCHEN');
+    });
+
+    it('should have exactly 5 views', () => {
       const views = Object.values(AppView);
-      expect(views).toHaveLength(4);
+      expect(views).toHaveLength(5);
     });
   });
 

@@ -92,6 +92,7 @@ export interface SocialPost extends Recipe {
 
 export enum AppView {
   COMMUNITY = 'COMMUNITY',
+  KITCHEN = 'KITCHEN',
   BUILDER = 'BUILDER',
   DECIDER = 'DECIDER',
   PROFILE = 'PROFILE',

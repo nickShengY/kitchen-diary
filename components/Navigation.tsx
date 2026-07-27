@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, PlusCircle, Sparkles, UserRound } from 'lucide-react';
+import { Compass, PlusCircle, Refrigerator, Sparkles, UserRound } from 'lucide-react';
 import { AppView } from '../types';
 
 interface NavigationProps {
@@ -10,6 +10,7 @@ interface NavigationProps {
 export const Navigation: React.FC<NavigationProps> = ({ currentView, setView }) => {
   const items = [
     { view: AppView.COMMUNITY, icon: Compass, label: 'Explore' },
+    { view: AppView.KITCHEN, icon: Refrigerator, label: 'Kitchen' },
     { view: AppView.BUILDER, icon: PlusCircle, label: 'Build' },
     { view: AppView.DECIDER, icon: Sparkles, label: 'Decide' },
     { view: AppView.PROFILE, icon: UserRound, label: 'Profile' },

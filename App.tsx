@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Navigation } from './components/Navigation';
 import { RecipeBuilder } from './components/RecipeBuilder';
 import { Community } from './components/Community';
+import { PantryKitchen } from './components/PantryKitchen';
 import { DeciderWheel } from './components/DeciderWheel';
 import { Profile } from './components/Profile';
 import { AppView, Recipe } from './types';
@@ -27,6 +28,8 @@ function App() {
     switch (currentView) {
       case AppView.COMMUNITY:
         return <Community onCookThis={handleCookThis} />;
+      case AppView.KITCHEN:
+        return <PantryKitchen onCookThis={handleCookThis} />;
       case AppView.BUILDER:
         return (
             <RecipeBuilder
@@ -39,7 +42,7 @@ function App() {
       case AppView.DECIDER:
         return <DeciderWheel />;
       case AppView.PROFILE:
-        return <Profile />;
+        return <Profile onCookThis={handleCookThis} />;
       default:
         return <Community onCookThis={handleCookThis} />;
     }

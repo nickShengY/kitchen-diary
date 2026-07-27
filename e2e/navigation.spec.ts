@@ -11,6 +11,7 @@ test.describe('Navigation', () => {
 
   test('should show navigation bar', async ({ page }) => {
     await expect(page.getByRole('button', { name: 'Explore', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Kitchen', exact: true })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Build', exact: true })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Decide', exact: true })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Profile', exact: true })).toBeVisible();
@@ -19,6 +20,11 @@ test.describe('Navigation', () => {
   test('should navigate to Decider view', async ({ page }) => {
     await page.getByRole('button', { name: 'Decide', exact: true }).click();
     await expect(page.getByText('Spin Cuisine')).toBeVisible();
+  });
+
+  test('should navigate to Kitchen view', async ({ page }) => {
+    await page.getByRole('button', { name: 'Kitchen', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Kitchen', level: 1 })).toBeVisible();
   });
 
   test('should navigate to Profile view', async ({ page }) => {

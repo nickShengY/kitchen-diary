@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, Mock } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Profile } from '../../components/Profile';
 
@@ -11,6 +11,8 @@ vi.mock('../../services/authService', () => ({
 }));
 
 import { login, logout, getCurrentUser } from '../../services/authService';
+import { savePantry, EMPTY_PANTRY, loadPantry } from '../../services/pantryStore';
+import { shareRecipeToCommunity } from '../../services/communityStore';
 
 describe('Profile Component', () => {
   const mockUser = {
@@ -61,15 +63,15 @@ describe('Profile Component', () => {
     expect(screen.getByRole('button', { name: /sign out/i })).toBeInTheDocument();
   });
 
-  it('opens the favorites panel', async () => {
+  it('opens the saved recipes panel', async () => {
     (getCurrentUser as Mock).mockReturnValue(mockUser);
     const user = userEvent.setup();
     render(<Profile />);
 
-    await user.click(screen.getByRole('button', { name: /favorites/i }));
+    await user.click(screen.getByRole('button', { name: /^saved/i }));
 
-    expect(screen.getByRole('dialog', { name: /favorites/i })).toBeInTheDocument();
-    expect(screen.getByText('No favorites yet')).toBeInTheDocument();
+    expect(screen.getByRole('dialog', { name: /saved recipes/i })).toBeInTheDocument();
+    expect(screen.getByText('No saved recipes yet')).toBeInTheDocument();
   });
 
   it('opens the cookbook panel', async () => {
@@ -77,7 +79,7 @@ describe('Profile Component', () => {
     const user = userEvent.setup();
     render(<Profile />);
 
-    await user.click(screen.getByRole('button', { name: /my cookbook/i }));
+    await user.click(screen.getByRole('button', { name: /^cookbook/i }));
 
     expect(screen.getByRole('dialog', { name: /my cookbook/i })).toBeInTheDocument();
     expect(screen.getByText('No cookbook recipes yet')).toBeInTheDocument();
@@ -103,6 +105,103 @@ describe('Profile Component', () => {
 
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /continue with google/i })).toBeInTheDocument();
+    });
+  });
+
+  describe('local kitchen', () => {
+    it('reaches saved dishes and history without signing in', async () => {
+      savePantry({
+        ...EMPTY_PANTRY,
+        favorites: ['tomato-scrambled-eggs'],
+        history: ['egg-fried-rice'],
+      });
+      const user = userEvent.setup();
+      render(<Profile />);
+
+      // The sign-in card is still there, but it no longer blocks the kitchen.
+      expect(screen.getByRole('button', { name: /continue with google/i })).toBeInTheDocument();
+
+      await user.click(screen.getByRole('button', { name: /^saved/i }));
+      expect(screen.getByText('Tomato Scrambled Eggs')).toBeInTheDocument();
+    });
+
+    it('lists recently cooked dishes newest first', async () => {
+      savePantry({ ...EMPTY_PANTRY, history: ['egg-fried-rice', 'tomato-pasta'] });
+      const user = userEvent.setup();
+      render(<Profile />);
+
+      await user.click(screen.getByRole('button', { name: /^history/i }));
+
+      const dialog = screen.getByRole('dialog', { name: /recently cooked/i });
+      const titles = within(dialog).getAllByRole('article').map((row) => row.textContent);
+      expect(titles[0]).toContain('Leftover Egg Fried Rice');
+      expect(titles[1]).toContain('Ten-Minute Tomato Pasta');
+    });
+
+    it('unsaves a dish and writes it back to storage', async () => {
+      savePantry({ ...EMPTY_PANTRY, favorites: ['tomato-scrambled-eggs'] });
+      const user = userEvent.setup();
+      render(<Profile />);
+
+      await user.click(screen.getByRole('button', { name: /^saved/i }));
+      await user.click(screen.getByRole('button', { name: /unsave tomato scrambled eggs/i }));
+
+      expect(screen.getByText('No saved recipes yet')).toBeInTheDocument();
+      await waitFor(() => expect(loadPantry().favorites).toEqual([]));
+    });
+
+    it('clears the whole history', async () => {
+      savePantry({ ...EMPTY_PANTRY, history: ['egg-fried-rice', 'tomato-pasta'] });
+      const user = userEvent.setup();
+      render(<Profile />);
+
+      await user.click(screen.getByRole('button', { name: /^history/i }));
+      await user.click(screen.getByRole('button', { name: /clear all/i }));
+
+      expect(screen.getByText('Nothing cooked yet')).toBeInTheDocument();
+      await waitFor(() => expect(loadPantry().history).toEqual([]));
+    });
+
+    it('sends a saved dish to the builder and records it as cooked', async () => {
+      savePantry({ ...EMPTY_PANTRY, favorites: ['tomato-scrambled-eggs'] });
+      const onCookThis = vi.fn();
+      const user = userEvent.setup();
+      render(<Profile onCookThis={onCookThis} />);
+
+      await user.click(screen.getByRole('button', { name: /^saved/i }));
+      await user.click(screen.getByRole('button', { name: /^cook$/i }));
+
+      expect(onCookThis).toHaveBeenCalledTimes(1);
+      expect(onCookThis.mock.calls[0][0].id).toBe('pantry-tomato-scrambled-eggs');
+      await waitFor(() => expect(loadPantry().history).toEqual(['tomato-scrambled-eggs']));
+    });
+
+    it('files shared recipes into the cookbook', async () => {
+      shareRecipeToCommunity({
+        title: 'My Shared Dish',
+        description: 'From the builder.',
+        tags: ['Quick'],
+        steps: [
+          { id: 's1', station: 'prep', ingredients: [{ id: 'egg', amount: '1', unit: 'pcs' }], toolId: 'bowl', actionId: 'mix' },
+        ],
+      });
+      const user = userEvent.setup();
+      render(<Profile />);
+
+      await user.click(screen.getByRole('button', { name: /^cookbook/i }));
+
+      expect(screen.getByText('My Shared Dish')).toBeInTheDocument();
+      expect(screen.getByText(/1 step . shared by you/i)).toBeInTheDocument();
+    });
+
+    it('drops dishes that are no longer in the corpus', async () => {
+      savePantry({ ...EMPTY_PANTRY, favorites: ['a-recipe-we-deleted'] });
+      const user = userEvent.setup();
+      render(<Profile />);
+
+      await user.click(screen.getByRole('button', { name: /^saved/i }));
+
+      expect(screen.getByText('No saved recipes yet')).toBeInTheDocument();
     });
   });
 });
