@@ -65,6 +65,30 @@ describe('Community Component', () => {
     });
   });
 
+  it('announces the smart-search loading state to assistive technology', async () => {
+    let resolveSearch: ((recipes: never[]) => void) | undefined;
+    (searchSmartRecipes as Mock).mockReturnValueOnce(new Promise<never[]>((resolve) => {
+      resolveSearch = resolve;
+    }));
+    const user = userEvent.setup();
+    render(<Community onCookThis={mockOnCookThis} />);
+
+    await screen.findByText('Chicken Alfredo');
+    const input = screen.getByPlaceholderText(/find recipes/i);
+    await user.type(input, 'alfredo');
+    await user.keyboard('{Enter}');
+
+    await waitFor(() => {
+      expect(input.closest('form')).toHaveAttribute('aria-busy', 'true');
+      expect(screen.getByText('Searching live recipes.')).toBeInTheDocument();
+    });
+
+    resolveSearch?.([]);
+    await waitFor(() => {
+      expect(input.closest('form')).toHaveAttribute('aria-busy', 'false');
+    });
+  });
+
   it('toggles likes on a post', async () => {
     const user = userEvent.setup();
     render(<Community onCookThis={mockOnCookThis} />);

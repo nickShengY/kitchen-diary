@@ -205,13 +205,13 @@ const CORE_INGREDIENTS: Ingredient[] = [
     'cookable',
     'vegetable',
   ]),
-  ingredient('chickpeas', 'Chickpeas', '\u{1F95C}', 'vegetable', 'cup', [
+  ingredient('chickpeas', 'Chickpeas', '\u{1F95C}', 'legume', 'cup', [
     'solid',
     'mixable',
     'cookable',
     'vegetable',
   ]),
-  ingredient('lentils', 'Lentils', '\u{1F95C}', 'vegetable', 'cup', [
+  ingredient('lentils', 'Lentils', '\u{1F95C}', 'legume', 'cup', [
     'solid',
     'mixable',
     'cookable',
@@ -726,6 +726,9 @@ const categoryForVisual = (category: string): Category => {
   if (category === 'protein') return 'meat';
   if (category === 'plant_protein') return 'legume';
   if (category === 'dessert') return 'grain';
+  if (category === 'grain') return 'grain';
+  if (category === 'legume') return 'legume';
+  if (category === 'condiment') return 'condiment';
   if (category === 'liquid') return 'liquid';
   if (category === 'seafood') return 'seafood';
   if (category === 'dairy') return 'dairy';

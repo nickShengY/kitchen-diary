@@ -208,7 +208,7 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
   }, [activeTab, activeTag, likedPosts, posts, searchQuery]);
 
   return (
-    <div className="pb-24 min-h-screen">
+    <div className="recipe-journal pb-28 min-h-screen">
       <header className="sticky top-0 bg-[#FFF5F0]/90 backdrop-blur-md z-20 pt-6 pb-2 px-4 shadow-[0_10px_30px_-18px_rgba(74,64,58,0.25)]">
         <div className="flex justify-between items-center mb-4">
           <div className="animate-rise">
@@ -231,7 +231,11 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
           </button>
         </div>
 
-        <form onSubmit={handleSearch} className="relative mb-4">
+        <form
+          onSubmit={handleSearch}
+          className="relative mb-4"
+          aria-busy={isSearching || isLoadingFeed}
+        >
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
           <input
             ref={searchInputRef}
@@ -247,6 +251,9 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
               className="absolute right-3.5 top-1/2 -translate-y-1/2 animate-spin rounded-full h-4 w-4 border-2 border-orange-100 border-b-toon-primary"
             />
           )}
+          <span className="sr-only" aria-live="polite">
+            {isLoadingFeed ? 'Loading live recipes.' : isSearching ? 'Searching live recipes.' : ''}
+          </span>
         </form>
 
         <div className="flex justify-between border-b border-orange-100 mb-4" role="tablist" aria-label="Feed sorting">
@@ -298,8 +305,8 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
         )}
       </div>
 
-      <div className="px-4 mt-4 columns-2 gap-4 space-y-4">
-        <div className="break-inside-avoid relative overflow-hidden bg-gradient-to-br from-toon-secondary via-toon-primary to-toon-primary-deep rounded-3xl shadow-[inset_0_2px_0_rgba(255,255,255,0.35),0_16px_34px_-12px_rgba(242,112,79,0.6)] p-6 text-white text-center mb-4 animate-pop-in">
+      <div className="recipe-journal-grid px-4 mt-4 columns-2 gap-4 space-y-4">
+        <div className="daily-inspiration break-inside-avoid relative overflow-hidden bg-gradient-to-br from-toon-secondary via-toon-primary to-toon-primary-deep rounded-3xl shadow-[inset_0_2px_0_rgba(255,255,255,0.35),0_16px_34px_-12px_rgba(242,112,79,0.6)] p-6 text-white text-center mb-4 animate-pop-in">
           <span aria-hidden="true" className="toon-sprinkles absolute inset-0 opacity-60" />
           <span aria-hidden="true" className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-white/15" />
           <span aria-hidden="true" className="absolute -left-6 bottom-2 h-20 w-20 rounded-full bg-white/10" />
@@ -366,7 +373,7 @@ export const Community: React.FC<CommunityProps> = ({ onCookThis }) => {
                 src={post.imageUrl}
                 alt={post.title}
                 loading="lazy"
-                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full aspect-[4/3] object-cover bg-orange-50 transition-transform duration-500 group-hover:scale-105"
               />
               {post.steps.length > 0 && (
                 <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-[10px] font-bold text-toon-primary shadow-sm backdrop-blur-sm">

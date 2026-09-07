@@ -1,16 +1,20 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigation } from './components/Navigation';
 import { RecipeBuilder } from './components/RecipeBuilder';
 import { Community } from './components/Community';
 import { PantryKitchen } from './components/PantryKitchen';
 import { DeciderWheel } from './components/DeciderWheel';
 import { Profile } from './components/Profile';
+import { subscribeToAuthState } from './services/authService';
 import { AppView, Recipe } from './types';
 
 function App() {
   const [currentView, setCurrentView] = useState<AppView>(AppView.COMMUNITY);
   const [importRecipe, setImportRecipe] = useState<Recipe | undefined>(undefined);
+  const [userId, setUserId] = useState<string | undefined>(undefined);
+
+  useEffect(() => subscribeToAuthState((user) => setUserId(user?.id)), []);
 
   const handleCookThis = (recipe: Recipe) => {
       setImportRecipe(recipe);
@@ -29,12 +33,13 @@ function App() {
       case AppView.COMMUNITY:
         return <Community onCookThis={handleCookThis} />;
       case AppView.KITCHEN:
-        return <PantryKitchen onCookThis={handleCookThis} />;
+        return <PantryKitchen userId={userId} onCookThis={handleCookThis} />;
       case AppView.BUILDER:
         return (
             <RecipeBuilder
                 key={importRecipe?.id || 'new'}
                 initialRecipe={importRecipe}
+                userId={userId}
                 onExit={() => setCurrentView(AppView.COMMUNITY)}
                 onShared={() => setCurrentView(AppView.COMMUNITY)}
             />

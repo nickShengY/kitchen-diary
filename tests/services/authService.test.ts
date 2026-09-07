@@ -6,6 +6,8 @@ const firebaseMocks = vi.hoisted(() => ({
   signInWithPopup: vi.fn(),
   signOut: vi.fn(),
   setCustomParameters: vi.fn(),
+  onSnapshot: vi.fn(),
+  doc: vi.fn((...parts: string[]) => parts.join('/')),
 }));
 
 vi.mock('firebase/auth', () => ({
@@ -15,8 +17,14 @@ vi.mock('firebase/auth', () => ({
   signOut: firebaseMocks.signOut,
 }));
 
+vi.mock('firebase/firestore', () => ({
+  doc: firebaseMocks.doc,
+  onSnapshot: firebaseMocks.onSnapshot,
+}));
+
 vi.mock('../../services/firebase', () => ({
   getFirebaseAuth: vi.fn(() => firebaseMocks.auth),
+  getFirebaseFirestore: vi.fn(() => ({})),
   isFirebaseConfigured: vi.fn(() => true),
 }));
 
@@ -35,6 +43,9 @@ describe('authService', () => {
     firebaseMocks.signInWithPopup.mockReset();
     firebaseMocks.signOut.mockReset();
     firebaseMocks.setCustomParameters.mockReset();
+    firebaseMocks.onSnapshot.mockReset();
+    firebaseMocks.onSnapshot.mockReturnValue(vi.fn());
+    firebaseMocks.doc.mockClear();
   });
 
   it('signs in only through the Firebase Google popup', async () => {
@@ -57,6 +68,22 @@ describe('authService', () => {
     const listener = firebaseMocks.onAuthStateChanged.mock.calls[0][1];
     listener(firebaseUser);
     expect(callback).toHaveBeenCalledWith(expect.objectContaining({ id: 'google-user-1' }));
+  });
+
+  it('hydrates server-authoritative subscription entitlements', () => {
+    firebaseMocks.onSnapshot.mockImplementation((_ref: unknown, next: (snapshot: unknown) => void) => {
+      next({
+        exists: () => true,
+        data: () => ({ active: true, currentPeriodEnd: { toMillis: () => 1_900_000_000_000 } }),
+      });
+      return vi.fn();
+    });
+    const callback = vi.fn();
+    subscribeToAuthState(callback);
+    const listener = firebaseMocks.onAuthStateChanged.mock.calls[0][1];
+    listener(firebaseUser);
+    expect(firebaseMocks.doc).toHaveBeenCalledWith({}, 'subscriptionEntitlements', 'google-user-1');
+    expect(callback).toHaveBeenLastCalledWith(expect.objectContaining({ isVip: true, vipExpiresAt: 1_900_000_000_000 }));
   });
 
   it('signs out through Firebase', async () => {

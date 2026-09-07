@@ -389,14 +389,18 @@ export const Profile: React.FC<ProfileProps> = ({ onCookThis }) => {
               </div>
               <div className="rounded-2xl border border-orange-100 bg-orange-50/60 p-4">
                 <p className="text-xs font-bold uppercase tracking-wider text-toon-primary">Kitchen Diary Plus</p>
-                <p className="mt-1 text-sm text-gray-600">Manage a web subscription through secure Stripe Checkout.</p>
+                <p className="mt-1 text-sm text-gray-600">
+                  {user.isVip
+                    ? 'Your subscription is active across your signed-in kitchens.'
+                    : 'Manage a web subscription through secure Stripe Checkout.'}
+                </p>
                 <button
                   type="button"
                   onClick={handleCheckout}
                   disabled={checkoutLoading || !isStripeCheckoutConfigured()}
                   className="press-springy mt-3 w-full rounded-xl bg-toon-primary py-2.5 text-sm font-bold text-white transition-colors hover:bg-toon-primary-deep disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  {checkoutLoading ? 'Opening checkout...' : 'Get Kitchen Diary Plus'}
+                  {checkoutLoading ? 'Opening checkout...' : user.isVip ? 'Add another plan' : 'Get Kitchen Diary Plus'}
                 </button>
                 {!isStripeCheckoutConfigured() && (
                   <p className="mt-2 text-xs text-gray-500">Subscriptions are coming soon.</p>

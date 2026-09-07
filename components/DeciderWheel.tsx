@@ -10,7 +10,7 @@ import {
   ChevronRight,
   Settings,
 } from 'lucide-react';
-import { analyzeMenuImage, getFoodDescription } from '../services/geminiService';
+import { analyzeMenuImage } from '../services/geminiService';
 import { fetchCuisineWheelData } from '../services/liveDataService';
 import { CUISINE_CATEGORIES } from '../data/kitchenData';
 import { CuisineCategory } from '../types';
@@ -24,6 +24,10 @@ const createLocalId = (): string => {
 };
 
 const CONFETTI_COLORS = ['#FF8E72', '#FFC482', '#6EC6CA', '#F9DC5C', '#FF9EAA'];
+const MAX_MENU_IMAGE_BYTES = 6 * 1024 * 1024;
+const SUPPORTED_MENU_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp']);
+const MENU_DESCRIPTION_UNAVAILABLE =
+  'No description was confirmed from this menu. Check the original menu for ingredients and allergens.';
 
 const ConfettiBurst: React.FC = () => (
   <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-0 overflow-visible">
@@ -64,6 +68,7 @@ export const DeciderWheel: React.FC = () => {
   const [scanImage, setScanImage] = useState<string | null>(null);
   const [scanResult, setScanResult] = useState<{ name: string; desc: string } | null>(null);
   const [isScanning, setIsScanning] = useState(false);
+  const [scanError, setScanError] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -210,33 +215,83 @@ export const DeciderWheel: React.FC = () => {
     setEditInputValue('');
   };
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const resetScan = () => {
+    setScanImage(null);
+    setScanResult(null);
+    setScanError(null);
+    setIsScanning(false);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
+    const mimeType = file.type.trim().toLowerCase() || 'image/jpeg';
+    setScanResult(null);
+    setScanError(null);
+
+    if (!SUPPORTED_MENU_IMAGE_TYPES.has(mimeType)) {
+      setScanImage(null);
+      setIsScanning(false);
+      setScanError('Use a JPEG, PNG, or WebP photo under 6 MB.');
+      event.currentTarget.value = '';
+      return;
+    }
+
+    if (file.size > MAX_MENU_IMAGE_BYTES) {
+      setScanImage(null);
+      setIsScanning(false);
+      setScanError('That photo is over 6 MB. Choose a smaller menu image and try again.');
+      event.currentTarget.value = '';
+      return;
+    }
+
     const reader = new FileReader();
-    reader.onloadend = async () => {
-      const base64 = reader.result as string;
+    reader.onerror = () => {
+      setScanImage(null);
+      setIsScanning(false);
+      setScanError('We could not read that photo. Choose another image and try again.');
+    };
+    reader.onloadend = () => {
+      const base64 = typeof reader.result === 'string' ? reader.result : '';
+      const separatorIndex = base64.indexOf(',');
+      const cleanBase64 = separatorIndex >= 0 ? base64.slice(separatorIndex + 1) : base64;
+      if (!cleanBase64.trim()) {
+        setScanImage(null);
+        setIsScanning(false);
+        setScanError('We could not read that photo. Choose another image and try again.');
+        return;
+      }
+
       setScanImage(base64);
       setIsScanning(true);
 
-      const cleanBase64 = base64.split(',')[1];
-      const menuItems = await analyzeMenuImage(cleanBase64);
-      setIsScanning(false);
+      void (async () => {
+        try {
+          const menuItems = await analyzeMenuImage(cleanBase64, mimeType);
 
-      if (menuItems.length > 0) {
-        const selected = menuItems[Math.floor(Math.random() * menuItems.length)];
-        const description = await getFoodDescription(selected.name);
-        setScanResult({
-          name: selected.name,
-          desc: selected.description || description,
-        });
-      } else {
-        setScanResult({
-          name: "We couldn't read that menu",
-          desc: 'Try a brighter photo with the dish names in focus.',
-        });
-      }
+          if (menuItems.length > 0) {
+            const selected = menuItems[Math.floor(Math.random() * menuItems.length)];
+            setScanResult({
+              name: selected.name,
+              // Keep the result grounded in the photographed menu. A public
+              // catalog match can describe a different dish with the same name.
+              desc: selected.description?.trim() || MENU_DESCRIPTION_UNAVAILABLE,
+            });
+          } else {
+            setScanResult({
+              name: "We couldn't read that menu",
+              desc: 'No dish names were confirmed. Try a brighter photo with the dish names in focus.',
+            });
+          }
+        } catch {
+          setScanResult(null);
+          setScanError('Menu reading is temporarily unavailable. Try again or use a clearer photo.');
+        } finally {
+          setIsScanning(false);
+        }
+      })();
     };
 
     reader.readAsDataURL(file);
@@ -588,12 +643,13 @@ export const DeciderWheel: React.FC = () => {
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp"
             className="hidden"
             aria-label="Upload a menu photo"
             onChange={handleFileUpload}
           />
           {!scanImage ? (
+            <>
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
@@ -603,8 +659,15 @@ export const DeciderWheel: React.FC = () => {
                 <Camera size={40} className="text-orange-400" aria-hidden="true" />
               </div>
               <p className="font-display text-lg font-semibold text-toon-dark">Snap a Menu</p>
-              <p className="text-xs text-gray-400">Secure menu scanning is coming soon</p>
+              <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-gray-300">JPEG, PNG, or WebP - max 6 MB</p>
+              <p className="text-xs text-gray-400">Upload a menu photo and we’ll pick a dish</p>
             </button>
+            {scanError && (
+              <p role="alert" className="mt-4 max-w-sm text-center text-sm font-semibold text-red-600">
+                {scanError}
+              </p>
+            )}
+            </>
           ) : (
             <div className="w-full max-w-sm rounded-3xl toon-card p-6">
               {isScanning ? (
@@ -623,16 +686,16 @@ export const DeciderWheel: React.FC = () => {
                     <div className="absolute inset-0 bg-black/20" />
                   </div>
                   <h2 className="mb-2 font-display text-3xl font-semibold text-toon-primary">
-                    {scanResult?.name}
+                    {scanError ? "We couldn't read that menu" : scanResult?.name}
                   </h2>
-                  <p className="mb-6 text-sm italic text-gray-500">
-                    "{scanResult?.desc}"
+                  <p
+                    className={`mb-6 text-sm ${scanError ? 'font-semibold text-red-600' : 'italic text-gray-500'}`}
+                    role={scanError ? 'alert' : undefined}
+                  >
+                    {scanError || `"${scanResult?.desc ?? 'No dish was confirmed from this photo.'}"`}
                   </p>
                   <button
-                    onClick={() => {
-                      setScanImage(null);
-                      setScanResult(null);
-                    }}
+                    onClick={resetScan}
                     className="press-springy w-full rounded-xl bg-orange-50 py-3 font-bold text-toon-dark hover:bg-orange-100 transition-colors"
                   >
                     Try Again

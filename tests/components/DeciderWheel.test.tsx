@@ -6,14 +6,13 @@ import { CUISINE_CATEGORIES } from '../../data/kitchenData';
 
 vi.mock('../../services/geminiService', () => ({
   analyzeMenuImage: vi.fn(),
-  getFoodDescription: vi.fn(),
 }));
 
 vi.mock('../../services/liveDataService', () => ({
   fetchCuisineWheelData: vi.fn(),
 }));
 
-import { analyzeMenuImage, getFoodDescription } from '../../services/geminiService';
+import { analyzeMenuImage } from '../../services/geminiService';
 import { fetchCuisineWheelData } from '../../services/liveDataService';
 
 describe('DeciderWheel Component', () => {
@@ -26,10 +25,8 @@ describe('DeciderWheel Component', () => {
     vi.useFakeTimers({ shouldAdvanceTime: true });
     (fetchCuisineWheelData as Mock).mockReset();
     (analyzeMenuImage as Mock).mockReset();
-    (getFoodDescription as Mock).mockReset();
     (fetchCuisineWheelData as Mock).mockResolvedValue(mockCuisines);
     (analyzeMenuImage as Mock).mockResolvedValue([{ name: 'Pad Thai' }]);
-    (getFoodDescription as Mock).mockResolvedValue('Sweet and savory noodles.');
   });
 
   it('loads and renders live cuisines', async () => {
@@ -105,5 +102,53 @@ describe('DeciderWheel Component', () => {
     await waitFor(() => {
       expect(screen.getByText('Pad Thai')).toBeInTheDocument();
     });
+  });
+
+  it('keeps empty scans grounded and does not invent a catalog description', async () => {
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    (analyzeMenuImage as Mock).mockResolvedValueOnce([{ name: 'Pad Thai' }]);
+    render(<DeciderWheel />);
+
+    await user.click(screen.getByRole('button', { name: /^Scan$/ }));
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
+    const file = new File(['test'], 'menu.jpg', { type: 'image/jpeg' });
+    Object.defineProperty(input, 'files', { configurable: true, value: [file] });
+    fireEvent.change(input);
+
+    await waitFor(() => {
+      expect(screen.getByText(/No description was confirmed from this menu/)).toBeInTheDocument();
+    });
+  });
+
+  it('shows useful feedback for unsupported images and resets for another attempt', async () => {
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    render(<DeciderWheel />);
+
+    await user.click(screen.getByRole('button', { name: /^Scan$/ }));
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
+    const file = new File(['test'], 'menu.gif', { type: 'image/gif' });
+    Object.defineProperty(input, 'files', { configurable: true, value: [file] });
+    fireEvent.change(input);
+
+    expect(screen.getByRole('alert')).toHaveTextContent('Use a JPEG, PNG, or WebP photo under 6 MB.');
+    expect(analyzeMenuImage).not.toHaveBeenCalled();
+  });
+
+  it('recovers from an analysis rejection instead of leaving the spinner active', async () => {
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    (analyzeMenuImage as Mock).mockRejectedValueOnce(new Error('provider unavailable'));
+    render(<DeciderWheel />);
+
+    await user.click(screen.getByRole('button', { name: /^Scan$/ }));
+    const input = document.querySelector('input[type="file"]') as HTMLInputElement;
+    const file = new File(['test'], 'menu.jpg', { type: 'image/jpeg' });
+    Object.defineProperty(input, 'files', { configurable: true, value: [file] });
+    fireEvent.change(input);
+
+    await waitFor(() => {
+      expect(screen.getByRole('alert')).toHaveTextContent('Menu reading is temporarily unavailable.');
+      expect(screen.getByRole('button', { name: 'Try Again' })).toBeInTheDocument();
+    });
+    expect(screen.queryByText('Reading menu...')).not.toBeInTheDocument();
   });
 });

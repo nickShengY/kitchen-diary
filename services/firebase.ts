@@ -1,5 +1,6 @@
 import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app';
 import { Auth, getAuth } from 'firebase/auth';
+import { Firestore, getFirestore } from 'firebase/firestore';
 
 type FirebaseClientConfig = {
   apiKey: string;
@@ -34,13 +35,22 @@ export const firebaseConfigurationMessage =
 
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
+let firestore: Firestore | undefined;
 
-export const getFirebaseAuth = (): Auth => {
+const getFirebaseApp = (): FirebaseApp => {
   if (!isFirebaseConfigured()) {
     throw new Error(firebaseConfigurationMessage);
   }
 
-  app ??= getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-  auth ??= getAuth(app);
+  return app ??= getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+};
+
+export const getFirebaseAuth = (): Auth => {
+  auth ??= getAuth(getFirebaseApp());
   return auth;
+};
+
+export const getFirebaseFirestore = (): Firestore => {
+  firestore ??= getFirestore(getFirebaseApp());
+  return firestore;
 };

@@ -35,15 +35,23 @@ import {
 } from '../data/kitchenData';
 import { kitchenAssetPack } from '../services/kitchenAssetPack';
 import { clearRecipeDraft, loadRecipeDraft, saveRecipeDraft } from '../services/recipeDraftStore';
+import {
+  deleteUserRecipeDraft,
+  getLocalDataOwner,
+  loadUserRecipeDraft,
+  markLocalDataOwner,
+  saveUserRecipeDraft,
+} from '../services/userDataSync';
 
 interface RecipeBuilderProps {
+    userId?: string;
     initialRecipe?: Recipe;
     onExit?: () => void;
     /** Called after a successful community share so the app can jump to the feed. */
     onShared?: () => void;
 }
 
-export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ initialRecipe, onExit, onShared }) => {
+export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ initialRecipe, onExit, onShared, userId }) => {
   // Imported recipes take priority; otherwise pick up the saved draft so a
   // half-built recipe survives navigating to another tab (or a reload).
   const [recipeName, setRecipeName] = useState(
@@ -57,6 +65,81 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ initialRecipe, onE
   const [ingredientCategory, setIngredientCategory] = useState<Ingredient['category'] | 'all'>('all');
   const [showPlayer, setShowPlayer] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const draftHydratingRef = React.useRef(Boolean(userId && !initialRecipe));
+  const draftMutationVersion = React.useRef(0);
+  const pendingCloudWrite = React.useRef(Promise.resolve());
+
+  const queueCloudDraftWrite = React.useCallback((id: string, draft: { title: string; steps: RecipeStep[] }) => {
+    pendingCloudWrite.current = pendingCloudWrite.current
+      .catch(() => undefined)
+      .then(() => saveUserRecipeDraft(id, draft))
+      .catch(() => undefined);
+  }, []);
+
+  const queueCloudDraftDelete = React.useCallback((id: string) => {
+    pendingCloudWrite.current = pendingCloudWrite.current
+      .catch(() => undefined)
+      .then(() => deleteUserRecipeDraft(id))
+      .catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
+    if (!userId || initialRecipe) {
+      draftHydratingRef.current = false;
+      return;
+    }
+
+    draftHydratingRef.current = true;
+    let cancelled = false;
+    const localOwner = getLocalDataOwner('recipeDraft');
+    const accountChanged = Boolean(localOwner && localOwner !== userId);
+    if (accountChanged) {
+      // The legacy local draft key is not account-scoped. Clear it before the
+      // new account's read so another cook's draft cannot flash or be copied.
+      clearRecipeDraft();
+      setRecipeName('My Delicious Recipe');
+      setSteps([]);
+    }
+    const versionAtStart = draftMutationVersion.current;
+
+    loadUserRecipeDraft(userId)
+      .then((remoteDraft) => {
+        if (cancelled) return;
+
+        if (remoteDraft && draftMutationVersion.current === versionAtStart) {
+          draftHydratingRef.current = false;
+          markLocalDataOwner('recipeDraft', userId);
+          setRecipeName(remoteDraft.title);
+          setSteps(remoteDraft.steps);
+          return;
+        }
+
+        if (accountChanged && draftMutationVersion.current === versionAtStart) {
+          // There is no draft for this account yet. Wait for the user's first
+          // edit before creating one in Firestore.
+          markLocalDataOwner('recipeDraft', userId);
+          draftHydratingRef.current = false;
+          return;
+        }
+
+        // Keep edits made while the cloud read was in flight, then make that
+        // latest local draft the account copy.
+        draftHydratingRef.current = false;
+        const localDraft = loadRecipeDraft();
+        if (localDraft) {
+          markLocalDataOwner('recipeDraft', userId);
+          queueCloudDraftWrite(userId, localDraft);
+        }
+      })
+      .catch(() => {
+        // The builder remains usable from localStorage while offline.
+        if (!cancelled) draftHydratingRef.current = false;
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [initialRecipe, queueCloudDraftWrite, userId]);
 
   // Editor State
   // Keep the working recipe saved as a draft; an empty timeline clears it so
@@ -70,11 +153,17 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ initialRecipe, onE
       if (steps.length === 0) return;
     }
     if (steps.length > 0) {
-      saveRecipeDraft({ title: recipeName, steps });
+      const draft = { title: recipeName, steps };
+      saveRecipeDraft(draft);
+      if (userId && !draftHydratingRef.current) {
+        markLocalDataOwner('recipeDraft', userId);
+        queueCloudDraftWrite(userId, draft);
+      }
     } else {
       clearRecipeDraft();
+      if (userId && !draftHydratingRef.current) queueCloudDraftDelete(userId);
     }
-  }, [recipeName, steps]);
+  }, [queueCloudDraftDelete, queueCloudDraftWrite, recipeName, steps, userId]);
 
   const [activeStep, setActiveStep] = useState<Partial<RecipeStep>>({ ingredients: [] });
   const [editingStepId, setEditingStepId] = useState<string | null>(null);
@@ -252,6 +341,7 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ initialRecipe, onE
           ? current.map((s) => (s.id === editingStepId ? completedStep : s))
           : [...current, completedStep],
       );
+      draftMutationVersion.current += 1;
       setEditingStepId(null);
       setView('list');
     }
@@ -294,7 +384,10 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ initialRecipe, onE
           <div className="flex-1">
             <input
                 value={recipeName}
-                onChange={(e) => setRecipeName(e.target.value)}
+                onChange={(e) => {
+                  draftMutationVersion.current += 1;
+                  setRecipeName(e.target.value);
+                }}
                 aria-label="Recipe name"
                 className="min-h-11 w-full bg-transparent font-display text-2xl font-semibold text-toon-dark outline-none placeholder-gray-300 rounded-lg transition-colors focus:bg-white/70 focus:px-2"
                 placeholder="Name your recipe..."
@@ -378,7 +471,10 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ initialRecipe, onE
                           </button>
                           <button
                             aria-label={`Delete step ${idx + 1}`}
-                            onClick={() => setSteps(steps.filter(s => s.id !== step.id))}
+                            onClick={() => {
+                              draftMutationVersion.current += 1;
+                              setSteps(steps.filter(s => s.id !== step.id));
+                            }}
                             className="press-springy flex h-11 w-11 items-center justify-center rounded-full text-gray-300 hover:text-red-400 hover:bg-red-50 transition-colors"
                           >
                             <Trash2 size={16} />
@@ -514,6 +610,7 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ initialRecipe, onE
            onShared={() => {
              setShowShare(false);
              clearRecipeDraft();
+             if (userId) queueCloudDraftDelete(userId);
              onShared?.();
            }}
          />

@@ -103,6 +103,9 @@ export interface UserProfile {
   name: string;
   avatar: string; // Image URL or emoji fallback
   bio: string;
+  /** Server-authoritative subscription status, when the account is signed in. */
+  isVip?: boolean;
+  vipExpiresAt?: number;
   favorites: string[];
   myRecipes: Recipe[];
   recipesCount?: number;

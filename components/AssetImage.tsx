@@ -60,7 +60,10 @@ export const PackAsset: React.FC<{
   const resolvedSrc = useResolvedAssetSrc(src);
 
   if (!resolvedSrc) {
-    return <span className={className}>{fallback}</span>;
+    // Decorative, exactly like the <img> branch below. Every call site pairs
+    // this with a visible text label, so letting the emoji into the accessible
+    // name would make that name change as pack art finishes loading.
+    return <span aria-hidden="true" className={className}>{fallback}</span>;
   }
 
   return (

@@ -33,11 +33,18 @@ import {
   shoppingListFor,
   suggestStarterPantry,
 } from '../services/pantryMatch';
-import { EMPTY_PANTRY, PantryState, loadPantry, toggleId, updatePantry, withCooked } from '../services/pantryStore';
+import { EMPTY_PANTRY, PantryState, loadPantry, savePantry, toggleId, updatePantry, withCooked } from '../services/pantryStore';
 import { kitchenAssetPack } from '../services/kitchenAssetPack';
+import {
+  getLocalDataOwner,
+  loadUserPantry,
+  markLocalDataOwner,
+  saveUserPantry,
+} from '../services/userDataSync';
 import { PackAsset } from './AssetImage';
 
 interface PantryKitchenProps {
+  userId?: string;
   onCookThis: (recipe: Recipe) => void;
 }
 
@@ -107,7 +114,7 @@ const IngredientChip: React.FC<{ id: string; tone: 'have' | 'missing' }> = ({ id
   </span>
 );
 
-export const PantryKitchen: React.FC<PantryKitchenProps> = ({ onCookThis }) => {
+export const PantryKitchen: React.FC<PantryKitchenProps> = ({ userId, onCookThis }) => {
   const [pantry, setPantryState] = useState(EMPTY_PANTRY);
   const [search, setSearch] = useState('');
   const [group, setGroup] = useState(GROUPS[0].id);
@@ -119,10 +126,72 @@ export const PantryKitchen: React.FC<PantryKitchenProps> = ({ onCookThis }) => {
   const [detail, setDetail] = useState<RecipeMatch | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
+  const pantryMutationVersion = useRef(0);
+  const pendingCloudWrite = useRef(Promise.resolve());
 
   useEffect(() => {
     setPantryState(loadPantry());
+  }, [userId]);
+
+  const queueCloudPantryWrite = useCallback((id: string, value: PantryState) => {
+    pendingCloudWrite.current = pendingCloudWrite.current
+      .catch(() => undefined)
+      .then(() => saveUserPantry(id, value))
+      .catch(() => undefined);
   }, []);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    let cancelled = false;
+    const localOwner = getLocalDataOwner('pantry');
+    const accountChanged = Boolean(localOwner && localOwner !== userId);
+    if (accountChanged) {
+      // The legacy local key is not account-scoped. Clear it immediately on
+      // account changes so another cook's offline state is never shown while
+      // the new account's Firestore read is in flight.
+      savePantry(EMPTY_PANTRY);
+      setPantryState(EMPTY_PANTRY);
+    }
+    const versionAtStart = pantryMutationVersion.current;
+
+    loadUserPantry(userId)
+      .then((remotePantry) => {
+        if (cancelled) return;
+
+        const localPantry = loadPantry();
+        if (remotePantry && pantryMutationVersion.current === versionAtStart) {
+          savePantry(remotePantry);
+          markLocalDataOwner('pantry', userId);
+          setPantryState(remotePantry);
+          return;
+        }
+
+        if (accountChanged && pantryMutationVersion.current === versionAtStart) {
+          // There is no account copy yet. Keep this account's local state
+          // empty until the user makes an edit, which will create its copy.
+          markLocalDataOwner('pantry', userId);
+          setPantryState(EMPTY_PANTRY);
+          return;
+        }
+
+        // A missing document is the first sign-in on this device. If the user
+        // edited the local copy while the read was in flight, keep that latest
+        // copy and send it to the account instead of overwriting it.
+        setPantryState(localPantry);
+        markLocalDataOwner('pantry', userId);
+        queueCloudPantryWrite(userId, localPantry);
+      })
+      .catch(() => {
+        // Firestore is optional at runtime; the local pantry remains usable
+        // when a network read is unavailable.
+        if (!cancelled) setPantryState(loadPantry());
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [queueCloudPantryWrite, userId]);
 
   /**
    * Writes through to storage before touching React state. "Cook this" navigates
@@ -130,8 +199,14 @@ export const PantryKitchen: React.FC<PantryKitchenProps> = ({ onCookThis }) => {
    * when this screen unmounts.
    */
   const setPantry = useCallback((mutate: (state: PantryState) => PantryState) => {
-    setPantryState(updatePantry(mutate));
-  }, []);
+    pantryMutationVersion.current += 1;
+    const next = updatePantry(mutate);
+    setPantryState(next);
+    if (userId) {
+      markLocalDataOwner('pantry', userId);
+      queueCloudPantryWrite(userId, next);
+    }
+  }, [queueCloudPantryWrite, userId]);
 
   useEffect(() => {
     if (!toast) return;

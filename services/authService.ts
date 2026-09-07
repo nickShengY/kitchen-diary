@@ -1,12 +1,20 @@
 import { GoogleAuthProvider, User, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { UserProfile } from '../types';
-import { getFirebaseAuth, isFirebaseConfigured } from './firebase';
+import { getFirebaseAuth, getFirebaseFirestore, isFirebaseConfigured } from './firebase';
 
-const toUserProfile = (user: User): UserProfile => ({
+type Entitlement = { active?: boolean; currentPeriodEnd?: { toMillis?: () => number } };
+
+const toUserProfile = (user: User, entitlement?: Entitlement): UserProfile => ({
   id: user.uid,
   name: user.displayName?.trim() || 'Kitchen Diary Cook',
   avatar: user.photoURL || '🧑‍🍳',
   bio: 'Cooking with Kitchen Diary.',
+  isVip:
+    entitlement?.active === true &&
+    (entitlement.currentPeriodEnd?.toMillis?.() === undefined ||
+      entitlement.currentPeriodEnd.toMillis() > Date.now()),
+  vipExpiresAt: entitlement?.currentPeriodEnd?.toMillis?.(),
   favorites: [],
   myRecipes: [],
 });
@@ -23,7 +31,26 @@ export const subscribeToAuthState = (callback: (user: UserProfile | null) => voi
     return () => undefined;
   }
 
-  return onAuthStateChanged(getFirebaseAuth(), (user) => callback(user ? toUserProfile(user) : null));
+  let stopEntitlement: (() => void) | undefined;
+  const stopAuth = onAuthStateChanged(getFirebaseAuth(), (user) => {
+    stopEntitlement?.();
+    stopEntitlement = undefined;
+    if (!user) {
+      callback(null);
+      return;
+    }
+
+    callback(toUserProfile(user));
+    stopEntitlement = onSnapshot(
+      doc(getFirebaseFirestore(), 'subscriptionEntitlements', user.uid),
+      (snapshot) => callback(toUserProfile(user, snapshot.exists() ? (snapshot.data() as Entitlement) : undefined)),
+    );
+  });
+
+  return () => {
+    stopEntitlement?.();
+    stopAuth();
+  };
 };
 
 export const login = async (): Promise<UserProfile> => {

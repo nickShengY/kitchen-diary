@@ -11,6 +11,14 @@ import {
 import { Category, PhysicalProperty } from '../../types';
 
 describe('kitchenData', () => {
+  it('keeps pantry grains and legumes out of the vegetable group', () => {
+    for (const id of ['spaghetti', 'rice_noodles', 'pita', 'naan', 'couscous']) {
+      expect(INGREDIENTS.find((item) => item.id === id)?.category).toBe('grain');
+    }
+    for (const id of ['chickpeas', 'lentils']) {
+      expect(INGREDIENTS.find((item) => item.id === id)?.category).toBe('legume');
+    }
+  });
   describe('INGREDIENTS', () => {
     it('should have ingredients array', () => {
       expect(Array.isArray(INGREDIENTS)).toBe(true);

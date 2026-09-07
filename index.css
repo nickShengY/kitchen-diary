@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --toon-bg: #fff5f0;
+  --toon-bg: #faf7f1;
   --toon-cream: #fffaf6;
   --toon-primary: #ff8e72;
   --toon-primary-deep: #f2704f;
@@ -16,6 +16,9 @@
   --toon-shadow: 74, 64, 58;
   --spring-out: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --motion-fast: 140ms;
+  --motion-base: 240ms;
 }
 
 html {
@@ -82,6 +85,57 @@ body {
     inset 0 1.5px 0 rgba(255, 255, 255, 0.9),
     0 1px 2px rgba(var(--toon-shadow), 0.05),
     0 12px 32px -14px rgba(var(--toon-shadow), 0.22);
+  transition: transform var(--motion-base) var(--motion-ease-out),
+    box-shadow var(--motion-base) var(--motion-ease-out),
+    border-color var(--motion-base) ease;
+  will-change: transform;
+}
+
+/* A quiet cookbook surface lets the food and existing illustrated assets lead. */
+.recipe-journal header { background: rgba(250, 247, 241, .96); box-shadow: none; border-bottom: 1px solid #e9e1d5; padding-top: 28px; }
+.recipe-journal h1 { font-family: Georgia, 'Times New Roman', serif; font-size: 38px; letter-spacing: -1.5px; }
+.recipe-journal h1 .text-candy { background: none; color: #384739; -webkit-text-fill-color: #384739; }
+.recipe-journal header p { color: #87654c; }
+.recipe-journal header input { border-color: #ddd6c9; box-shadow: none; border-radius: 12px; }
+.recipe-journal-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 16px; }
+.recipe-journal-grid > * { margin: 0 !important; min-width: 0; }
+.recipe-journal-grid .daily-inspiration { grid-column: 1 / -1; background: #3e5140; border-radius: 20px; text-align: left; padding: 22px 20px; box-shadow: none; }
+.daily-inspiration > span, .daily-inspiration > div { display: none; }
+.daily-inspiration h3 { font-family: Georgia, 'Times New Roman', serif; font-size: 25px; font-weight: 400; }
+.daily-inspiration p { font-size: 13px; margin-bottom: 16px; }
+.daily-inspiration button { color: #344637; border-radius: 10px; box-shadow: none; }
+.recipe-journal .toon-card { border-color: #e6dfd4; box-shadow: 0 3px 12px #55483108; border-radius: 16px; }
+.recipe-journal .text-gray-400 { color: #787871; }
+.recipe-journal article h3 { font-size: 16px; line-height: 1.3; }
+.recipe-journal article .text-gray-300 { color: #827c72; }
+.recipe-journal article p.text-gray-400 { color: #626057; font-size: 12px; line-height: 1.55; }
+.recipe-journal article .text-gray-500 { color: #626057; }
+.recipe-journal header [role='tab'][aria-selected='true'] { color: #9e432c; }
+.recipe-journal header [role='tab'][aria-selected='true'] > span { background: #9e432c; }
+@media (hover: none) {
+  .recipe-journal article .absolute.inset-0 { opacity: 1; background: linear-gradient(transparent 45%, #0005); align-items: end; padding-bottom: 8px; }
+  .recipe-journal article .absolute.inset-0 button { transform: none; min-height: 36px; font-size: 11px; padding: 6px 12px; }
+}
+nav[aria-label='Primary'] { border-color: #e1d9cc; border-radius: 22px; box-shadow: 0 8px 28px #382f241a; }
+nav[aria-label='Primary'] button { border-radius: 16px; }
+nav[aria-label='Primary'] button[aria-current='page'] { background: #3e5140; box-shadow: none; }
+nav[aria-label='Primary'] button[aria-current='page'] > span:last-child { display: none; }
+nav[aria-label='Primary'] button:not([aria-current]) { color: #716f66; }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .toon-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 142, 114, 0.55);
+    box-shadow:
+      inset 0 1.5px 0 rgba(255, 255, 255, 0.9),
+      0 2px 4px rgba(var(--toon-shadow), 0.06),
+      0 18px 38px -14px rgba(var(--toon-shadow), 0.3);
+  }
+}
+
+.toon-card:active {
+  transform: translateY(-1px) scale(0.99);
+  transition-duration: var(--motion-fast);
 }
 
 .press-springy {
@@ -405,6 +459,13 @@ body {
 /* ---------- Accessibility: respect reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
+  .toon-card,
+  .toon-card:hover,
+  .toon-card:active {
+    will-change: auto;
+    transform: none;
+    transition-duration: 0.01ms;
+  }
   *,
   *::before,
   *::after {

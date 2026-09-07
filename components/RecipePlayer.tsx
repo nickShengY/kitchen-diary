@@ -144,7 +144,7 @@ export const RecipePlayer: React.FC<RecipePlayerProps> = ({ recipeName, steps, o
       </p>
 
       {/* Slide */}
-      <div className="flex-1 overflow-y-auto px-5 py-4">
+      <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
         {isFinale ? (
           <div key="finale" className="relative flex h-full min-h-[420px] flex-col items-center justify-center rounded-[2rem] toon-card p-6 text-center animate-pop-in">
             <FinaleConfetti />
@@ -183,9 +183,9 @@ export const RecipePlayer: React.FC<RecipePlayerProps> = ({ recipeName, steps, o
         ) : (
           <div
             key={step?.id ?? slideIndex}
-            className={`relative flex h-full min-h-[420px] flex-col overflow-hidden rounded-[2rem] border border-orange-100 bg-gradient-to-br ${scene.bg} shadow-toon-lift animate-pop-in`}
+            className={`relative flex min-h-full flex-col overflow-hidden rounded-[2rem] border border-orange-100 bg-gradient-to-br ${scene.bg} shadow-toon-lift animate-pop-in`}
           >
-            <div className="flex items-center justify-between px-5 pt-5">
+            <div className="flex flex-wrap items-center justify-between gap-2 px-5 pt-5">
               <span className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${scene.chip}`}>
                 <span aria-hidden="true">{scene.emoji}</span> {scene.label}
               </span>
@@ -194,7 +194,7 @@ export const RecipePlayer: React.FC<RecipePlayerProps> = ({ recipeName, steps, o
               </span>
             </div>
 
-            <div className="relative flex flex-1 items-center justify-center px-4">
+            <div className="relative flex min-h-40 flex-1 items-center justify-center px-4 py-3">
               {step?.station === 'cook' ? (
                 <span aria-hidden="true" className="pointer-events-none absolute left-1/2 top-6 -translate-x-1/2">
                   <span className="steam-wisp" style={{ left: '-12px' }} />
@@ -206,7 +206,7 @@ export const RecipePlayer: React.FC<RecipePlayerProps> = ({ recipeName, steps, o
                 <MotionScene
                   src={motionAsset}
                   alt={`${action?.name ?? 'Cooking'} animation`}
-                  className="h-56 w-[267px] max-w-full drop-shadow-[0_14px_20px_rgba(242,112,79,0.2)]"
+                  className="h-40 w-[267px] max-w-full drop-shadow-[0_14px_20px_rgba(242,112,79,0.2)] sm:h-56"
                 />
               ) : (
                 <span className="text-8xl animate-float" aria-hidden="true">
@@ -215,30 +215,39 @@ export const RecipePlayer: React.FC<RecipePlayerProps> = ({ recipeName, steps, o
               )}
             </div>
 
-            <div className="bg-white/85 px-5 pb-5 pt-4 backdrop-blur-sm">
+            <div className="shrink-0 bg-white/85 px-5 pb-5 pt-4 backdrop-blur-sm">
               <h2 className="font-display text-2xl font-semibold capitalize text-toon-dark">
                 {action?.verb ?? 'Cook'}
-                {tool?.name ? <span className="ml-2 text-base font-normal text-gray-400">with {tool.name}</span> : null}
+                {tool?.name ? <span className="ml-2 text-base font-normal text-gray-600">with {tool.name}</span> : null}
               </h2>
 
+              {step?.notes?.trim() ? (
+                <p className="mt-2 whitespace-pre-line break-words text-base leading-relaxed text-toon-dark">
+                  {step.notes}
+                </p>
+              ) : null}
+
               {step && step.ingredients.length > 0 ? (
-                <div className="mt-3 flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
+                <div className="mt-4">
+                  <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-600">For this step</h3>
+                  <ul aria-label="Ingredients for this step" className="grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
                   {step.ingredients.map((item) => {
                     const data = INGREDIENTS.find((ingredient) => ingredient.id === item.id);
                     return (
-                      <span
+                      <li
                         key={item.id}
-                        className="flex shrink-0 items-center gap-1.5 rounded-full border border-orange-100 bg-orange-50 px-3 py-1.5 text-xs font-bold text-toon-dark"
+                        className="flex min-w-0 items-start gap-2 rounded-xl border border-orange-100 bg-orange-50 px-3 py-2 text-sm font-semibold leading-snug text-toon-dark"
                       >
                         <PackAsset
                           src={kitchenAssetPack.ingredientPresentation(item.id).asset}
                           fallback={data?.emoji ?? '🥣'}
-                          imageClassName="h-5 w-5"
+                          imageClassName="h-5 w-5 shrink-0"
                         />
-                        {item.amount} {item.unit} {data?.name ?? item.id.replace(/_/g, ' ')}
-                      </span>
+                        <span className="min-w-0 break-words">{item.amount} {item.unit} {data?.name ?? item.id.replace(/_/g, ' ')}</span>
+                      </li>
                     );
                   })}
+                  </ul>
                 </div>
               ) : null}
 
