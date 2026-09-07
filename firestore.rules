@@ -1,0 +1,138 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(field) {
+      return signedIn() && resource.data[field] == request.auth.uid;
+    }
+
+    function createsAsOwner(field) {
+      return signedIn() && request.resource.data[field] == request.auth.uid;
+    }
+
+    function changesOwnFollow() {
+      let before = resource.data.get('followers', []).toSet();
+      let after = request.resource.data.get('followers', []).toSet();
+      return signedIn()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['followers'])
+        && after.difference(before).hasOnly([request.auth.uid])
+        && before.difference(after).hasOnly([request.auth.uid]);
+    }
+
+    // Public chef discovery never reads the private users document. Only
+    // deliberately public profile fields are permitted in this projection.
+    match /public_profiles/{uid} {
+      function validPublicProfile() {
+        let data = request.resource.data;
+        return data.keys().hasOnly(['displayName', 'photoUrl', 'bio', 'avatarEmoji',
+          'followers', 'following', 'recipesCount', 'likesReceived',
+          'badges'])
+          && data.displayName is string && data.avatarEmoji is string
+          && (data.get('photoUrl', null) == null || data.photoUrl is string)
+          && (data.get('bio', null) == null || data.bio is string)
+          && data.followers is list && data.following is list
+          && data.recipesCount is int && data.likesReceived is int
+          && data.get('badges', []) is list;
+      }
+      allow read: if true;
+      allow create: if signedIn() && uid == request.auth.uid && validPublicProfile();
+      allow update: if validPublicProfile() && (
+        (signedIn() && uid == request.auth.uid) || changesOwnFollow());
+      allow delete: if signedIn() && uid == request.auth.uid;
+    }
+
+    // These documents mix social metadata with email, preferences and private
+    // saved lists. Firestore reads cannot redact fields: public profile
+    // discovery must use a separate sanitized projection before it is enabled.
+    match /users/{uid} {
+      allow read: if signedIn() && uid == request.auth.uid;
+      allow create: if signedIn() && uid == request.auth.uid;
+      allow update: if signedIn() && (
+        uid == request.auth.uid ||
+        changesOwnFollow()
+      );
+      allow delete: if signedIn() && uid == request.auth.uid;
+
+      match /cookingHistory/{historyId} {
+        allow read, write: if signedIn() && uid == request.auth.uid;
+      }
+      match /badges/{badgeId} {
+        allow read: if signedIn() && uid == request.auth.uid;
+        allow write: if false;
+      }
+
+      // Cross-device pantry state and the in-progress recipe draft are
+      // private account documents. The client can only access its own copy.
+      match /pantry/{documentId} {
+        allow read, write: if signedIn() && uid == request.auth.uid;
+      }
+      match /recipeDrafts/{documentId} {
+        allow read, write: if signedIn() && uid == request.auth.uid;
+      }
+    }
+
+    // Public recipes can be browsed without an account. Only the author can
+    // create, edit, or remove their own recipe; engagement counters are
+    // updated by the signed-in interaction flow.
+    match /recipes/{recipeId} {
+      allow read: if resource.data.isPublic == true || isOwner('authorId');
+      allow create: if createsAsOwner('authorId');
+      allow update: if signedIn() && (
+        isOwner('authorId') ||
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'views'])
+      );
+      allow delete: if isOwner('authorId');
+    }
+
+    match /forum_posts/{postId} {
+      allow read: if true;
+      allow create: if createsAsOwner('authorId');
+      allow update: if isOwner('authorId') ||
+        (signedIn() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'likedBy', 'views', 'commentsCount']));
+      allow delete: if isOwner('authorId');
+    }
+
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if createsAsOwner('authorId');
+      allow update, delete: if isOwner('authorId');
+    }
+
+    match /forum_comments/{commentId} {
+      allow read: if true;
+      allow create: if createsAsOwner('authorId');
+      allow update, delete: if isOwner('authorId');
+    }
+
+    match /collections/{collectionId} {
+      allow read: if resource.data.isPublic == true || isOwner('authorId');
+      allow create: if createsAsOwner('authorId');
+      allow update, delete: if isOwner('authorId');
+    }
+
+    match /challenges/{challengeId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /activities/{activityId} {
+      allow read, update: if signedIn() && resource.data.userId == request.auth.uid;
+      allow create: if signedIn() && request.resource.data.actorId == request.auth.uid;
+      allow delete: if false;
+    }
+
+    // Entitlements are written only by the Stripe webhook's Admin SDK.
+    match /subscriptionEntitlements/{uid} {
+      allow read: if signedIn() && uid == request.auth.uid;
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
