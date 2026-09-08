@@ -83,4 +83,13 @@ describe('Play account ownership', () => {
     await verifyAndPersistGooglePlayPurchase({...input('one'), purchaseToken:'replacement-token'}, {db, readSubscription});
     await expect(verifyAndPersistGooglePlayPurchase(input('two'), {db, readSubscription})).rejects.toThrow('already linked');
   });
+  it('does not let a delayed notification for an old token overwrite the replacement', async () => {
+    const {db, records} = store();
+    await verifyAndPersistGooglePlayPurchase(input('one'), {db, readSubscription});
+    await verifyAndPersistGooglePlayPurchase({...input('one'), purchaseToken:'replacement-token'}, {db, readSubscription});
+    const current = records.get('subscriptionEntitlements/one');
+    await verifyAndPersistGooglePlayPurchase(input('one'), {db, readSubscription: async () => ({expiry: null, active: false, orderId: null}), onlyIfCurrentPurchase: true});
+    expect(records.get('subscriptionEntitlements/one')).toBe(current);
+    expect(current?.active).toBe(true);
+  });
 });

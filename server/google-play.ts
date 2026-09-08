@@ -259,7 +259,7 @@ const firebaseFirestore = (): Firestore => {
 
 export const verifyAndPersistGooglePlayPurchase = async (
   input: GooglePlayVerificationInput,
-  dependencies: { db?: Firestore; readSubscription?: typeof readSubscription } = {},
+  dependencies: { db?: Firestore; readSubscription?: typeof readSubscription; onlyIfCurrentPurchase?: boolean } = {},
 ): Promise<GooglePlayVerificationResult> => {
   if (!input.userId.trim()) throw new MenuAnalysisError('invalid_request', 401, 'A verified account is required.');
   const subscription = await (dependencies.readSubscription ?? readSubscription)(input.productId, input.purchaseToken, input.userId);
@@ -270,6 +270,11 @@ export const verifyAndPersistGooglePlayPurchase = async (
   const entitlement = db.collection('subscriptionEntitlements').doc(input.userId);
   const claim = db.collection('googlePlayPurchaseClaims').doc(purchaseTokenHash);
   await db.runTransaction(async (transaction) => {
+    if (dependencies.onlyIfCurrentPurchase) {
+      const current = await transaction.get(entitlement);
+      // An old plan's delayed notification must not replace a newer purchase.
+      if (current.data()?.purchaseTokenHash !== purchaseTokenHash) return;
+    }
     const claimed = await transaction.get(claim);
     // Retain ownership established before the dedicated claim collection existed.
     const existing = await transaction.get(db.collection('subscriptionEntitlements')
@@ -301,6 +306,23 @@ export const verifyAndPersistGooglePlayPurchase = async (
     productId: input.productId,
     provider: 'google_play',
   };
+};
+
+/** Notifications carry the token; retain only its hash in our database. */
+export const refreshGooglePlayPurchase = async (purchaseToken: string): Promise<void> => {
+  const db = firebaseFirestore();
+  const hash = createHash('sha256').update(purchaseToken).digest('hex');
+  const owners = await db.collection('subscriptionEntitlements')
+    .where('purchaseTokenHash', '==', hash).limit(1).get();
+  const owner = owners.docs[0];
+  // First-purchase notifications can arrive before the app registers ownership.
+  // The authenticated purchase endpoint will verify and persist that purchase.
+  if (!owner) return;
+  const productId = safeString(owner.data().googlePlayProductId);
+  if (!productId) return;
+  await verifyAndPersistGooglePlayPurchase({ userId: owner.id, productId, purchaseToken }, {
+    db, onlyIfCurrentPurchase: true,
+  });
 };
 
 /** Matches the Android client's UTF-8 FNV-1a identifier, not a client claim. */
