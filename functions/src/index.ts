@@ -57,6 +57,10 @@ export const createStripeCheckoutSession = onRequest(
     if (req.method !== "POST") return void res.status(405).json({ error: "POST required." });
     try {
       const uid = await verifiedUid(req);
+      const entitlement = await getFirestore().collection("subscriptionEntitlements").doc(uid).get();
+      if (entitlement.data()?.active === true) {
+        return void res.status(409).json({ error: "You already have an active plan. Manage your existing subscription instead." });
+      }
       const body = (req.body ?? {}) as CheckoutRequest;
       if (body.plan !== "monthly" && body.plan !== "annual") {
         throw new HttpsError("invalid-argument", "Choose monthly or annual.");
@@ -77,6 +81,30 @@ export const createStripeCheckoutSession = onRequest(
       const status = error instanceof HttpsError && error.code === "unauthenticated" ? 401 : 400;
       console.error("Checkout session creation failed", error);
       res.status(status).json({ error: "Unable to start checkout." });
+    }
+  },
+);
+
+export const createStripePortalSession = onRequest(
+  { region: "northamerica-northeast1", secrets: [stripeSecretKey] },
+  async (req, res) => {
+    if (!cors(req, res)) return;
+    if (req.method === "OPTIONS") return void res.status(204).send("");
+    if (req.method !== "POST") return void res.status(405).json({ error: "POST required." });
+    try {
+      const uid = await verifiedUid(req);
+      const record = (await getFirestore().collection("subscriptionEntitlements").doc(uid).get()).data();
+      if (record?.provider === "google_play" || typeof record?.stripeCustomerId !== "string" || !record.stripeCustomerId.startsWith("cus_")) {
+        return void res.status(409).json({ error: "No web subscription is available to manage. Manage store purchases in the store where you subscribed." });
+      }
+      const session = await new Stripe(stripeSecretKey.value()).billingPortal.sessions.create({
+        customer: record.stripeCustomerId,
+        return_url: `${allowedOrigin.value()}/billing/manage`,
+      });
+      res.status(200).json({ url: session.url });
+    } catch (error) {
+      const status = error instanceof HttpsError && error.code === "unauthenticated" ? 401 : 400;
+      res.status(status).json({ error: "Unable to open subscription management. Please try again." });
     }
   },
 );
@@ -104,6 +132,7 @@ export const stripeWebhook = onRequest(
         const uid = subscription.metadata.firebaseUid;
         if (!uid) throw new Error("Subscription has no Firebase UID metadata.");
         await getFirestore().collection("subscriptionEntitlements").doc(uid).set({
+          provider: "stripe",
           status: subscription.status,
           active: ["active", "trialing"].includes(subscription.status),
           stripeCustomerId: String(subscription.customer),

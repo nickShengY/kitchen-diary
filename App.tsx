@@ -8,8 +8,13 @@ import { DeciderWheel } from './components/DeciderWheel';
 import { Profile } from './components/Profile';
 import { subscribeToAuthState } from './services/authService';
 import { AppView, Recipe } from './types';
+import { BillingReturn } from './components/BillingReturn';
 
 function App() {
+  const [billingReturn, setBillingReturn] = useState(() => {
+    const match = window.location.pathname.match(/^\/billing\/(success|cancel|manage)\/?$/);
+    return match ? match[1] as 'success' | 'cancel' | 'manage' : null;
+  });
   const [currentView, setCurrentView] = useState<AppView>(AppView.COMMUNITY);
   const [importRecipe, setImportRecipe] = useState<Recipe | undefined>(undefined);
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -52,6 +57,12 @@ function App() {
         return <Community onCookThis={handleCookThis} />;
     }
   };
+
+  if (billingReturn) return <BillingReturn mode={billingReturn} onContinue={() => {
+    window.history.replaceState(null, '', '/');
+    setCurrentView(AppView.PROFILE);
+    setBillingReturn(null);
+  }} />;
 
   return (
     <div className="toon-atmosphere min-h-screen font-sans text-toon-dark selection:bg-toon-primary selection:text-white overflow-hidden">

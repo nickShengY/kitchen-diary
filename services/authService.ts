@@ -3,7 +3,7 @@ import { doc, onSnapshot } from 'firebase/firestore';
 import { UserProfile } from '../types';
 import { getFirebaseAuth, getFirebaseFirestore, isFirebaseConfigured } from './firebase';
 
-type Entitlement = { active?: boolean; currentPeriodEnd?: { toMillis?: () => number } };
+type Entitlement = { active?: boolean; provider?: string; stripeCustomerId?: string; currentPeriodEnd?: { toMillis?: () => number } };
 
 const toUserProfile = (user: User, entitlement?: Entitlement): UserProfile => ({
   id: user.uid,
@@ -15,6 +15,8 @@ const toUserProfile = (user: User, entitlement?: Entitlement): UserProfile => ({
     (entitlement.currentPeriodEnd?.toMillis?.() === undefined ||
       entitlement.currentPeriodEnd.toMillis() > Date.now()),
   vipExpiresAt: entitlement?.currentPeriodEnd?.toMillis?.(),
+  billingProvider: entitlement?.provider === 'google_play' ? 'google_play' : entitlement?.stripeCustomerId ? 'stripe' : undefined,
+  billingStatus: 'loading',
   favorites: [],
   myRecipes: [],
 });
@@ -43,7 +45,8 @@ export const subscribeToAuthState = (callback: (user: UserProfile | null) => voi
     callback(toUserProfile(user));
     stopEntitlement = onSnapshot(
       doc(getFirebaseFirestore(), 'subscriptionEntitlements', user.uid),
-      (snapshot) => callback(toUserProfile(user, snapshot.exists() ? (snapshot.data() as Entitlement) : undefined)),
+      (snapshot) => callback({ ...toUserProfile(user, snapshot.exists() ? (snapshot.data() as Entitlement) : undefined), billingStatus: 'ready' }),
+      () => callback({ ...toUserProfile(user), billingStatus: 'error' }),
     );
   });
 

@@ -106,6 +106,8 @@ export interface UserProfile {
   /** Server-authoritative subscription status, when the account is signed in. */
   isVip?: boolean;
   vipExpiresAt?: number;
+  billingProvider?: 'stripe' | 'google_play';
+  billingStatus?: 'loading' | 'ready' | 'error';
   favorites: string[];
   myRecipes: Recipe[];
   recipesCount?: number;
