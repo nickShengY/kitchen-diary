@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Recipe, SocialPost, UserProfile } from '../types';
 import { login, logout, getCurrentUser, subscribeToAuthState } from '../services/authService';
 import { isFirebaseConfigured } from '../services/firebase';
-import { isStripeCheckoutConfigured, isStripePortalConfigured, openStripePortal, startStripeCheckout } from '../services/billingService';
 import { getSharedPosts, removeSharedPost } from '../services/communityStore';
 import { PANTRY_RECIPE_BY_ID, PantryRecipe, pantryRecipeToRecipe } from '../data/pantryRecipes';
 import { loadPantry, toggleId, updatePantry } from '../services/pantryStore';
@@ -111,8 +110,6 @@ export const Profile: React.FC<ProfileProps> = ({ onCookThis }) => {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
-  const [billingError, setBillingError] = useState<string | null>(null);
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [activePanel, setActivePanel] = useState<ProfilePanel>(null);
 
   // The kitchen lives on this device, so it loads whether or not anyone is
@@ -198,18 +195,6 @@ export const Profile: React.FC<ProfileProps> = ({ onCookThis }) => {
     }
   };
 
-  const handleCheckout = async () => {
-    setCheckoutLoading(true);
-    setBillingError(null);
-    try {
-      if (user?.isVip || user?.billingProvider === 'stripe') await openStripePortal();
-      else await startStripeCheckout('monthly');
-    } catch (error) {
-      setBillingError(error instanceof Error ? error.message : 'Unable to start secure checkout.');
-    } finally {
-      setCheckoutLoading(false);
-    }
-  };
 
   const kitchenStats = [
     { label: 'Cooked', value: formatCount(history.length) },
@@ -393,24 +378,13 @@ export const Profile: React.FC<ProfileProps> = ({ onCookThis }) => {
                 <p className="mt-1 text-sm text-gray-600">
                   {user.isVip
                     ? 'Your subscription is active across your signed-in kitchens.'
-                    : 'Manage a web subscription through secure Stripe Checkout.'}
+                    : 'Subscriptions are managed in the Kitchen Diary Android app through Google Play. Web checkout is not available.'}
                 </p>
-                <button
-                  type="button"
-                  onClick={handleCheckout}
-                  disabled={checkoutLoading || user.billingStatus === 'loading' || user.billingStatus === 'error' || user.billingProvider === 'google_play' || ((user.isVip || user.billingProvider === 'stripe') ? !isStripePortalConfigured() : !isStripeCheckoutConfigured())}
-                  className="press-springy mt-3 w-full rounded-xl bg-toon-primary py-2.5 text-sm font-bold text-white transition-colors hover:bg-toon-primary-deep disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {checkoutLoading ? 'Opening secure billing...' : user.billingProvider === 'google_play' ? 'Managed through Google Play' : (user.isVip || user.billingProvider === 'stripe') ? 'Manage subscription' : 'Get Kitchen Diary Plus'}
-                </button>
                 {user.billingProvider === 'google_play' && <a className="mt-2 block text-sm underline" href="https://play.google.com/store/account/subscriptions?package=com.kitchendiary.app">Manage in Google Play</a>}
                 {user.billingStatus === 'loading' && <p role="status" className="mt-2 text-sm">Checking your subscription…</p>}
-                {user.billingStatus === 'error' && <p role="alert" className="mt-2 text-sm">Unable to check your subscription. Please reload or contact support before starting checkout.</p>}
-                {(user.isVip || user.billingProvider === 'stripe') && user.billingProvider !== 'google_play' && !isStripePortalConfigured() && <p className="mt-2 text-sm text-gray-600">Subscription management is not available yet. Please contact support.</p>}
-                {!user.isVip && !user.billingProvider && !isStripeCheckoutConfigured() && (
-                  <p className="mt-2 text-xs text-gray-500">Subscriptions are coming soon.</p>
-                )}
-                {billingError && <p role="alert" className="mt-2 text-xs font-medium text-red-500">{billingError}</p>}
+                {user.billingStatus === 'error' && <p role="alert" className="mt-2 text-sm">Unable to check your subscription. Please reload or contact support.</p>}
+                {user.billingProvider === 'stripe' && <p className="mt-2 text-sm text-gray-600">Your existing access is still recognized. For help with a previous web subscription, <a href="/support" className="underline">contact support</a>.</p>}
+                <p className="mt-2 text-sm text-gray-600">Google Play purchases and restoration are not available yet. Once enabled, use Restore purchases in the Android app with the same Kitchen Diary account to refresh existing Play access. For help now, <a href="/support" className="underline">contact support</a>.</p>
               </div>
               <button
                 type="button"

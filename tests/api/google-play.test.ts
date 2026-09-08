@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { createGooglePlayVerifyHandler } from '../../api/google-play/verify-purchase';
 import {
   normalizeGooglePlayVerificationInput,
+  KITCHEN_DIARY_ANDROID_PACKAGE,
 } from '../../server/google-play';
 import { MenuAnalysisError } from '../../server/menu-analysis';
 import type { ApiRequest, ApiResponse } from '../../api/analyze-menu';
@@ -30,6 +31,9 @@ const request = (overrides: Partial<ApiRequest> = {}): ApiRequest => ({
 });
 
 describe('Google Play verification contract', () => {
+  it('targets the released Android package by default', () => {
+    expect(KITCHEN_DIARY_ANDROID_PACKAGE).toBe('com.kitchendiary.app');
+  });
   it('accepts only configured product IDs and bounded tokens', () => {
     expect(normalizeGooglePlayVerificationInput({
       productId: 'kitchendiary_premium_yearly',

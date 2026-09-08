@@ -94,6 +94,18 @@ describe('Profile Component', () => {
 
     expect(screen.getByRole('dialog', { name: /profile settings/i })).toBeInTheDocument();
     expect(screen.getByText('Signed in with your Google account.')).toBeInTheDocument();
+    expect(screen.getByText(/Web checkout is not available/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /get kitchen diary plus|manage subscription/i })).not.toBeInTheDocument();
+  });
+
+  it.each(['google_play', 'stripe'])('preserves existing %s access without web checkout', async (billingProvider) => {
+    (getCurrentUser as Mock).mockReturnValue({ ...mockUser, isVip: true, billingProvider, billingStatus: 'ready' });
+    render(<Profile />);
+    await userEvent.setup().click(screen.getByRole('button', { name: /profile settings/i }));
+    expect(screen.getByText(/Your subscription is active/)).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /get kitchen diary plus|manage subscription/i })).not.toBeInTheDocument();
+    if (billingProvider === 'google_play') expect(screen.getByRole('link', { name: 'Manage in Google Play' })).toHaveAttribute('href', 'https://play.google.com/store/account/subscriptions?package=com.kitchendiary.app');
+    else expect(screen.getByText(/Your existing access is still recognized/)).toBeInTheDocument();
   });
 
   it('returns to signed-out state after logout', async () => {

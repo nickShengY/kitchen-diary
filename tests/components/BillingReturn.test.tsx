@@ -20,7 +20,8 @@ describe('checkout return', () => {
     const view = render(<BillingReturn mode="success" onContinue={vi.fn()} />);
     expect(screen.getByText('Checking your Plus access')).toBeInTheDocument();
     act(() => state.callback?.({ isVip: false }));
-    expect(screen.getByRole('status')).toHaveTextContent('do not buy another plan');
+    expect(screen.getByRole('status')).toHaveTextContent('Restore purchases');
+    expect(screen.getByText(/Web checkout is no longer available/)).toBeInTheDocument();
     act(() => state.callback?.({ isVip: true }));
     expect(screen.getByText('Your Plus access is active')).toBeInTheDocument();
     view.unmount(); expect(state.stop).toHaveBeenCalled();
@@ -30,7 +31,7 @@ describe('checkout return', () => {
     act(() => state.callback?.(null));
     expect(screen.getByRole('status')).toHaveTextContent('same Google account');
     view.rerender(<BillingReturn mode="cancel" onContinue={vi.fn()} />);
-    expect(screen.getByText('Checkout closed')).toBeInTheDocument();
-    expect(screen.getByRole('status')).toHaveTextContent('only changes');
+    expect(screen.getByText('Sign in to check access')).toBeInTheDocument();
+    expect(screen.getByText(/This page does not change your subscription/)).toBeInTheDocument();
   });
 });

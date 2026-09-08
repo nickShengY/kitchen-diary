@@ -3,6 +3,7 @@ import { cert, getApps, initializeApp } from 'firebase-admin/app';
 import { getFirestore, Timestamp, type Firestore } from 'firebase-admin/firestore';
 import { MenuAnalysisError } from './menu-analysis.js';
 
+export const KITCHEN_DIARY_ANDROID_PACKAGE = 'com.kitchendiary.app';
 export const KITCHEN_DIARY_PLAY_PRODUCT_IDS = [
   'kitchendiary_premium_monthly',
   'kitchendiary_premium_yearly',
@@ -175,7 +176,7 @@ const readSubscription = async (
 ): Promise<{ expiry: Date | null; active: boolean; orderId: string | null }> => {
   const accessToken = await getAccessToken();
   const packageName = safeString(process.env.KITCHEN_DIARY_ANDROID_PACKAGE)
-    || 'com.example.kitchen_diary';
+    || KITCHEN_DIARY_ANDROID_PACKAGE;
   const url = `${PUBLISHER_URL}/applications/${encodeURIComponent(packageName)}`
     + `/purchases/subscriptionsv2/tokens/${encodeURIComponent(purchaseToken)}`;
   const response = await fetch(url, {
