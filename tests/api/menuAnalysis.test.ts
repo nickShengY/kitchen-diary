@@ -36,7 +36,7 @@ describe('server menu analysis provider', () => {
       { imageData: Buffer.from('menu').toString('base64'), mimeType: 'image/png' },
       {
         OPENROUTER_API_KEY: 'openrouter-test-key',
-        OPENROUTER_MODEL: 'test/vision-model',
+        OPENROUTER_MODEL: 'test/vision-model:free',
       },
       fetchMock as unknown as typeof fetch,
     );
@@ -53,43 +53,21 @@ describe('server menu analysis provider', () => {
       model: string;
       messages: Array<{ content: Array<{ type: string; image_url?: { url: string } }> }>;
     };
-    expect(payload.model).toBe('test/vision-model');
+    expect(payload.model).toBe('nex-agi/nex-n2-mini');
     expect(payload.messages[0].content[0].type).toBe('text');
     expect(payload.messages[0].content[1].image_url?.url).toBe('data:image/png;base64,bWVudQ==');
   });
 
-  it('uses Gemini when explicitly selected', async () => {
-    fetchMock.mockResolvedValue({
-      ok: true,
-      json: async () => ({
-        candidates: [{ content: { parts: [{ text: '{"items":[{"title":"Ramen"}]}' }] } }],
-      }),
-    });
-
-    const result = await analyzeMenuImageWithProvider(
-      { imageData: Buffer.from('menu').toString('base64') },
-      { KITCHEN_DIARY_AI_PROVIDER: 'gemini', GEMINI_API_KEY: 'gemini-test-key', GEMINI_MODEL: 'test-model' },
-      fetchMock as unknown as typeof fetch,
-    );
-
-    expect(result.provider).toBe('gemini');
-    expect(result.items).toEqual([{ name: 'Ramen' }]);
-    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(url).toContain('/v1beta/models/test-model:generateContent?key=gemini-test-key');
-    const payload = JSON.parse(String(init.body)) as {
-      contents: Array<{ parts: Array<{ inline_data?: { mime_type: string; data: string } }> }>;
-    };
-    expect(payload.contents[0].parts[1].inline_data).toEqual({
-      mime_type: 'image/jpeg',
-      data: 'bWVudQ==',
-    });
+  it('uses one fixed low-cost model regardless of stale provider configuration', () => {
+    for (const model of ['google/gemini-2.5-flash', 'google/gemini-test:free', 'paid/vision']) {
+      expect(resolveProvider({ OPENROUTER_API_KEY: 'test', KITCHEN_DIARY_AI_PROVIDER: 'gemini', OPENROUTER_MODEL: model })).toMatchObject({
+        provider: 'openrouter', model: 'nex-agi/nex-n2-mini',
+      });
+    }
   });
 
-  it('falls back from the preferred provider only when no provider is pinned', () => {
-    expect(resolveProvider({ GEMINI_API_KEY: 'gemini-test-key' })).toMatchObject({
-      provider: 'gemini',
-      model: 'gemini-2.5-flash',
-    });
+  it('never falls back to Gemini credentials', () => {
+    expect(resolveProvider({ GEMINI_API_KEY: 'gemini-test-key' })).toBeNull();
     expect(resolveProvider({
       KITCHEN_DIARY_AI_PROVIDER: 'openrouter',
       GEMINI_API_KEY: 'gemini-test-key',

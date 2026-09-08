@@ -45,6 +45,10 @@ describe('Kitchen Diary AI Chef provider contract', () => {
     expect(fetcher).toHaveBeenCalledOnce();
     const [, init] = fetcher.mock.calls[0] as [string, RequestInit];
     expect((init.headers as Record<string, string>).Authorization).toBe('Bearer server-only-key');
+    expect(JSON.parse(String(init.body))).toMatchObject({
+      model: 'mistralai/mistral-nemo',
+      provider: { only: ['deepinfra'], allow_fallbacks: false },
+    });
     expect(JSON.parse(String(init.body)).messages.at(-1).content).toContain('Current pantry items: onion');
   });
 

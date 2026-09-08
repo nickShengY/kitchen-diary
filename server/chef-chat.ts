@@ -18,7 +18,7 @@ export type ChefChatInput = {
 };
 
 export type ChefChatResult = {
-  provider: 'openrouter' | 'gemini';
+  provider: 'openrouter';
   reply: string;
 };
 
@@ -114,7 +114,6 @@ export const chefChatWithProvider = async (
 
   let url: string;
   let init: RequestInit;
-  if (config.provider === 'openrouter') {
     const siteUrl = environment.OPENROUTER_SITE_URL?.trim();
     url = OPENROUTER_URL;
     init = {
@@ -126,29 +125,13 @@ export const chefChatWithProvider = async (
         'X-Title': 'Kitchen Diary AI Chef',
       },
       body: JSON.stringify({
-        model: config.model,
+        model: 'mistralai/mistral-nemo',
+        provider: { only: ['deepinfra'], allow_fallbacks: false },
         messages,
         temperature: 0.35,
         max_tokens: 900,
       }),
     };
-  } else {
-    url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(config.model)}:generateContent?key=${encodeURIComponent(config.apiKey)}`;
-    init = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: messages
-          .filter((item) => item.role !== 'system')
-          .map((item) => ({
-            role: item.role === 'assistant' ? 'model' : 'user',
-            parts: [{ text: item.content }],
-          })),
-        systemInstruction: { parts: [{ text: CHEF_SYSTEM_PROMPT }] },
-        generationConfig: { temperature: 0.35, maxOutputTokens: 900 },
-      }),
-    };
-  }
 
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 20_000);

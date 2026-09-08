@@ -1,6 +1,6 @@
 import type { MenuItem } from '../types';
 
-export type MenuAnalysisProvider = 'openrouter' | 'gemini';
+export type MenuAnalysisProvider = 'openrouter';
 
 export type MenuAnalysisEnvironment = Readonly<Record<string, string | undefined>>;
 
@@ -42,8 +42,7 @@ export class MenuAnalysisError extends Error {
   }
 }
 
-const DEFAULT_OPENROUTER_MODEL = 'google/gemini-2.5-flash';
-const DEFAULT_GEMINI_MODEL = 'gemini-2.5-flash';
+const DEFAULT_OPENROUTER_MODEL = 'nex-agi/nex-n2-mini';
 const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const MAX_IMAGE_BYTES = 6 * 1024 * 1024;
 const MAX_IMAGE_BASE64_CHARS = Math.ceil(MAX_IMAGE_BYTES / 3) * 4;
@@ -70,44 +69,12 @@ const envValue = (environment: MenuAnalysisEnvironment, key: string): string =>
 export const resolveProvider = (
   environment: MenuAnalysisEnvironment = process.env,
 ): ProviderConfig | null => {
-  const requested = envValue(environment, 'KITCHEN_DIARY_AI_PROVIDER').toLowerCase();
-  const provider = requested || 'openrouter';
-
-  if (provider !== 'openrouter' && provider !== 'gemini') {
-    throw new MenuAnalysisError(
-      'invalid_provider',
-      500,
-      'KITCHEN_DIARY_AI_PROVIDER must be openrouter or gemini.',
-    );
-  }
-
   const openRouterKey = envValue(environment, 'OPENROUTER_API_KEY');
-  const geminiKey = envValue(environment, 'GEMINI_API_KEY');
-
-  if (provider === 'openrouter' && openRouterKey) {
+  if (openRouterKey) {
     return {
-      provider,
+      provider: 'openrouter',
       apiKey: openRouterKey,
-      model: envValue(environment, 'OPENROUTER_MODEL') || DEFAULT_OPENROUTER_MODEL,
-    };
-  }
-
-  if (provider === 'gemini' && geminiKey) {
-    return {
-      provider,
-      apiKey: geminiKey,
-      model: envValue(environment, 'GEMINI_MODEL') || DEFAULT_GEMINI_MODEL,
-    };
-  }
-
-  // OpenRouter is the preferred default, but an unpinned setup can still use
-  // Gemini without changing client code. An explicit provider selection never
-  // silently switches to a different provider.
-  if (!requested && geminiKey) {
-    return {
-      provider: 'gemini',
-      apiKey: geminiKey,
-      model: envValue(environment, 'GEMINI_MODEL') || DEFAULT_GEMINI_MODEL,
+      model: DEFAULT_OPENROUTER_MODEL,
     };
   }
 
@@ -244,23 +211,11 @@ const openRouterText = (payload: unknown): string => {
   return '';
 };
 
-const geminiText = (payload: unknown): string => {
-  const root = asRecord(payload);
-  const candidates = Array.isArray(root?.candidates) ? root.candidates : [];
-  const content = asRecord(asRecord(candidates[0])?.content);
-  const parts = Array.isArray(content?.parts) ? content.parts : [];
-  return parts
-    .map((part) => asText(asRecord(part)?.text))
-    .filter(Boolean)
-    .join('\n');
-};
-
 const providerRequest = (
   config: ProviderConfig,
   image: NormalizedImage,
   environment: MenuAnalysisEnvironment,
 ): { url: string; init: RequestInit } => {
-  if (config.provider === 'openrouter') {
     const siteUrl = envValue(environment, 'OPENROUTER_SITE_URL');
     return {
       url: OPENROUTER_URL,
@@ -274,6 +229,7 @@ const providerRequest = (
         },
         body: JSON.stringify({
           model: config.model,
+          provider: { sort: 'price', allow_fallbacks: false },
           messages: [
             {
               role: 'user',
@@ -291,35 +247,6 @@ const providerRequest = (
         }),
       },
     };
-  }
-
-  return {
-    url: `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(config.model)}:generateContent?key=${encodeURIComponent(config.apiKey)}`,
-    init: {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [
-          {
-            parts: [
-              { text: MENU_ANALYSIS_PROMPT },
-              {
-                inline_data: {
-                  mime_type: image.mimeType,
-                  data: image.data,
-                },
-              },
-            ],
-          },
-        ],
-        generationConfig: {
-          responseMimeType: 'application/json',
-          temperature: 0.1,
-          maxOutputTokens: 900,
-        },
-      }),
-    },
-  };
 };
 
 export const analyzeMenuImageWithProvider = async (
@@ -381,7 +308,7 @@ export const analyzeMenuImageWithProvider = async (
     );
   }
 
-  const text = config.provider === 'openrouter' ? openRouterText(payload) : geminiText(payload);
+  const text = openRouterText(payload);
   const items = parseMenuItems(text);
   return { provider: config.provider, items };
 };
