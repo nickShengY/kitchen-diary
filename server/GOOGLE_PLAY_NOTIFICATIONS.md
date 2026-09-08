@@ -8,7 +8,7 @@ renewals, cancellations, expirations, and voided-purchase notifications.
 
 - Project: `kitchen-diary-19971117`
 - Endpoint and OIDC audience: `https://kitchendiary.robopioneer.ca/api/google-play/notifications`
-- Keyless push identity: `kitchendiary-play-notifications@kitchen-diary-19971117.iam.gserviceaccount.com`
+- Keyless push identity: `kitchendiary-play-notification@kitchen-diary-19971117.iam.gserviceaccount.com`
 - Topic: `kitchendiary-play-notifications`
 - Push subscription: `kitchendiary-play-notifications-push`
 - Give `google-play-developer-notifications@system.gserviceaccount.com`

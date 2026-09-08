@@ -3,7 +3,7 @@ import { KITCHEN_DIARY_ANDROID_PACKAGE, refreshGooglePlayPurchase } from '../../
 import type { ApiRequest, ApiResponse } from '../analyze-menu.js';
 
 const audience = 'https://kitchendiary.robopioneer.ca/api/google-play/notifications';
-const pushIdentity = 'kitchendiary-play-notifications@kitchen-diary-19971117.iam.gserviceaccount.com';
+const pushIdentity = 'kitchendiary-play-notification@kitchen-diary-19971117.iam.gserviceaccount.com';
 const oidc = new OAuth2Client();
 
 const verifyPush = async (token: string): Promise<void> => {
