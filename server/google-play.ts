@@ -33,6 +33,7 @@ type GooglePlayLineItem = {
 };
 
 type GooglePlaySubscription = {
+  externalAccountIdentifiers?: { obfuscatedExternalAccountId?: unknown };
   subscriptionState?: unknown;
   lineItems?: unknown;
   latestOrderId?: unknown;
@@ -173,6 +174,7 @@ const getAccessToken = async (): Promise<string> => {
 const readSubscription = async (
   productId: string,
   purchaseToken: string,
+  userId: string,
 ): Promise<{ expiry: Date | null; active: boolean; orderId: string | null }> => {
   const accessToken = await getAccessToken();
   const packageName = safeString(process.env.KITCHEN_DIARY_ANDROID_PACKAGE)
@@ -194,6 +196,7 @@ const readSubscription = async (
     );
   }
   const body = await response.json() as GooglePlaySubscription;
+  validateGooglePlayAccountBinding(userId, body.externalAccountIdentifiers?.obfuscatedExternalAccountId);
   const lineItems = Array.isArray(body.lineItems)
     ? body.lineItems as GooglePlayLineItem[]
     : [];
@@ -256,35 +259,41 @@ const firebaseFirestore = (): Firestore => {
 
 export const verifyAndPersistGooglePlayPurchase = async (
   input: GooglePlayVerificationInput,
+  dependencies: { db?: Firestore; readSubscription?: typeof readSubscription } = {},
 ): Promise<GooglePlayVerificationResult> => {
-  const subscription = await readSubscription(input.productId, input.purchaseToken);
-  const db = firebaseFirestore();
+  if (!input.userId.trim()) throw new MenuAnalysisError('invalid_request', 401, 'A verified account is required.');
+  const subscription = await (dependencies.readSubscription ?? readSubscription)(input.productId, input.purchaseToken, input.userId);
+  const db = dependencies.db ?? firebaseFirestore();
   const purchaseTokenHash = createHash('sha256')
     .update(input.purchaseToken)
     .digest('hex');
-  const existing = await db
-    .collection('subscriptionEntitlements')
-    .where('purchaseTokenHash', '==', purchaseTokenHash)
-    .limit(1)
-    .get();
-  const owner = existing.docs[0];
-  if (owner && owner.id !== input.userId) {
-    throw new MenuAnalysisError(
-      'invalid_request',
-      409,
-      'This Google Play purchase is already linked to another account.',
-    );
-  }
+  const entitlement = db.collection('subscriptionEntitlements').doc(input.userId);
+  const claim = db.collection('googlePlayPurchaseClaims').doc(purchaseTokenHash);
+  await db.runTransaction(async (transaction) => {
+    const claimed = await transaction.get(claim);
+    // Retain ownership established before the dedicated claim collection existed.
+    const existing = await transaction.get(db.collection('subscriptionEntitlements')
+      .where('purchaseTokenHash', '==', purchaseTokenHash));
+    if ((claimed.exists && claimed.data()?.userId !== input.userId)
+      || existing.docs.some((owner) => owner.id !== input.userId)) {
+      throw new MenuAnalysisError(
+        'invalid_request',
+        409,
+        'This Google Play purchase is already linked to another account.',
+      );
+    }
 
-  await db.collection('subscriptionEntitlements').doc(input.userId).set({
-    active: subscription.active,
-    currentPeriodEnd: subscription.expiry ? Timestamp.fromDate(subscription.expiry) : null,
-    googlePlayProductId: input.productId,
-    googlePlayOrderId: subscription.orderId,
-    provider: 'google_play',
-    purchaseTokenHash,
-    updatedAt: Timestamp.now(),
-  }, { merge: true });
+    transaction.set(claim, { userId: input.userId }, { merge: true });
+    transaction.set(entitlement, {
+      active: subscription.active,
+      currentPeriodEnd: subscription.expiry ? Timestamp.fromDate(subscription.expiry) : null,
+      googlePlayProductId: input.productId,
+      googlePlayOrderId: subscription.orderId,
+      provider: 'google_play',
+      purchaseTokenHash,
+      updatedAt: Timestamp.now(),
+    }, { merge: true });
+  });
 
   return {
     active: subscription.active,
@@ -292,4 +301,20 @@ export const verifyAndPersistGooglePlayPurchase = async (
     productId: input.productId,
     provider: 'google_play',
   };
+};
+
+/** Matches the Android client's UTF-8 FNV-1a identifier, not a client claim. */
+export const googlePlayAccountId = (uid: string): string => {
+  let hash = 2166136261;
+  for (const byte of Buffer.from(uid, 'utf8')) hash = Math.imul(hash ^ byte, 16777619) >>> 0;
+  return hash.toString(16).padStart(8, '0');
+};
+
+export const validateGooglePlayAccountBinding = (uid: string, binding: unknown): void => {
+  // Older Play purchases may have no binding; their immutable token claim still
+  // protects ownership. A supplied binding must exactly match the verified UID.
+  if (binding == null || binding === '') return;
+  if (typeof binding !== 'string' || binding !== googlePlayAccountId(uid)) {
+    throw new MenuAnalysisError('invalid_request', 403, 'This Google Play purchase belongs to another account.');
+  }
 };
