@@ -6,9 +6,10 @@ import { Community } from './components/Community';
 import { PantryKitchen } from './components/PantryKitchen';
 import { DeciderWheel } from './components/DeciderWheel';
 import { Profile } from './components/Profile';
-import { subscribeToAuthState } from './services/authService';
+import { login, subscribeToAuthState } from './services/authService';
 import { AppView, Recipe } from './types';
 import { BillingReturn } from './components/BillingReturn';
+import { LandingPage } from './components/LandingPage';
 
 function App() {
   const [billingReturn, setBillingReturn] = useState(() => {
@@ -18,8 +19,12 @@ function App() {
   const [currentView, setCurrentView] = useState<AppView>(AppView.COMMUNITY);
   const [importRecipe, setImportRecipe] = useState<Recipe | undefined>(undefined);
   const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [showLanding, setShowLanding] = useState(true);
 
-  useEffect(() => subscribeToAuthState((user) => setUserId(user?.id)), []);
+  useEffect(() => subscribeToAuthState((user) => {
+      setUserId(user?.id);
+      if (user) setShowLanding(false);
+  }), []);
 
   const handleCookThis = (recipe: Recipe) => {
       setImportRecipe(recipe);
@@ -27,6 +32,7 @@ function App() {
   };
 
   const handleNavigate = (view: AppView) => {
+      setShowLanding(false);
       if (view === AppView.BUILDER) {
           setImportRecipe(undefined);
       }
@@ -34,6 +40,9 @@ function App() {
   };
 
   const renderView = () => {
+    if (showLanding && !userId) {
+      return <LandingPage onNavigate={handleNavigate} onSignIn={login} />;
+    }
     switch (currentView) {
       case AppView.COMMUNITY:
         return <Community onCookThis={handleCookThis} />;
@@ -61,12 +70,13 @@ function App() {
   if (billingReturn) return <BillingReturn mode={billingReturn} onContinue={() => {
     window.history.replaceState(null, '', '/');
     setCurrentView(AppView.PROFILE);
+    setShowLanding(false);
     setBillingReturn(null);
   }} />;
 
   return (
-    <div className="toon-atmosphere min-h-screen font-sans text-toon-dark selection:bg-toon-primary selection:text-white overflow-hidden">
-      <div className="toon-atmosphere max-w-md mx-auto min-h-screen relative shadow-2xl sm:border-x sm:border-orange-100 overflow-y-auto hide-scrollbar">
+    <div className={`toon-atmosphere min-h-screen font-sans text-toon-dark selection:bg-toon-primary selection:text-white overflow-hidden ${showLanding && !userId ? 'landing-host' : ''}`}>
+      <div className={showLanding && !userId ? 'landing-host-inner' : 'toon-atmosphere max-w-md mx-auto min-h-screen relative shadow-2xl sm:border-x sm:border-orange-100 overflow-y-auto hide-scrollbar'}>
 
         {/* Main Content Area. Screens animate their own content in; main itself
             must stay unanimated so it doesn't become a stacking context that
@@ -76,7 +86,7 @@ function App() {
         </main>
 
         {/* Navigation */}
-        <Navigation currentView={currentView} setView={handleNavigate} />
+        {!(showLanding && !userId) && <Navigation currentView={currentView} setView={handleNavigate} />}
 
       </div>
     </div>
