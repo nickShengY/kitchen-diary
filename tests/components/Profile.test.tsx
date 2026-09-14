@@ -39,7 +39,7 @@ describe('Profile Component', () => {
   it('renders signed-out state by default', () => {
     render(<Profile />);
 
-    expect(screen.getByText('CookToon')).toBeInTheDocument();
+    expect(screen.getByText('Kitchen Diary')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /continue with google/i })).toBeInTheDocument();
   });
 

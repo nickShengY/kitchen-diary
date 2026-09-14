@@ -480,7 +480,7 @@ export const Profile: React.FC<ProfileProps> = ({ onCookThis }) => {
             </div>
           </div>
           <h1 className="animate-rise mb-2 font-display text-4xl font-semibold" style={{ animationDelay: '100ms' }}>
-            <span className="text-candy">CookToon</span>
+            <span className="text-candy">Kitchen Diary</span>
           </h1>
           <p
             className="animate-rise mb-6 max-w-xs text-center text-gray-500"

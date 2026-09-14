@@ -100,7 +100,7 @@ describe('App integration flows', () => {
     await screen.findByText('Italian');
 
     await user.click(screen.getByRole('button', { name: /^Profile$/ }));
-    expect(screen.getByText('CookToon')).toBeInTheDocument();
+    expect(screen.getByText('Kitchen Diary')).toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: /^Explore$/ }));
     expect(screen.getByRole('heading', { name: 'Explore' })).toBeInTheDocument();

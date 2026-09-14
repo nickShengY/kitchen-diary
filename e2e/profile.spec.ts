@@ -26,7 +26,7 @@ test.describe('Profile View', () => {
   });
 
   test('should display login screen when not authenticated', async ({ page }) => {
-    await expect(page.getByText('CookToon')).toBeVisible();
+    await expect(page.getByText('Kitchen Diary')).toBeVisible();
   });
 
   test('should display welcome message', async ({ page }) => {

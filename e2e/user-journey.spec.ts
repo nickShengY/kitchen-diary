@@ -93,7 +93,7 @@ test.describe('Complete User Journey', () => {
     await expect(page.getByRole('button', { name: /find a dish/i })).toBeVisible({ timeout: 10000 });
 
     await page.getByRole('button', { name: 'Profile', exact: true }).click();
-    await expect(page.getByText('CookToon')).toBeVisible();
+    await expect(page.getByText('Kitchen Diary')).toBeVisible();
     await signInWithLiveProfile(page);
     await expect(page.getByRole('button', { name: /sign out/i })).toBeVisible();
 
@@ -224,7 +224,7 @@ test.describe('Mobile Responsive Tests', () => {
     await expect(page.getByText('Spin Cuisine')).toBeVisible();
 
     await page.getByRole('button', { name: 'Profile', exact: true }).click();
-    await expect(page.getByText('CookToon')).toBeVisible();
+    await expect(page.getByText('Kitchen Diary')).toBeVisible();
 
     await page.getByRole('button', { name: 'Explore', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Explore' })).toBeVisible();

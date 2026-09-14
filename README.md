@@ -1,4 +1,4 @@
-# Kitchen Diary / CookToon
+# Kitchen Diary
 
 Kitchen Diary is a cute, mobile-first recipe builder and cooking community prototype. It lets users browse live recipe inspiration, tell the app what is in their kitchen and get back dishes they can actually make, build step-by-step recipes with ingredients, tools, actions, heat, liquids, timing, cut shapes, and finishing details, and preview generated cooking artwork and motion assets while authoring.
 

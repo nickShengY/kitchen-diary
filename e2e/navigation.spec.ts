@@ -29,7 +29,7 @@ test.describe('Navigation', () => {
 
   test('should navigate to Profile view', async ({ page }) => {
     await page.getByRole('button', { name: 'Profile', exact: true }).click();
-    await expect(page.getByText('CookToon')).toBeVisible();
+    await expect(page.getByText('Kitchen Diary')).toBeVisible();
     await expect(page.getByRole('button', { name: /continue with google/i })).toBeVisible();
   });
 
