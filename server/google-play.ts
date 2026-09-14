@@ -175,7 +175,7 @@ const readSubscription = async (
   productId: string,
   purchaseToken: string,
   userId: string,
-): Promise<{ expiry: Date | null; active: boolean; orderId: string | null }> => {
+): Promise<{ expiry: Date | null; active: boolean; orderId: string | null; accountBound: boolean }> => {
   const accessToken = await getAccessToken();
   const packageName = safeString(process.env.KITCHEN_DIARY_ANDROID_PACKAGE)
     || KITCHEN_DIARY_ANDROID_PACKAGE;
@@ -196,7 +196,7 @@ const readSubscription = async (
     );
   }
   const body = await response.json() as GooglePlaySubscription;
-  validateGooglePlayAccountBinding(userId, body.externalAccountIdentifiers?.obfuscatedExternalAccountId);
+  const accountBound = validateGooglePlayAccountBinding(userId, body.externalAccountIdentifiers?.obfuscatedExternalAccountId);
   const lineItems = Array.isArray(body.lineItems)
     ? body.lineItems as GooglePlayLineItem[]
     : [];
@@ -218,6 +218,7 @@ const readSubscription = async (
   return {
     expiry: validExpiry,
     active,
+    accountBound,
     orderId: safeString(body.latestOrderId) || null,
   };
 };
@@ -288,6 +289,17 @@ export const verifyAndPersistGooglePlayPurchase = async (
       );
     }
 
+    // A provider receipt without an account identifier is NOT proof of who paid.
+    // Legacy restore requires a pre-existing server-owned binding, atomically read
+    // above. Unclaimed legacy tokens need independently verified support migration;
+    // possession of a token or a client-supplied UID is never migration evidence.
+    const independentlyOwned = (claimed.exists && claimed.data()?.userId === input.userId)
+      || existing.docs.some((owner) => owner.id === input.userId);
+    if (!subscription.accountBound && !independentlyOwned) {
+      throw new MenuAnalysisError('invalid_request', 403,
+        'This legacy purchase has no verified account binding. Contact support to establish ownership.');
+    }
+
     transaction.set(claim, { userId: input.userId }, { merge: true });
     transaction.set(entitlement, {
       active: subscription.active,
@@ -332,11 +344,11 @@ export const googlePlayAccountId = (uid: string): string => {
   return hash.toString(16).padStart(8, '0');
 };
 
-export const validateGooglePlayAccountBinding = (uid: string, binding: unknown): void => {
-  // Older Play purchases may have no binding; their immutable token claim still
-  // protects ownership. A supplied binding must exactly match the verified UID.
-  if (binding == null || binding === '') return;
+export const validateGooglePlayAccountBinding = (uid: string, binding: unknown): boolean => {
+  // False requires independent legacy ownership inside the storage transaction.
+  if (binding == null || binding === '') return false;
   if (typeof binding !== 'string' || binding !== googlePlayAccountId(uid)) {
     throw new MenuAnalysisError('invalid_request', 403, 'This Google Play purchase belongs to another account.');
   }
+  return true;
 };

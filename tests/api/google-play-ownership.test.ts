@@ -32,7 +32,7 @@ function store() {
   return {db, records};
 }
 const input = (userId: string) => ({userId, productId: 'kitchendiary_premium_monthly', purchaseToken: 'test-token'});
-const readSubscription = async () => ({expiry: new Date('2030-01-01'), active: true, orderId: 'test-order'});
+const readSubscription = async () => ({expiry: new Date('2030-01-01'), active: true, orderId: 'test-order', accountBound: true});
 afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
 
 describe('Play account ownership', () => {
@@ -59,7 +59,8 @@ describe('Play account ownership', () => {
     expect(() => validateGooglePlayAccountBinding('hello', '4f9f2cab')).not.toThrow();
     expect(() => validateGooglePlayAccountBinding('other', '4f9f2cab')).toThrow();
     expect(() => validateGooglePlayAccountBinding('hello', {})).toThrow();
-    expect(() => validateGooglePlayAccountBinding('hello', undefined)).not.toThrow();
+    expect(validateGooglePlayAccountBinding('hello', undefined)).toBe(false);
+    expect(validateGooglePlayAccountBinding('hello', '')).toBe(false);
   });
   it('serializes competing first claims, preserves fields, and supports owner restore', async () => {
     const {db, records} = store();
@@ -88,8 +89,22 @@ describe('Play account ownership', () => {
     await verifyAndPersistGooglePlayPurchase(input('one'), {db, readSubscription});
     await verifyAndPersistGooglePlayPurchase({...input('one'), purchaseToken:'replacement-token'}, {db, readSubscription});
     const current = records.get('subscriptionEntitlements/one');
-    await verifyAndPersistGooglePlayPurchase(input('one'), {db, readSubscription: async () => ({expiry: null, active: false, orderId: null}), onlyIfCurrentPurchase: true});
+    await verifyAndPersistGooglePlayPurchase(input('one'), {db, readSubscription: async () => ({expiry: null, active: false, orderId: null, accountBound: false}), onlyIfCurrentPurchase: true});
     expect(records.get('subscriptionEntitlements/one')).toBe(current);
     expect(current?.active).toBe(true);
+  });
+  it('rejects every first claimant of an unbound legacy token without any writes', async () => {
+    const {db, records} = store();
+    const unbound = async () => ({...await readSubscription(), accountBound: false});
+    for (const uid of ['one', 'two']) await expect(verifyAndPersistGooglePlayPurchase(input(uid), {db, readSubscription: unbound})).rejects.toThrow('no verified account binding');
+    expect(records.size).toBe(0);
+  });
+  it('restores an unbound legacy receipt only to its independently recorded owner', async () => {
+    const {db, records} = store();
+    await verifyAndPersistGooglePlayPurchase(input('one'), {db, readSubscription});
+    for (const path of records.keys()) if (path.startsWith('googlePlayPurchaseClaims/')) records.delete(path);
+    const unbound = async () => ({...await readSubscription(), accountBound: false});
+    await expect(verifyAndPersistGooglePlayPurchase(input('one'), {db, readSubscription: unbound})).resolves.toMatchObject({active:true});
+    await expect(verifyAndPersistGooglePlayPurchase(input('two'), {db, readSubscription: unbound})).rejects.toThrow('already linked');
   });
 });

@@ -57,7 +57,7 @@ const adminAuth = (): Auth => {
 
 const verifyFirebaseIdToken = async (token: string): Promise<string> => {
   try {
-    const decoded = await adminAuth().verifyIdToken(token);
+    const decoded = await adminAuth().verifyIdToken(token, true);
     if (!decoded.uid) throw new Error('Missing Firebase UID');
     return decoded.uid;
   } catch {
