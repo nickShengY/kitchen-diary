@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "iPhone and iPad targeted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Marketing/build versions present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Sign in with Apple entitlement",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Assets store icon",
+      "passed": true,
+      "detail": "1024x1024; PNG color type 2 (2 = RGB)"
+    },
+    {
+      "check": "WatchAssets store icon",
+      "passed": true,
+      "detail": "1024x1024; PNG color type 2 (2 = RGB)"
+    },
+    {
+      "check": "No tracking declared",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "UserDefaults reason declared",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Apple signing identity available",
+      "passed": false,
+      "detail": ""
+    }
+  ],
+  "readyToSubmit": false,
+  "note": "Live auth/deletion, sandbox billing, App Store metadata, signing and Organizer validation must also be completed."
+}

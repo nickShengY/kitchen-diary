@@ -5,6 +5,9 @@ import { describe, expect, it } from 'vitest';
 const rules = readFileSync(resolve(__dirname, '../firestore.rules'), 'utf8');
 
 describe('Firestore account-data rules', () => {
+  it('denies signed-in access while account deletion is in progress', () => {
+    expect(rules).toContain('!exists(/databases/$(database)/documents/accountDeletions/$(request.auth.uid))');
+  });
   it('restricts public profiles to a fixed public field allowlist', () => {
     const publicRules = rules.split('match /public_profiles/{uid} {')[1]?.split('// These documents')[0];
     expect(publicRules).toBeTruthy();

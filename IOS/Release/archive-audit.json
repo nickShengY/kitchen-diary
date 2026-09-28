@@ -1,0 +1,81 @@
+{
+  "checks": [
+    {
+      "check": "iPhone and iPad targeted",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Marketing/build versions present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Sign in with Apple entitlement",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Assets store icon",
+      "passed": true,
+      "detail": "1024x1024; PNG color type 2 (2 = RGB)"
+    },
+    {
+      "check": "WatchAssets store icon",
+      "passed": true,
+      "detail": "1024x1024; PNG color type 2 (2 = RGB)"
+    },
+    {
+      "check": "No tracking declared",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "UserDefaults reason declared",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Archive version",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Watch app embedded",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Phone privacy manifest embedded",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Watch privacy manifest embedded",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "No StoreKit test configuration in shipping app",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "check": "Provisioning profile present",
+      "passed": false,
+      "detail": ""
+    },
+    {
+      "check": "Code signature valid",
+      "passed": false,
+      "detail": "<archive>/Products/Applications/KitchenDiary.app: code object is not signed at all\nIn architecture: arm64"
+    },
+    {
+      "check": "Apple signing identity available",
+      "passed": false,
+      "detail": ""
+    }
+  ],
+  "readyToSubmit": false,
+  "note": "Live auth/deletion, sandbox billing, App Store metadata, signing and Organizer validation must also be completed."
+}

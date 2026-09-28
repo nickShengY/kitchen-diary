@@ -1,0 +1,55 @@
+{
+  "identifier": "B9DDDD66",
+  "nonRenewingSubscriptions": [],
+  "products": [],
+  "settings": {
+    "_applicationInternalID": "",
+    "_developerTeamID": "",
+    "_failTransactionsEnabled": false,
+    "_lastSynchronizedDate": 0,
+    "_locale": "en_US",
+    "_storefront": "USA",
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [
+    {
+      "id": "1A2B3C4D",
+      "localizations": [
+        {
+          "description": "Menu-photo recognition",
+          "displayName": "Pro",
+          "locale": "en_US"
+        }
+      ],
+      "name": "Kitchen Diary Pro",
+      "subscriptions": [
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "2.99",
+          "familyShareable": false,
+          "groupNumber": 1,
+          "internalID": "9ABCDEF0",
+          "introductoryOffer": null,
+          "localizations": [
+            {
+              "description": "Read menu photos privately on your device, edit the dishes and spin your choices.",
+              "displayName": "Kitchen Diary Pro",
+              "locale": "en_US"
+            }
+          ],
+          "productID": "com.kitchendiary.premium.monthly",
+          "recurringSubscriptionPeriod": "P1M",
+          "referenceName": "Premium monthly",
+          "subscriptionGroupID": "1A2B3C4D",
+          "type": "RecurringSubscription",
+          "winBackOffers": []
+        }
+      ]
+    }
+  ],
+  "version": {
+    "major": 3,
+    "minor": 0
+  }
+}

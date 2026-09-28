@@ -1,0 +1,1044 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		07F0C5D6671F3DA1B9400AE4 /* KitchenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA47193D1EF95094688060A1 /* KitchenStore.swift */; };
+		0C82D2B7C708EE2E9F0222A5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E3523890C57B217C7D57EDF4 /* FirebaseAuth */; };
+		1C603730B3E2369362772C7D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9956FD1164C1444ED9FE171 /* Foundation.framework */; };
+		217E0E8109E94890254A0090 /* catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = 393130EB183F8A7A23610601 /* catalog.json */; };
+		252BACEA8851779AADBEB3AB /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 2E227B735CD0B50D059F286F /* FirebaseFirestore */; };
+		3001D5A779BFD9EDF310822F /* MembershipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC45CC6CCD5CB59A0BA0D004 /* MembershipTests.swift */; };
+		37BF1BC78D5490F58FA42B3A /* KitchenDiaryWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 9CE59AE03D87107E67778ACE /* KitchenDiaryWatch.app */; };
+		4DF62B66C856DBFB083ABD52 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B672FB872E6C24EA32AE4D /* Models.swift */; };
+		5208EC02F7F4C11C239E6899 /* DeciderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C679B1B47E404FF7EEE864 /* DeciderView.swift */; };
+		5808D75A7EF8E20F126D5377 /* KitchenDiaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4F5F6682A9ABD346E87395 /* KitchenDiaryApp.swift */; };
+		58BAE558CB9AB2174E8A089F /* CookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 829960DE37DC321269230B95 /* CookingView.swift */; };
+		66D9A84AE9AFF876E4D89C39 /* KitchenDiary.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 934D0B78F93028D7666E5B29 /* KitchenDiary.storekit */; };
+		67291E93D6F9FE6186332761 /* BuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A91858AE45545659E7AE1B3 /* BuilderView.swift */; };
+		67809FACC95987548C75C479 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FCA6D071E665AC7A01061DC /* ExploreView.swift */; };
+		6D92DDBF365F2D47E4B8A51C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 5ED07847869BC391A5C65788 /* PrivacyInfo.xcprivacy */; };
+		6FDB359FB081C18802194291 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C987E9B1C811A3A3C3979191 /* AccountService.swift */; };
+		74028CA0FA9F4DAAF9D3533D /* KitchenWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F5A1494369F89AF9AB6E58 /* KitchenWatchApp.swift */; };
+		77A7C21BEA6821024F67018B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505D8C815A917290D205AA5F /* Theme.swift */; };
+		7AC022F77CF020595F4A4A10 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0BD39E560BAB0B9D31034676 /* GoogleService-Info.plist */; };
+		83FC69188D1EEFD3CEE00164 /* PantryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02E4CF5249D03C71783E628 /* PantryView.swift */; };
+		85C853F9EA95B8A8DFEEDBF0 /* KitchenCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361B2124274A72F03A51713C /* KitchenCoreTests.swift */; };
+		915F46B8F615C9224721755D /* Wheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A75E70DF69549E9E60FBD7F /* Wheel.swift */; };
+		91BCEDEB8AEC567EE6146121 /* KitchenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA47193D1EF95094688060A1 /* KitchenStore.swift */; };
+		93879E6DE5A4A658C758C303 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9956FD1164C1444ED9FE171 /* Foundation.framework */; };
+		9FBA9AC138B2EA6C1C26DD25 /* parity-fixtures.json in Resources */ = {isa = PBXBuildFile; fileRef = 0294B17A1737AEAAF942A4F5 /* parity-fixtures.json */; };
+		A0935193FFB063C34E707372 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 33211B88F073872127E059B7 /* FirebaseCore */; };
+		A120426633840716C35888CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735F72704C5E99CF83DD2900 /* Foundation.framework */; };
+		A790A96928B5DFE3F5C34797 /* WatchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A39C568862FFEFF821C8C5 /* WatchUITests.swift */; };
+		AA92AF65BA7FEAAF5C128F87 /* MembershipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795B550047F16D9D9F51F96D /* MembershipView.swift */; };
+		AEDA1CB66F8FDCAF3E249E15 /* KitchenUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A53F2C551CD91DCECA2893 /* KitchenUITests.swift */; };
+		B27244139BF223392D26232D /* ActionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C97255FE98B87D8DC41514A /* ActionAnimation.swift */; };
+		B6303C30A4299E88AB7D4724 /* AppleAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446ED81C7F734F7E976A9867 /* AppleAuthorization.swift */; };
+		B92C455084965715086AB156 /* WatchAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 183AF3D006F26EEC52C01EE4 /* WatchAssets.xcassets */; };
+		BFD7ACC3ADE46C090BA30869 /* AppLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B889EB64315237223FB8B607 /* AppLinks.swift */; };
+		C0A52028D5FA51549617FFA3 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = D13CC109B5B809F2DF5615C5 /* GoogleSignIn */; };
+		C0B4666FDEE8E354FF44CF23 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735F72704C5E99CF83DD2900 /* Foundation.framework */; };
+		C13C771AAEA3D737AA66281F /* Wheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A75E70DF69549E9E60FBD7F /* Wheel.swift */; };
+		C3EEDFB011A04FEFEA124C78 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B672FB872E6C24EA32AE4D /* Models.swift */; };
+		DC35972C3A6C2F9F6A9E4924 /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B3050F6DA0069686EBA7DE /* DiaryView.swift */; };
+		DC53A4F3C7803E5C586AF361 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18BB18397DAF8D6E35DB5762 /* Assets.xcassets */; };
+		DDD021C31EF5CF3C2961E020 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 735F72704C5E99CF83DD2900 /* Foundation.framework */; };
+		DEFEE6A3CD07FA202B7CF85A /* Motion in Resources */ = {isa = PBXBuildFile; fileRef = 75FF4C7098106620C87824BA /* Motion */; };
+		DFB0676D9F18C546BC8D7E9B /* catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = 393130EB183F8A7A23610601 /* catalog.json */; };
+		F37D16470F5F01E100CE9CF9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 5ED07847869BC391A5C65788 /* PrivacyInfo.xcprivacy */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0F316D23A9A4522CE496C4FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F4EFF2C98A0F38917078080 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A128416756706917BCDFA7AB;
+			remoteInfo = KitchenDiary;
+		};
+		5F5BAC662747D710FF9F8587 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F4EFF2C98A0F38917078080 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82E31FE841D0A2A82A4617E8;
+			remoteInfo = KitchenDiaryWatch;
+		};
+		97F246E4D1C6A748CD55C2DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F4EFF2C98A0F38917078080 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A128416756706917BCDFA7AB;
+			remoteInfo = KitchenDiary;
+		};
+		BF106A5A6B53C7BEC04FDDBA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F4EFF2C98A0F38917078080 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 82E31FE841D0A2A82A4617E8;
+			remoteInfo = KitchenDiaryWatch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		ECC58958B3865A6C3275CABE /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				37BF1BC78D5490F58FA42B3A /* KitchenDiaryWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0294B17A1737AEAAF942A4F5 /* parity-fixtures.json */ = {isa = PBXFileReference; includeInIndex = 1; name = "parity-fixtures.json"; path = "Resources/parity-fixtures.json"; sourceTree = "<group>"; };
+		0A75E70DF69549E9E60FBD7F /* Wheel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Wheel.swift; path = Shared/Wheel.swift; sourceTree = "<group>"; };
+		0BD39E560BAB0B9D31034676 /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Resources/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		0C43A0B94F3CF2C2B4585A4F /* KitchenDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KitchenDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		183AF3D006F26EEC52C01EE4 /* WatchAssets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = WatchAssets.xcassets; path = Resources/WatchAssets.xcassets; sourceTree = "<group>"; };
+		18BB18397DAF8D6E35DB5762 /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
+		361B2124274A72F03A51713C /* KitchenCoreTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KitchenCoreTests.swift; path = Tests/KitchenCoreTests.swift; sourceTree = "<group>"; };
+		393130EB183F8A7A23610601 /* catalog.json */ = {isa = PBXFileReference; includeInIndex = 1; name = catalog.json; path = Resources/catalog.json; sourceTree = "<group>"; };
+		3A4F5F6682A9ABD346E87395 /* KitchenDiaryApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KitchenDiaryApp.swift; path = KitchenDiary/KitchenDiaryApp.swift; sourceTree = "<group>"; };
+		3FCA6D071E665AC7A01061DC /* ExploreView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExploreView.swift; path = KitchenDiary/ExploreView.swift; sourceTree = "<group>"; };
+		446ED81C7F734F7E976A9867 /* AppleAuthorization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppleAuthorization.swift; path = KitchenDiary/AppleAuthorization.swift; sourceTree = "<group>"; };
+		48A8FF7DA47CDDB998007B8A /* KitchenDiaryWatchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KitchenDiaryWatchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		505D8C815A917290D205AA5F /* Theme.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Theme.swift; path = KitchenDiary/Theme.swift; sourceTree = "<group>"; };
+		5A91858AE45545659E7AE1B3 /* BuilderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BuilderView.swift; path = KitchenDiary/BuilderView.swift; sourceTree = "<group>"; };
+		5ED07847869BC391A5C65788 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Resources/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		71B3050F6DA0069686EBA7DE /* DiaryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DiaryView.swift; path = KitchenDiary/DiaryView.swift; sourceTree = "<group>"; };
+		735F72704C5E99CF83DD2900 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		75FF4C7098106620C87824BA /* Motion */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = Motion; path = Resources/Motion; sourceTree = "<group>"; };
+		795B550047F16D9D9F51F96D /* MembershipView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MembershipView.swift; path = KitchenDiary/MembershipView.swift; sourceTree = "<group>"; };
+		822C07D75A4717F36F81A386 /* KitchenDiaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KitchenDiaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		829960DE37DC321269230B95 /* CookingView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CookingView.swift; path = KitchenDiary/CookingView.swift; sourceTree = "<group>"; };
+		8C97255FE98B87D8DC41514A /* ActionAnimation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ActionAnimation.swift; path = KitchenDiary/ActionAnimation.swift; sourceTree = "<group>"; };
+		934D0B78F93028D7666E5B29 /* KitchenDiary.storekit */ = {isa = PBXFileReference; includeInIndex = 1; name = KitchenDiary.storekit; path = Resources/KitchenDiary.storekit; sourceTree = "<group>"; };
+		95B672FB872E6C24EA32AE4D /* Models.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Models.swift; path = Shared/Models.swift; sourceTree = "<group>"; };
+		9CE59AE03D87107E67778ACE /* KitchenDiaryWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KitchenDiaryWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3C679B1B47E404FF7EEE864 /* DeciderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DeciderView.swift; path = KitchenDiary/DeciderView.swift; sourceTree = "<group>"; };
+		B6A53F2C551CD91DCECA2893 /* KitchenUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KitchenUITests.swift; path = UITests/KitchenUITests.swift; sourceTree = "<group>"; };
+		B889EB64315237223FB8B607 /* AppLinks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppLinks.swift; path = KitchenDiary/AppLinks.swift; sourceTree = "<group>"; };
+		BA47193D1EF95094688060A1 /* KitchenStore.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KitchenStore.swift; path = Shared/KitchenStore.swift; sourceTree = "<group>"; };
+		C987E9B1C811A3A3C3979191 /* AccountService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AccountService.swift; path = KitchenDiary/AccountService.swift; sourceTree = "<group>"; };
+		D02E4CF5249D03C71783E628 /* PantryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PantryView.swift; path = KitchenDiary/PantryView.swift; sourceTree = "<group>"; };
+		D9956FD1164C1444ED9FE171 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E9A39C568862FFEFF821C8C5 /* WatchUITests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WatchUITests.swift; path = WatchUITests/WatchUITests.swift; sourceTree = "<group>"; };
+		EC45CC6CCD5CB59A0BA0D004 /* MembershipTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MembershipTests.swift; path = Tests/MembershipTests.swift; sourceTree = "<group>"; };
+		F31F5A5E4035C01EFAADC003 /* KitchenDiaryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KitchenDiaryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7F5A1494369F89AF9AB6E58 /* KitchenWatchApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KitchenWatchApp.swift; path = Watch/KitchenWatchApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0E128BD64ABADBDA94A2B857 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A120426633840716C35888CC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		257055187736D9D92D32A702 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93879E6DE5A4A658C758C303 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA8E50C83EBA56D1A68A1B06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C603730B3E2369362772C7D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E07A0DD75454CCD76B481D0E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDD021C31EF5CF3C2961E020 /* Foundation.framework in Frameworks */,
+				A0935193FFB063C34E707372 /* FirebaseCore in Frameworks */,
+				0C82D2B7C708EE2E9F0222A5 /* FirebaseAuth in Frameworks */,
+				252BACEA8851779AADBEB3AB /* FirebaseFirestore in Frameworks */,
+				C0A52028D5FA51549617FFA3 /* GoogleSignIn in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F230B8729061E1BD42C6549C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0B4666FDEE8E354FF44CF23 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		231BDF5EB40362E498AD6A7E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				393130EB183F8A7A23610601 /* catalog.json */,
+				18BB18397DAF8D6E35DB5762 /* Assets.xcassets */,
+				183AF3D006F26EEC52C01EE4 /* WatchAssets.xcassets */,
+				75FF4C7098106620C87824BA /* Motion */,
+				0BD39E560BAB0B9D31034676 /* GoogleService-Info.plist */,
+				5ED07847869BC391A5C65788 /* PrivacyInfo.xcprivacy */,
+				0294B17A1737AEAAF942A4F5 /* parity-fixtures.json */,
+				934D0B78F93028D7666E5B29 /* KitchenDiary.storekit */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		23CF13A08CBDC7DE4A0FE38E = {
+			isa = PBXGroup;
+			children = (
+				C6014B5EA4EBCE488A2CAE37 /* Products */,
+				E153CAD4DA1822C6119D7278 /* Frameworks */,
+				4B749A92B5876088E5E274FC /* Sources */,
+				231BDF5EB40362E498AD6A7E /* Resources */,
+			);
+			sourceTree = "<group>";
+		};
+		4B749A92B5876088E5E274FC /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				95B672FB872E6C24EA32AE4D /* Models.swift */,
+				BA47193D1EF95094688060A1 /* KitchenStore.swift */,
+				0A75E70DF69549E9E60FBD7F /* Wheel.swift */,
+				3FCA6D071E665AC7A01061DC /* ExploreView.swift */,
+				829960DE37DC321269230B95 /* CookingView.swift */,
+				B889EB64315237223FB8B607 /* AppLinks.swift */,
+				5A91858AE45545659E7AE1B3 /* BuilderView.swift */,
+				3A4F5F6682A9ABD346E87395 /* KitchenDiaryApp.swift */,
+				71B3050F6DA0069686EBA7DE /* DiaryView.swift */,
+				8C97255FE98B87D8DC41514A /* ActionAnimation.swift */,
+				D02E4CF5249D03C71783E628 /* PantryView.swift */,
+				A3C679B1B47E404FF7EEE864 /* DeciderView.swift */,
+				C987E9B1C811A3A3C3979191 /* AccountService.swift */,
+				446ED81C7F734F7E976A9867 /* AppleAuthorization.swift */,
+				505D8C815A917290D205AA5F /* Theme.swift */,
+				795B550047F16D9D9F51F96D /* MembershipView.swift */,
+				F7F5A1494369F89AF9AB6E58 /* KitchenWatchApp.swift */,
+				EC45CC6CCD5CB59A0BA0D004 /* MembershipTests.swift */,
+				361B2124274A72F03A51713C /* KitchenCoreTests.swift */,
+				B6A53F2C551CD91DCECA2893 /* KitchenUITests.swift */,
+				E9A39C568862FFEFF821C8C5 /* WatchUITests.swift */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		91C3FC1B8ED41DD5C68EE4A3 /* watchOS */ = {
+			isa = PBXGroup;
+			children = (
+				D9956FD1164C1444ED9FE171 /* Foundation.framework */,
+			);
+			name = watchOS;
+			sourceTree = "<group>";
+		};
+		B68ECC377670261688F1B1AC /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				735F72704C5E99CF83DD2900 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		C6014B5EA4EBCE488A2CAE37 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0C43A0B94F3CF2C2B4585A4F /* KitchenDiary.app */,
+				9CE59AE03D87107E67778ACE /* KitchenDiaryWatch.app */,
+				F31F5A5E4035C01EFAADC003 /* KitchenDiaryTests.xctest */,
+				822C07D75A4717F36F81A386 /* KitchenDiaryUITests.xctest */,
+				48A8FF7DA47CDDB998007B8A /* KitchenDiaryWatchUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E153CAD4DA1822C6119D7278 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B68ECC377670261688F1B1AC /* iOS */,
+				91C3FC1B8ED41DD5C68EE4A3 /* watchOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7B640DCE4E7C641B40D3DD53 /* KitchenDiaryUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C405A6C4E18AB1DAD7176014 /* Build configuration list for PBXNativeTarget "KitchenDiaryUITests" */;
+			buildPhases = (
+				C06023389CCFF83791FFCD0E /* Sources */,
+				F230B8729061E1BD42C6549C /* Frameworks */,
+				3FAC17A0737FBF5B3C1ECB10 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				48798375EF7EC4505F04348A /* PBXTargetDependency */,
+			);
+			name = KitchenDiaryUITests;
+			productName = KitchenDiaryUITests;
+			productReference = 822C07D75A4717F36F81A386 /* KitchenDiaryUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		82E31FE841D0A2A82A4617E8 /* KitchenDiaryWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 701D37539BA4687574527D17 /* Build configuration list for PBXNativeTarget "KitchenDiaryWatch" */;
+			buildPhases = (
+				0ECE7B6923F23BB85169CDE3 /* Sources */,
+				257055187736D9D92D32A702 /* Frameworks */,
+				2673310C42D3AF395634E912 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KitchenDiaryWatch;
+			productName = KitchenDiaryWatch;
+			productReference = 9CE59AE03D87107E67778ACE /* KitchenDiaryWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A128416756706917BCDFA7AB /* KitchenDiary */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6E983687F8A63197A006DF5 /* Build configuration list for PBXNativeTarget "KitchenDiary" */;
+			buildPhases = (
+				F30B8A1E7D5CAFDCF2BA5AD1 /* Sources */,
+				E07A0DD75454CCD76B481D0E /* Frameworks */,
+				DF222ABC864EF37B8151D704 /* Resources */,
+				ECC58958B3865A6C3275CABE /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4C843BB18E714D1DF468D4AA /* PBXTargetDependency */,
+			);
+			name = KitchenDiary;
+			packageProductDependencies = (
+				33211B88F073872127E059B7 /* FirebaseCore */,
+				E3523890C57B217C7D57EDF4 /* FirebaseAuth */,
+				2E227B735CD0B50D059F286F /* FirebaseFirestore */,
+				D13CC109B5B809F2DF5615C5 /* GoogleSignIn */,
+			);
+			productName = KitchenDiary;
+			productReference = 0C43A0B94F3CF2C2B4585A4F /* KitchenDiary.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AAB719CB348CD5EC4512C225 /* KitchenDiaryTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D08E8505D4C26A2C25711DB9 /* Build configuration list for PBXNativeTarget "KitchenDiaryTests" */;
+			buildPhases = (
+				F9BA8E658D0759552FA939A6 /* Sources */,
+				0E128BD64ABADBDA94A2B857 /* Frameworks */,
+				0AF9B59D7B7B574DFE353090 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3EB4136A26DE39816C2EB726 /* PBXTargetDependency */,
+			);
+			name = KitchenDiaryTests;
+			productName = KitchenDiaryTests;
+			productReference = F31F5A5E4035C01EFAADC003 /* KitchenDiaryTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D073A32456AF54A8DE9C2E8C /* KitchenDiaryWatchUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2B1F4F0487ADE11C33B7231 /* Build configuration list for PBXNativeTarget "KitchenDiaryWatchUITests" */;
+			buildPhases = (
+				1648A602DBE0594EA3BBF4AF /* Sources */,
+				AA8E50C83EBA56D1A68A1B06 /* Frameworks */,
+				1D12C9D7C91209230FE1EAED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AF8103E6948489DEA2F12145 /* PBXTargetDependency */,
+			);
+			name = KitchenDiaryWatchUITests;
+			productName = KitchenDiaryWatchUITests;
+			productReference = 48A8FF7DA47CDDB998007B8A /* KitchenDiaryWatchUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3F4EFF2C98A0F38917078080 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 2700;
+			};
+			buildConfigurationList = AB73EDE29E51F4CC4F2C3F3F /* Build configuration list for PBXProject "KitchenDiary" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 23CF13A08CBDC7DE4A0FE38E;
+			minimizedProjectReferenceProxies = 0;
+			packageReferences = (
+				C5E23483F5FFEA315CFD651D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				6EBDC7FB44B7DF5323EACE51 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
+			preferredProjectObjectVersion = 100;
+			productRefGroup = C6014B5EA4EBCE488A2CAE37 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A128416756706917BCDFA7AB /* KitchenDiary */,
+				82E31FE841D0A2A82A4617E8 /* KitchenDiaryWatch */,
+				AAB719CB348CD5EC4512C225 /* KitchenDiaryTests */,
+				7B640DCE4E7C641B40D3DD53 /* KitchenDiaryUITests */,
+				D073A32456AF54A8DE9C2E8C /* KitchenDiaryWatchUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0AF9B59D7B7B574DFE353090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FBA9AC138B2EA6C1C26DD25 /* parity-fixtures.json in Resources */,
+				66D9A84AE9AFF876E4D89C39 /* KitchenDiary.storekit in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D12C9D7C91209230FE1EAED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2673310C42D3AF395634E912 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				217E0E8109E94890254A0090 /* catalog.json in Resources */,
+				B92C455084965715086AB156 /* WatchAssets.xcassets in Resources */,
+				6D92DDBF365F2D47E4B8A51C /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3FAC17A0737FBF5B3C1ECB10 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF222ABC864EF37B8151D704 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFB0676D9F18C546BC8D7E9B /* catalog.json in Resources */,
+				DC53A4F3C7803E5C586AF361 /* Assets.xcassets in Resources */,
+				DEFEE6A3CD07FA202B7CF85A /* Motion in Resources */,
+				7AC022F77CF020595F4A4A10 /* GoogleService-Info.plist in Resources */,
+				F37D16470F5F01E100CE9CF9 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0ECE7B6923F23BB85169CDE3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C3EEDFB011A04FEFEA124C78 /* Models.swift in Sources */,
+				07F0C5D6671F3DA1B9400AE4 /* KitchenStore.swift in Sources */,
+				C13C771AAEA3D737AA66281F /* Wheel.swift in Sources */,
+				74028CA0FA9F4DAAF9D3533D /* KitchenWatchApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1648A602DBE0594EA3BBF4AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A790A96928B5DFE3F5C34797 /* WatchUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C06023389CCFF83791FFCD0E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEDA1CB66F8FDCAF3E249E15 /* KitchenUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F30B8A1E7D5CAFDCF2BA5AD1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DF62B66C856DBFB083ABD52 /* Models.swift in Sources */,
+				91BCEDEB8AEC567EE6146121 /* KitchenStore.swift in Sources */,
+				915F46B8F615C9224721755D /* Wheel.swift in Sources */,
+				67809FACC95987548C75C479 /* ExploreView.swift in Sources */,
+				58BAE558CB9AB2174E8A089F /* CookingView.swift in Sources */,
+				BFD7ACC3ADE46C090BA30869 /* AppLinks.swift in Sources */,
+				67291E93D6F9FE6186332761 /* BuilderView.swift in Sources */,
+				5808D75A7EF8E20F126D5377 /* KitchenDiaryApp.swift in Sources */,
+				DC35972C3A6C2F9F6A9E4924 /* DiaryView.swift in Sources */,
+				B27244139BF223392D26232D /* ActionAnimation.swift in Sources */,
+				83FC69188D1EEFD3CEE00164 /* PantryView.swift in Sources */,
+				5208EC02F7F4C11C239E6899 /* DeciderView.swift in Sources */,
+				6FDB359FB081C18802194291 /* AccountService.swift in Sources */,
+				B6303C30A4299E88AB7D4724 /* AppleAuthorization.swift in Sources */,
+				77A7C21BEA6821024F67018B /* Theme.swift in Sources */,
+				AA92AF65BA7FEAAF5C128F87 /* MembershipView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F9BA8E658D0759552FA939A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3001D5A779BFD9EDF310822F /* MembershipTests.swift in Sources */,
+				85C853F9EA95B8A8DFEEDBF0 /* KitchenCoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3EB4136A26DE39816C2EB726 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KitchenDiary;
+			target = A128416756706917BCDFA7AB /* KitchenDiary */;
+			targetProxy = 97F246E4D1C6A748CD55C2DC /* PBXContainerItemProxy */;
+		};
+		48798375EF7EC4505F04348A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KitchenDiary;
+			target = A128416756706917BCDFA7AB /* KitchenDiary */;
+			targetProxy = 0F316D23A9A4522CE496C4FA /* PBXContainerItemProxy */;
+		};
+		4C843BB18E714D1DF468D4AA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KitchenDiaryWatch;
+			target = 82E31FE841D0A2A82A4617E8 /* KitchenDiaryWatch */;
+			targetProxy = BF106A5A6B53C7BEC04FDDBA /* PBXContainerItemProxy */;
+		};
+		AF8103E6948489DEA2F12145 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KitchenDiaryWatch;
+			target = 82E31FE841D0A2A82A4617E8 /* KitchenDiaryWatch */;
+			targetProxy = 5F5BAC662747D710FF9F8587 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1D209CDCE1865207FFC739D0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
+				"CODE_SIGNING_ALLOWED[sdk=watchsimulator*]" = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = KitchenDiaryTests;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitchendiary.app.tests;
+				PRODUCT_NAME = KitchenDiaryTests;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KitchenDiary.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KitchenDiary";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		446C77981D2322C0C89757BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
+				"CODE_SIGNING_ALLOWED[sdk=watchsimulator*]" = NO;
+				CODE_SIGN_ENTITLEMENTS = Resources/KitchenDiary.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Kitchen Diary";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitchendiary.app;
+				PRODUCT_NAME = KitchenDiary;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4EA52AF9982E17613619ACB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
+				"CODE_SIGNING_ALLOWED[sdk=watchsimulator*]" = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Kitchen Diary";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.kitchendiary.app;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitchendiary.app.watchkitapp;
+				PRODUCT_NAME = KitchenDiaryWatch;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		81FE6FBF5FBF5FF33B575C49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
+				"CODE_SIGNING_ALLOWED[sdk=watchsimulator*]" = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = KitchenDiaryWatchUITests;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitchendiary.app.watchkitapp.uitests;
+				PRODUCT_NAME = KitchenDiaryWatchUITests;
+				SDKROOT = watchos;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = KitchenDiaryWatch;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		94962321547C32386447A5F8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
+				"CODE_SIGNING_ALLOWED[sdk=watchsimulator*]" = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = KitchenDiaryUITests;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitchendiary.app.uitests;
+				PRODUCT_NAME = KitchenDiaryUITests;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = KitchenDiary;
+			};
+			name = Debug;
+		};
+		A07A490DE076180368A2B2E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
+				"CODE_SIGNING_ALLOWED[sdk=watchsimulator*]" = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Kitchen Diary";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_WKApplication = YES;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.kitchendiary.app;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitchendiary.app.watchkitapp;
+				PRODUCT_NAME = KitchenDiaryWatch;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		A69CE5100445E17C7149725F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B0FCB8F0F4F1386DCA40E168 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
+				"CODE_SIGNING_ALLOWED[sdk=watchsimulator*]" = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = KitchenDiaryTests;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitchendiary.app.tests;
+				PRODUCT_NAME = KitchenDiaryTests;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KitchenDiary.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/KitchenDiary";
+			};
+			name = Debug;
+		};
+		C21854856E4E233D1B945FB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
+				"CODE_SIGNING_ALLOWED[sdk=watchsimulator*]" = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = KitchenDiaryWatchUITests;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitchendiary.app.watchkitapp.uitests;
+				PRODUCT_NAME = KitchenDiaryWatchUITests;
+				SDKROOT = watchos;
+				SUPPORTED_PLATFORMS = "watchos watchsimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				TEST_TARGET_NAME = KitchenDiaryWatch;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		CB26E1B98C373F8B99C5CFD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		E3E95B08471046AE60C02544 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
+				"CODE_SIGNING_ALLOWED[sdk=watchsimulator*]" = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = KitchenDiaryUITests;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitchendiary.app.uitests;
+				PRODUCT_NAME = KitchenDiaryUITests;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = KitchenDiary;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F18C57D35E83B583FEDAB2DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
+				"CODE_SIGNING_ALLOWED[sdk=watchsimulator*]" = NO;
+				CODE_SIGN_ENTITLEMENTS = Resources/KitchenDiary.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Kitchen Diary";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kitchendiary.app;
+				PRODUCT_NAME = KitchenDiary;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		701D37539BA4687574527D17 /* Build configuration list for PBXNativeTarget "KitchenDiaryWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EA52AF9982E17613619ACB8 /* Release */,
+				A07A490DE076180368A2B2E4 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB73EDE29E51F4CC4F2C3F3F /* Build configuration list for PBXProject "KitchenDiary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB26E1B98C373F8B99C5CFD3 /* Debug */,
+				A69CE5100445E17C7149725F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2B1F4F0487ADE11C33B7231 /* Build configuration list for PBXNativeTarget "KitchenDiaryWatchUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				81FE6FBF5FBF5FF33B575C49 /* Release */,
+				C21854856E4E233D1B945FB8 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C405A6C4E18AB1DAD7176014 /* Build configuration list for PBXNativeTarget "KitchenDiaryUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3E95B08471046AE60C02544 /* Release */,
+				94962321547C32386447A5F8 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D08E8505D4C26A2C25711DB9 /* Build configuration list for PBXNativeTarget "KitchenDiaryTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D209CDCE1865207FFC739D0 /* Release */,
+				B0FCB8F0F4F1386DCA40E168 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6E983687F8A63197A006DF5 /* Build configuration list for PBXNativeTarget "KitchenDiary" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F18C57D35E83B583FEDAB2DF /* Release */,
+				446C77981D2322C0C89757BB /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6EBDC7FB44B7DF5323EACE51 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+		C5E23483F5FFEA315CFD651D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2E227B735CD0B50D059F286F /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5E23483F5FFEA315CFD651D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		33211B88F073872127E059B7 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5E23483F5FFEA315CFD651D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		D13CC109B5B809F2DF5615C5 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EBDC7FB44B7DF5323EACE51 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		E3523890C57B217C7D57EDF4 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5E23483F5FFEA315CFD651D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 3F4EFF2C98A0F38917078080 /* Project object */;
+}

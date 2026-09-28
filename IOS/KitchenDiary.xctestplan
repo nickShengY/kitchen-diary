@@ -1,0 +1,32 @@
+{
+  "configurations": [
+    {
+      "id": "E689BEF4-C10D-4EAD-B55E-110010101010",
+      "name": "Native validation",
+      "options": {
+      }
+    }
+  ],
+  "defaultOptions": {
+    "storeKitConfigurationFile": {
+      "identifier": "Resources/KitchenDiary.storekit"
+    }
+  },
+  "testTargets": [
+    {
+      "target": {
+        "containerPath": "container:KitchenDiary.xcodeproj",
+        "identifier": "AAB719CB348CD5EC4512C225",
+        "name": "KitchenDiaryTests"
+      }
+    },
+    {
+      "target": {
+        "containerPath": "container:KitchenDiary.xcodeproj",
+        "identifier": "7B640DCE4E7C641B40D3DD53",
+        "name": "KitchenDiaryUITests"
+      }
+    }
+  ],
+  "version": 1
+}

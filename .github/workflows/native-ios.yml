@@ -1,0 +1,51 @@
+name: Native Apple app
+on:
+  pull_request:
+    paths: ['IOS/**', 'api/delete-account.ts', 'server/account-deletion.ts', 'firestore.rules', 'tests/api/account-deletion.test.ts', '.github/workflows/native-ios.yml']
+  push:
+    branches: [main]
+    paths: ['IOS/**', 'api/delete-account.ts', 'server/account-deletion.ts', 'firestore.rules', 'tests/api/account-deletion.test.ts', '.github/workflows/native-ios.yml']
+  workflow_dispatch:
+concurrency:
+  group: native-apple-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx vitest run tests/api tests/firestore.rules.test.ts
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pick installed iPhone simulator
+        run: |
+          xcodebuild -version
+          xcrun simctl list devices available --json > /tmp/devices.json
+          python3 - <<'PY'
+          import json, os
+          devices=json.load(open('/tmp/devices.json'))['devices']
+          selected=next(d['udid'] for runtime, values in devices.items() if 'iOS' in runtime for d in values if 'iPhone' in d['name'])
+          with open(os.environ['GITHUB_ENV'],'a') as f: f.write('SIMULATOR_ID='+selected+'\n')
+          PY
+      - name: Build and test core, OCR and local StoreKit
+        run: >-
+          xcodebuild -project IOS/KitchenDiary.xcodeproj -scheme KitchenDiary
+          -destination "platform=iOS Simulator,id=$SIMULATOR_ID"
+          -derivedDataPath IOS/.build -only-testing:KitchenDiaryTests
+          -parallel-testing-enabled NO -collect-test-diagnostics never
+          -resultBundlePath /tmp/NativeTests.xcresult test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-test-results
+          path: /tmp/NativeTests.xcresult
