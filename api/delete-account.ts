@@ -3,6 +3,7 @@ import type { ApiRequest, ApiResponse } from './analyze-menu.js';
 
 type Identity = { uid: string; auth_time: number };
 type Dependencies = {
+  enabled?: () => boolean;
   verify?: (token: string) => Promise<Identity>;
   removeData?: (uid: string) => Promise<void>;
   removeIdentity?: (uid: string) => Promise<void>;
@@ -12,6 +13,10 @@ export const createDeleteAccountHandler = (dependencies: Dependencies = {}) => a
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); res.status(405).json({ error: 'POST required' }); return; }
+  // Enable only after the deletion-marker Firestore rules have been deployed.
+  if (!(dependencies.enabled?.() ?? process.env.KITCHEN_DIARY_ACCOUNT_DELETION_ENABLED === 'true')) {
+    res.status(503).json({ error: 'Account deletion is temporarily unavailable. Please contact support.' }); return;
+  }
   const header = req.headers?.authorization;
   const token = /^Bearer (\S+)$/i.exec(typeof header === 'string' ? header : '')?.[1];
   if (!token) { res.status(401).json({ error: 'Sign in again to delete your account' }); return; }

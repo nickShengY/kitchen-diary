@@ -1,6 +1,6 @@
 .build/
 TestResults
 TestResults/
-Screenshots/
+/Screenshots/
 *.xcuserstate
 xcuserdata/

@@ -7,11 +7,16 @@ const now = 1_790_000_000;
 function setup() {
   const response = { setHeader:vi.fn(), status:vi.fn(), json:vi.fn(), end:vi.fn() };
   response.status.mockReturnValue(response);
-  const dependencies = { verify:vi.fn().mockResolvedValue({uid:'owner',auth_time:now}), removeData:vi.fn(), removeIdentity:vi.fn(), now:()=>now*1000 };
+  const dependencies = { enabled:()=>true, verify:vi.fn().mockResolvedValue({uid:'owner',auth_time:now}), removeData:vi.fn(), removeIdentity:vi.fn(), now:()=>now*1000 };
   const request = { method:'POST', headers:{authorization:'Bearer fixture'}, body:{confirmation:'DELETE',uid:'victim'} };
   return { response, dependencies, request };
 }
 describe('account deletion authorization', () => {
+  it('stays disabled until the server rollout is explicitly enabled', async () => {
+    const {response,dependencies,request}=setup();dependencies.enabled=()=>false;
+    await createDeleteAccountHandler(dependencies)(request,response);
+    expect(response.status).toHaveBeenCalledWith(503);expect(dependencies.verify).not.toHaveBeenCalled();expect(dependencies.removeData).not.toHaveBeenCalled();
+  });
   it('deletes only the verified UID, with identity last', async () => {
     const {response,dependencies,request}=setup();
     await createDeleteAccountHandler(dependencies)(request,response);

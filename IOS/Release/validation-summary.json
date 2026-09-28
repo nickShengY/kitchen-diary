@@ -1,0 +1,38 @@
+{
+  "iPhone": {
+    "result": "Passed",
+    "totalTestCount": 19,
+    "passedTests": 19,
+    "failedTests": 0,
+    "skippedTests": 0
+  },
+  "iPad13": {
+    "result": "Failed",
+    "totalTestCount": 19,
+    "passedTests": 17,
+    "failedTests": 2,
+    "skippedTests": 0
+  },
+  "iPad-followup": {
+    "result": "Failed",
+    "totalTestCount": 2,
+    "passedTests": 1,
+    "failedTests": 1,
+    "skippedTests": 0
+  },
+  "iPad-timer-final": {
+    "result": "Passed",
+    "totalTestCount": 1,
+    "passedTests": 1,
+    "failedTests": 0,
+    "skippedTests": 0
+  },
+  "Watch": {
+    "result": "Passed",
+    "totalTestCount": 2,
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0
+  },
+  "explanation": "Initial iPad failures were resolved: StoreKit purchase/expiry passed in iPad-followup, and the corrected duration-independent timer test passed in iPad-timer-final. The earlier timer assumption also failed in iPad-followup; that bundle is not represented as entirely green."
+}

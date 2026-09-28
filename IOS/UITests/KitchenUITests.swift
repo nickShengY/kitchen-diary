@@ -61,7 +61,7 @@ final class KitchenUITests:XCTestCase {
         let springboard=XCUIApplication(bundleIdentifier:"com.apple.springboard")
         if springboard.alerts.buttons["Cancel"].exists {springboard.alerts.buttons["Cancel"].tap()}
         let search=app.textFields["recipeSearch"];XCTAssertTrue(search.waitForExistence(timeout:8));search.tap();search.typeText("tomato\n")
-        app.swipeUp();app.buttons.matching(NSPredicate(format:"label CONTAINS[c] %@ AND identifier != %@","Tomato","resumeCooking")).firstMatch.tap()
+        app.swipeUp();app.buttons.matching(NSPredicate(format:"label CONTAINS[c] %@ AND identifier != %@","Tomato Scrambled Eggs","resumeCooking")).firstMatch.tap()
         for _ in 0..<8 {if app.buttons["startCooking"].isHittable {break};app.swipeUp()}
         app.buttons["startCooking"].tap()
         XCTAssertTrue(app.staticTexts["cookingInstruction"].waitForExistence(timeout:5))
@@ -69,12 +69,16 @@ final class KitchenUITests:XCTestCase {
         app.buttons["startTimer"].tap()
         if springboard.alerts.buttons["Allow"].waitForExistence(timeout:3) {springboard.alerts.buttons["Allow"].tap()}
         XCTAssertTrue(app.buttons["Pause"].waitForExistence(timeout:5))
+        func seconds(_ value:String)->Int {let parts=value.split(separator:":").compactMap {Int($0)};return parts.count==2 ? parts[0]*60+parts[1]:-1}
+        let before=seconds(app.staticTexts["timerRemaining"].label),capturedAt=Date()
+        XCTAssertGreaterThan(before,0)
         app.terminate();app.launchArguments=["-kitchen.onboarded","YES"];app.launch()
         XCTAssertTrue(app.buttons["resumeCooking"].waitForExistence(timeout:6));app.buttons["resumeCooking"].tap()
         for _ in 0..<5 {if app.buttons["Pause"].isHittable {break};app.swipeUp()}
         XCTAssertTrue(app.buttons["Pause"].exists)
         let remaining=app.staticTexts["timerRemaining"].label
-        XCTAssertTrue(remaining.hasPrefix("04:") || remaining.hasPrefix("05:"),remaining)
+        let expected=max(0,before-Int(Date().timeIntervalSince(capturedAt)))
+        XCTAssertEqual(Double(seconds(remaining)),Double(expected),accuracy:3,remaining)
         screenshot("09-timer-restored")
         app.buttons["Pause"].tap()
         for _ in 0..<5 {if app.buttons["nextCookingStep"].isHittable {break};app.swipeUp()}

@@ -41,3 +41,18 @@ This is a working native implementation with simulator evidence; it is not an Ap
 - Physical-device builds require an Apple Development team/provisioning. Physical Watch haptics, intermittent Bluetooth, background delivery, notification delivery while locked, battery use, and device performance remain to be tested.
 - Minimum targets are iOS/iPadOS 17 and watchOS 10; only the installed 27.0 runtimes above were exercised. Smaller Watch cases, other screen sizes, older OS versions, VoiceOver end-to-end, and arbitrary real menu photos need broader coverage.
 - Online MealDB availability and every cloud error/recovery path were not exhaustively tested. Community publication remains the same local-feed behavior as the React source.
+
+
+## App Store preparation follow-up
+
+The release branch adds Sign in with Apple, a privacy-preserving nonce flow, Pro access for menu-photo recognition, account deletion with recent reauthentication, privacy/support links, explicit app versions and privacy manifests for both app bundles. Core/manual features remain free. The obsolete yearly test offer was removed; 2.99 currency and billing term remain a product decision before registration.
+
+- iPhone 18 Pro Max: all **19 tests passed** in `TestResults/release/iPhone.xcresult`, including the Pro paywall/free manual entry, Apple sign-in discovery and privacy settings. This run preceded the removal of the sample yearly StoreKit product.
+- iPad Pro 13-inch: **17 of 19 initially passed** in `TestResults/release/iPad13.xcresult`. The local StoreKit daemon needed a longer startup window; the purchase/expiry test passed on rerun in `iPad-followup.xcresult`. The timer test had assumed a five-minute recipe despite selecting a ten-minute recipe in the larger grid. It now selects the intended recipe and compares the countdown to wall-clock elapsed time; the corrected test passed in `iPad-timer-final.xcresult`. All 19 distinct iPad cases therefore have passing evidence across these runs, rather than claiming the initial bundle was green.
+- Watch follow-up: both crown/standalone and paired-guide UI tests passed again in `TestResults/release/Watch.xcresult`.
+- Backend/API and Firestore rule checks: **60 tests passed**, including recent-auth requirements, rejected stale/revoked tokens, confirmed ownership, failure/retry ordering and nested account cleanup. Rule checks are static; actual deployed-rule and authenticated deletion integration tests remain a release gate.
+- Focused TypeScript checking of the new deletion endpoint/service passed. The production Vite web build passed. The repository-wide TypeScript command still reports an existing `App.tsx` sign-in callback mismatch and missing separate Functions dependencies; these are not introduced by the native change.
+- An unsigned device Release archive succeeded and embeds the Watch app, matching versions and both privacy manifests. `Release/archive-audit.json` correctly fails signing/profile checks: no Apple signing identity was available. StoreKit test configuration is absent from the shipping app bundle.
+- `Release/Screenshots` contains opaque PNG captures at accepted iPhone and 13-inch iPad dimensions. They are real app screenshots, not generated mockups.
+
+See `Release/APP_STORE.md` for remaining release blockers. Backend rollout, authenticated Apple/Google and deletion tests, production/sandbox billing, signed archive validation and physical-device checks have not been represented as complete.
