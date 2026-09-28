@@ -33,7 +33,7 @@ struct DiaryView:View {
                 LazyVGrid(columns:[GridItem(.adaptive(minimum:280))],spacing:20) {ForEach(recipes) {recipe in RecipeCard(recipe:recipe) {selected=recipe}.contextMenu {if store.data.cookbook.contains(where:{$0.id==recipe.id}) {Button("Delete from cookbook",role:.destructive) {store.data.cookbook.removeAll {$0.id==recipe.id}}};if panel=="Shared" {Button("Remove from feed",role:.destructive) {store.data.published.removeAll {$0.id==recipe.id}}}}}}
                 PaperCard {Label("Your tiny kitchen companion",systemImage:"applewatch").font(.headline);Text("Spin with the Digital Crown, keep your next cooking step close, and check your timer without touching your phone.").font(.subheadline).foregroundStyle(.secondary).padding(.top,8);Text(store.watchStatus).font(.caption).foregroundStyle(KitchenTheme.sage).padding(.top,8)}
                 Button("Kitchen Diary Pro") {membershipSheet=true}.buttonStyle(KitchenButton(secondary:true))
-                if account.name != nil {Button("Sign out") {account.signOut(store:store)}}
+                if account.name != nil {Button("Sign out") {account.signOut(store:store)}.disabled(account.busy)}
             }.padding(22).frame(maxWidth:950)
         }.frame(maxWidth:.infinity).kitchenBackground().navigationTitle("My diary").navigationBarTitleDisplayMode(.inline).toolbar {Button {settings=true} label: {Image(systemName:"gearshape")}.accessibilityLabel("Settings")}
             .sheet(isPresented:$membershipSheet) {MembershipView()}

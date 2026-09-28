@@ -136,7 +136,7 @@ import AuthenticationServices
     }
     func signOut(store:KitchenStore) {
         pending?.cancel();store.onSave=nil
-        if let uid=activeUID,let raw=try? JSONEncoder().encode(store.data) {UserDefaults.standard.set(raw,forKey:"kitchen.account."+uid)}
+        if let uid=Auth.auth().currentUser?.uid ?? activeUID,let raw=try? JSONEncoder().encode(store.data) {UserDefaults.standard.set(raw,forKey:"kitchen.account."+uid)}
         do {try Auth.auth().signOut();GIDSignIn.sharedInstance.signOut();activeUID=nil;name=nil;hasPro=false;UserDefaults.standard.removeObject(forKey:"kitchen.native.owner")
             if let raw=UserDefaults.standard.data(forKey:"kitchen.account.guest"),let guest=try? JSONDecoder().decode(SavedKitchen.self,from:raw) {store.data=guest} else {store.data=SavedKitchen();store.data.cuisines=store.catalog.cuisines}
             store.synchronize()

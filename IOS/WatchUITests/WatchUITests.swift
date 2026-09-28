@@ -1,7 +1,18 @@
 import XCTest
 final class WatchUITests:XCTestCase {
+    func allowTimerNotificationsIfRequested(_ app:XCUIApplication) {
+        for surface in [app,XCUIApplication(bundleIdentifier:"com.apple.Carousel")] {
+            let allow=surface.buttons["Allow"]
+            if allow.exists {
+                for _ in 0..<3 {if allow.isHittable {break};surface.swipeUp()}
+                allow.tap()
+                return
+            }
+        }
+    }
+
     func testCrownWheelAndCookingGuide() {
-        let app=XCUIApplication();app.launch()
+        let app=XCUIApplication();app.launch();allowTimerNotificationsIfRequested(app)
         XCTAssertTrue(app.buttons["watchSpin"].waitForExistence(timeout:12))
         let beforeCrown=app.staticTexts["watchWheelResult"].label
         XCUIDevice.shared.rotateDigitalCrown(delta:0.4)
@@ -17,7 +28,7 @@ final class WatchUITests:XCTestCase {
         let guide=XCTAttachment(screenshot:app.screenshot());guide.name="Watch-cooking-guide";guide.lifetime = .keepAlways;add(guide)
     }
     func testPairedPhoneCookingHandoff() {
-        let app=XCUIApplication();app.launchArguments=["-watch-handoff-test"];app.launch()
+        let app=XCUIApplication();app.launchArguments=["-watch-handoff-test"];app.launch();allowTimerNotificationsIfRequested(app)
         XCTAssertTrue(app.staticTexts["watchInstruction"].waitForExistence(timeout:20), "Start the phone guide using kitchendiary://cook/pantry-tomato-scrambled-eggs before this paired test.")
         XCTAssertTrue(app.staticTexts["Tomato Scrambled Eggs"].exists)
         let before=app.staticTexts["watchInstruction"].label

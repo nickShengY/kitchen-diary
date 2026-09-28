@@ -11,10 +11,10 @@ final class MembershipTests:XCTestCase {
         let membership=MembershipStore()
         // A freshly booted simulator applies StoreKitTest configuration asynchronously.
         // Wait for the local products before testing any purchase behavior.
-        for _ in 0..<10 {
+        for _ in 0..<60 {
             await membership.load()
             if membership.products.count == MembershipStore.productIDs.count { break }
-            try await Task.sleep(for:.milliseconds(250))
+            try await Task.sleep(for:.milliseconds(500))
         }
         XCTAssertEqual(Set(membership.products.map(\.id)),Set(MembershipStore.productIDs),membership.message ?? "No StoreKit message")
         let monthly=try XCTUnwrap(membership.products.first {$0.id.hasSuffix("monthly")})

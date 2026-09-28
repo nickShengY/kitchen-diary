@@ -6,6 +6,9 @@ on:
     branches: [main]
     paths: ['IOS/**', 'api/delete-account.ts', 'server/account-deletion.ts', 'firestore.rules', 'tests/api/account-deletion.test.ts', '.github/workflows/native-ios.yml']
   workflow_dispatch:
+concurrency:
+  group: native-apple-${{ github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
