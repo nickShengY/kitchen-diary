@@ -16,12 +16,12 @@
       "id": "1A2B3C4D",
       "localizations": [
         {
-          "description": "Kitchen Diary Premium",
-          "displayName": "Premium",
+          "description": "Menu-photo recognition",
+          "displayName": "Pro",
           "locale": "en_US"
         }
       ],
-      "name": "Kitchen Diary Premium",
+      "name": "Kitchen Diary Pro",
       "subscriptions": [
         {
           "adHocOffers": [],
@@ -33,36 +33,14 @@
           "introductoryOffer": null,
           "localizations": [
             {
-              "description": "Support your everyday kitchen companion.",
-              "displayName": "Kitchen Diary Premium Monthly",
+              "description": "Read menu photos privately on your device, edit the dishes and spin your choices.",
+              "displayName": "Kitchen Diary Pro",
               "locale": "en_US"
             }
           ],
           "productID": "com.kitchendiary.premium.monthly",
           "recurringSubscriptionPeriod": "P1M",
           "referenceName": "Premium monthly",
-          "subscriptionGroupID": "1A2B3C4D",
-          "type": "RecurringSubscription",
-          "winBackOffers": []
-        },
-        {
-          "adHocOffers": [],
-          "codeOffers": [],
-          "displayPrice": "24.99",
-          "familyShareable": false,
-          "groupNumber": 1,
-          "internalID": "9ABCDEF1",
-          "introductoryOffer": null,
-          "localizations": [
-            {
-              "description": "Support your everyday kitchen companion.",
-              "displayName": "Kitchen Diary Premium Yearly",
-              "locale": "en_US"
-            }
-          ],
-          "productID": "com.kitchendiary.premium.yearly",
-          "recurringSubscriptionPeriod": "P1Y",
-          "referenceName": "Premium yearly",
           "subscriptionGroupID": "1A2B3C4D",
           "type": "RecurringSubscription",
           "winBackOffers": []

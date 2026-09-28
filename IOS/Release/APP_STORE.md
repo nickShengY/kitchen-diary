@@ -4,7 +4,7 @@
 
 **Not approved for submission yet.** Simulator success and an unsigned archive do not replace a signed App Store validation or live-service testing. The merge ships source code; it does not submit the app to Apple.
 
-The core app is free. Pro unlocks menu-photo recognition; typing dishes, wheels, pantry matching, recipes, guides and Watch features remain free. The requested price is 2.99; billing interval and base currency still need confirmation. Do not create or submit live products with guessed terms. Existing product identifiers are retained for compatibility while that decision is pending.
+The core app is free. Pro unlocks menu-photo recognition; typing dishes, wheels, pantry matching, recipes, guides and Watch features remain free. The requested price is 2.99; billing interval and base currency still need confirmation. Do not create or submit live products with guessed terms. The existing monthly test identifier (`com.kitchendiary.premium.monthly`) is a draft, not a confirmed commercial term. The unrelated example yearly plan has been removed.
 
 ## Required external setup
 

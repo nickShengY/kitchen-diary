@@ -54,7 +54,7 @@ Cooking timers persist a wall-clock deadline, request notification permission on
 
 ## Subscriptions and service verification
 
-The core app is free; Pro unlocks menu-photo recognition. The requested price is 2.99, with currency and term pending confirmation. The local `.storekit` catalog is **test data**, with example monthly/yearly pricing. It is used by `MembershipTests` and makes no real charges. Real products must be created in App Store Connect with the IDs in `MembershipStore.productIDs` (or those IDs must be changed to your actual product IDs). Prices displayed in production come from StoreKit, not the sample catalog. When products are unavailable, the app explains that and keeps cooking features usable.
+The core app is free; Pro unlocks menu-photo recognition. The requested price is 2.99, with currency and term pending confirmation. The local `.storekit` catalog is **test data**, with a draft 2.99 monthly test product. It is used by `MembershipTests` and makes no real charges. Real products must be created in App Store Connect with the IDs in `MembershipStore.productIDs` (or those IDs must be changed to your actual product IDs). Prices displayed in production come from StoreKit, not the sample catalog. When products are unavailable, the app explains that and keeps cooking features usable.
 
 Apple entitlements are verified through StoreKit. Existing Firebase membership is read from the existing server-owned entitlement document. This change does not deploy an App Store Server Notifications bridge to share Apple purchases with the web/Android entitlement system. Never grant server membership from an unverified client flag.
 

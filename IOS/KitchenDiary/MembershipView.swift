@@ -2,7 +2,7 @@ import SwiftUI
 import StoreKit
 
 @MainActor final class MembershipStore:ObservableObject {
-    static let productIDs=["com.kitchendiary.premium.monthly","com.kitchendiary.premium.yearly"]
+    static let productIDs=["com.kitchendiary.premium.monthly"]
     @Published var products:[Product]=[]
     @Published var active=false
     @Published var busy=false
