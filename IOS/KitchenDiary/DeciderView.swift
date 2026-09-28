@@ -93,6 +93,7 @@ struct DeciderView:View {
     func findRecipe(_ title:String) async {
         searching=true
         if let local=store.allRecipes.first(where:{$0.title.localizedCaseInsensitiveContains(title) || title.localizedCaseInsensitiveContains($0.title)}) {showingRecipe=local}
+        else if !MealService.isAvailable {scanError="No matching recipe in your cookbook yet. Create your own version in the recipe builder."}
         else {do {if let recipe=try await MealService.search(title).first {showingRecipe=recipe} else {scanError="No exact recipe found. Try another spin or create your own version."}} catch {scanError="The online recipe book is unavailable. Try again when connected."}}
         searching=false
     }

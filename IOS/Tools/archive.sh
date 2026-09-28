@@ -10,6 +10,6 @@ if ! security find-identity -v -p codesigning | grep -q '"Apple '; then
 fi
 xcodebuild -project KitchenDiary.xcodeproj -scheme KitchenDiary -configuration Release \
   -destination 'generic/platform=iOS' -archivePath "$ARCHIVE_PATH" \
-  DEVELOPMENT_TEAM="$APPLE_TEAM_ID" CURRENT_PROJECT_VERSION="$BUILD_NUMBER" \
+  DEVELOPMENT_TEAM="$APPLE_TEAM_ID" CURRENT_PROJECT_VERSION="$BUILD_NUMBER" MEALDB_API_KEY="${MEALDB_API_KEY:-}" \
   -allowProvisioningUpdates archive
 printf 'Archive created: %s\nValidate and distribute it using Xcode Organizer.\n' "$ARCHIVE_PATH"

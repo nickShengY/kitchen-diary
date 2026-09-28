@@ -79,4 +79,10 @@ final class KitchenCoreTests:XCTestCase {
         XCTAssertTrue(nonces.allSatisfy {$0.count==64})
     }
 
+    func testProductionRecipeSearchRejectsDevelopmentKeyAndBuildPlaceholders() {
+        XCTAssertNil(MealService.productionKey(nil));XCTAssertNil(MealService.productionKey("1"))
+        XCTAssertNil(MealService.productionKey("$(MEALDB_API_KEY)"));XCTAssertNil(MealService.productionKey("../other"))
+        XCTAssertEqual(MealService.productionKey(" 12345 "),"12345")
+    }
+
 }

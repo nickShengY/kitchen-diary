@@ -16,6 +16,10 @@ The core app is free. Pro unlocks menu-photo recognition; typing dishes, wheels,
 6. Complete App Store Connect privacy answers, content rights, age-rating questionnaire, export-compliance answers, contact details, availability and agreements. The manifest covers account identity, user content, purchase history and UserDefaults; verify it against the final services. No ads or tracking are implemented in the native app.
 7. Test notification delivery while locked, interruption/reconnection on physical Watch, voice accessibility, and the minimum supported OS releases. Current simulator results use iOS/watchOS 27.0; deployment targets are iOS 17 and watchOS 10.
 
+## Optional wider recipe catalog
+
+TheMealDB's development key `1` is not permitted for a public App Store release. [The provider requires a supporter production key](https://www.themealdb.com/api.php). Set the `MEALDB_API_KEY` build setting/environment for the archive script to enable the wider catalog. Do not commit a real provider key. Release builds without it use the complete bundled catalog and personal cookbook; they hide unavailable online-search actions. Debug builds retain the provider's development key. A production provider key is required to ship the full online-search feature set. This recipe search is not an AI feature and stays free.
+
 ## Metadata draft
 
 - Name: Kitchen Diary

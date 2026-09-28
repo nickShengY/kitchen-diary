@@ -34,5 +34,12 @@
     "failedTests": 0,
     "skippedTests": 0
   },
-  "explanation": "Initial iPad failures were resolved: StoreKit purchase/expiry passed in iPad-followup, and the corrected duration-independent timer test passed in iPad-timer-final. The earlier timer assumption also failed in iPad-followup; that bundle is not represented as entirely green."
+  "explanation": "Initial iPad failures were resolved: StoreKit purchase/expiry passed in iPad-followup, and the corrected duration-independent timer test passed in iPad-timer-final. The earlier timer assumption also failed in iPad-followup; that bundle is not represented as entirely green.",
+  "final-core": {
+    "result": "Passed",
+    "totalTestCount": 13,
+    "passedTests": 13,
+    "failedTests": 0,
+    "skippedTests": 0
+  }
 }

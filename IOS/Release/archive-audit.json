@@ -61,7 +61,7 @@
       "detail": ""
     },
     {
-      "check": "Distribution provisioning profile present",
+      "check": "Provisioning profile present",
       "passed": false,
       "detail": ""
     },

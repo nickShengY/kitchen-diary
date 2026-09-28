@@ -38,7 +38,7 @@ struct ExploreView: View {
                 ScrollView(.horizontal,showsIndicators:false) { HStack { ForEach(["All","Quick","Dinner","Lunch","Breakfast","Healthy","Dessert"],id:\.self) { item in Chip(text:item,selected:tag == item) { tag = item } } } }
                 HStack { Text("From the recipe book").font(KitchenTheme.display(24)); Spacer(); Picker("Sort recipes",selection:$sort) { Text("Popular").tag("Popular"); Text("Latest").tag("Latest") }.pickerStyle(.menu) }
                 if let error { Text(error).font(.caption).foregroundStyle(.secondary) }
-                if recipes.isEmpty { ContentUnavailableView.search(text:query); Button("Search the wider recipe catalog") { Task {await searchOnline()} }.buttonStyle(KitchenButton()) }
+                if recipes.isEmpty { ContentUnavailableView.search(text:query); if MealService.isAvailable {Button("Search the wider recipe catalog") { Task {await searchOnline()} }.buttonStyle(KitchenButton())} }
                 LazyVGrid(columns:[GridItem(.adaptive(minimum:280),spacing:20)],spacing:20) {
                     ForEach(recipes) { recipe in RecipeCard(recipe:recipe) {selected=recipe} }
                 }
@@ -49,6 +49,7 @@ struct ExploreView: View {
             .refreshable { await searchOnline() }
     }
     func searchOnline() async {
+        guard MealService.isAvailable else {return}
         loading = true; error = nil
         do { remote = try await MealService.search(query) } catch { self.error = "The online kitchen is taking a breather. Your saved recipes are still here." }
         loading = false
@@ -90,8 +91,24 @@ struct RecipeDetailView: View {
 }
 struct MealService {
     struct Response: Decodable { var meals: [[String:String?]]? }
+    static func productionKey(_ value:String?) -> String? {
+        guard let key=value?.trimmingCharacters(in:.whitespacesAndNewlines), !key.isEmpty, key != "1",
+              key.unicodeScalars.allSatisfy({CharacterSet.alphanumerics.contains($0) || "-_".unicodeScalars.contains($0)}) else {return nil}
+        return key
+    }
+    static var apiKey:String? {
+        if let key=productionKey(Bundle.main.object(forInfoDictionaryKey:"MealDBAPIKey") as? String) {return key}
+        #if DEBUG
+        return "1"
+        #else
+        return nil
+        #endif
+    }
+    static var isAvailable:Bool {apiKey != nil}
     static func search(_ query: String) async throws -> [Recipe] {
-        var components=URLComponents(string:"https://www.themealdb.com/api/json/v1/1/search.php")!
+        guard let key=apiKey else {throw URLError(.resourceUnavailable)}
+        let endpoint=URL(string:"https://www.themealdb.com/api/json/v1")!.appendingPathComponent(key).appendingPathComponent("search.php")
+        var components=URLComponents(url:endpoint,resolvingAgainstBaseURL:false)!
         components.queryItems=[URLQueryItem(name:"s",value:query)]
         var request=URLRequest(url:components.url!); request.timeoutInterval=10
         let (data,response)=try await URLSession.shared.data(for:request)

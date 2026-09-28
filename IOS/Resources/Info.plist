@@ -19,5 +19,7 @@
 	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>MealDBAPIKey</key>
+	<string>$(MEALDB_API_KEY)</string>
 </dict>
 </plist>

@@ -27,7 +27,7 @@ if len(sys.argv)>1:
     check('Phone privacy manifest embedded',(app/'PrivacyInfo.xcprivacy').is_file())
     check('Watch privacy manifest embedded',(watch/'PrivacyInfo.xcprivacy').is_file())
     check('No StoreKit test configuration in shipping app',not list(app.rglob('*.storekit')))
-    check('Distribution provisioning profile present',(app/'embedded.mobileprovision').is_file())
+    check('Provisioning profile present',(app/'embedded.mobileprovision').is_file())
     verification=subprocess.run(['codesign','--verify','--deep','--strict',str(app)],capture_output=True,text=True)
     check('Code signature valid',verification.returncode==0,verification.stderr.strip().replace(str(app), '<archive>/Products/Applications/KitchenDiary.app'))
 identities=subprocess.run(['security','find-identity','-v','-p','codesigning'],capture_output=True,text=True).stdout

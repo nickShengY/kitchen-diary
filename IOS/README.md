@@ -60,6 +60,8 @@ Apple entitlements are verified through StoreKit. Existing Firebase membership i
 
 The existing Firebase configuration and Sign in with Apple entitlement are included, but Apple provider configuration, real Apple/Google sign-in, two-account cloud round trips, production entitlements, and real App Store sandbox purchases need an authenticated validation session. No production purchases or backend writes were made by the automated local tests.
 
+Public App Store builds require a TheMealDB supporter key for wider online search. Pass `MEALDB_API_KEY` when archiving; Release never falls back to the development key `1`. Without a production key, local recipe search and the bundled catalog still work.
+
 ## Test commands
 
 Use a destination returned by `xcrun simctl list devices available`:

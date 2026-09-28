@@ -44,7 +44,8 @@ import AuthenticationServices
     func deleteAccount(store:KitchenStore) async {
         guard !busy,let user=Auth.auth().currentUser else {return}
         busy=true;error=nil;pending?.cancel();store.onSave=nil
-        if let pending {await pending.value}
+        // A queued Firestore write may wait indefinitely offline. The server deletion marker
+        // blocks subsequent writes; do not hold the deletion UI waiting for that queue.
         let uid=user.uid
         do {
             if user.providerData.contains(where:{$0.providerID=="apple.com"}) {
@@ -122,7 +123,7 @@ import AuthenticationServices
             try await batch.commit()
             guard !Task.isCancelled, Auth.auth().currentUser?.uid==uid else {return}
             syncStatus="Pantry & draft synced";error=nil
-        } catch {self.error="Sync is waiting for a connection. Your changes are saved here.";syncStatus="Saved locally · retry sync"}
+        } catch {guard !Task.isCancelled,Auth.auth().currentUser?.uid==uid else {return};self.error="Sync is waiting for a connection. Your changes are saved here.";syncStatus="Saved locally · retry sync"}
     }
     func refreshEntitlement() async {
         guard let uid=Auth.auth().currentUser?.uid else {return}
