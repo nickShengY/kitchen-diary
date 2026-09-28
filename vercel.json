@@ -1,9 +1,29 @@
 {
   "rewrites": [
-    { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/account-deletion", "destination": "/account-deletion.html" },
-    { "source": "/terms", "destination": "/terms.html" },
-    { "source": "/support", "destination": "/support.html" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
-  ]
+    {
+      "source": "/privacy",
+      "destination": "/privacy.html"
+    },
+    {
+      "source": "/account-deletion",
+      "destination": "/account-deletion.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
+      "source": "/support",
+      "destination": "/support.html"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "functions": {
+    "api/delete-account.ts": {
+      "maxDuration": 300
+    }
+  }
 }

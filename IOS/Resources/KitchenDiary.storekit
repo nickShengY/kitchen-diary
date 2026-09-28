@@ -1,0 +1,77 @@
+{
+  "identifier": "B9DDDD66",
+  "nonRenewingSubscriptions": [],
+  "products": [],
+  "settings": {
+    "_applicationInternalID": "",
+    "_developerTeamID": "",
+    "_failTransactionsEnabled": false,
+    "_lastSynchronizedDate": 0,
+    "_locale": "en_US",
+    "_storefront": "USA",
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [
+    {
+      "id": "1A2B3C4D",
+      "localizations": [
+        {
+          "description": "Kitchen Diary Premium",
+          "displayName": "Premium",
+          "locale": "en_US"
+        }
+      ],
+      "name": "Kitchen Diary Premium",
+      "subscriptions": [
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "2.99",
+          "familyShareable": false,
+          "groupNumber": 1,
+          "internalID": "9ABCDEF0",
+          "introductoryOffer": null,
+          "localizations": [
+            {
+              "description": "Support your everyday kitchen companion.",
+              "displayName": "Kitchen Diary Premium Monthly",
+              "locale": "en_US"
+            }
+          ],
+          "productID": "com.kitchendiary.premium.monthly",
+          "recurringSubscriptionPeriod": "P1M",
+          "referenceName": "Premium monthly",
+          "subscriptionGroupID": "1A2B3C4D",
+          "type": "RecurringSubscription",
+          "winBackOffers": []
+        },
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "24.99",
+          "familyShareable": false,
+          "groupNumber": 1,
+          "internalID": "9ABCDEF1",
+          "introductoryOffer": null,
+          "localizations": [
+            {
+              "description": "Support your everyday kitchen companion.",
+              "displayName": "Kitchen Diary Premium Yearly",
+              "locale": "en_US"
+            }
+          ],
+          "productID": "com.kitchendiary.premium.yearly",
+          "recurringSubscriptionPeriod": "P1Y",
+          "referenceName": "Premium yearly",
+          "subscriptionGroupID": "1A2B3C4D",
+          "type": "RecurringSubscription",
+          "winBackOffers": []
+        }
+      ]
+    }
+  ],
+  "version": {
+    "major": 3,
+    "minor": 0
+  }
+}

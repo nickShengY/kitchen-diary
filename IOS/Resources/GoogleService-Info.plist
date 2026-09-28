@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>625787154783-dvamo92nrjt8c9l3cn025ubrdobfep84.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.625787154783-dvamo92nrjt8c9l3cn025ubrdobfep84</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>625787154783-7aggqkjiv9e77tp6fan8pn7400qonk1s.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCIE0brGnVHt_wMZPMxTEjnb1uXJ34SoD4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>625787154783</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kitchendiary.app</string>
+	<key>PROJECT_ID</key>
+	<string>kitchen-diary-19971117</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kitchen-diary-19971117.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:625787154783:ios:04d743ae49a4ba31a786ea</string>
+</dict>
+</plist>
