@@ -17,6 +17,6 @@ describe('production product branding', () => {
     walk('public');
     for (const file of files) expect(readFileSync(file, 'utf8'), file).not.toMatch(retired);
     expect(readFileSync('components/Profile.tsx', 'utf8')).toContain('Kitchen Diary');
-    expect(readFileSync('index.html', 'utf8')).toContain('<title>Kitchen Diary</title>');
+    expect(readFileSync('index.html', 'utf8')).toContain('<title>Kitchen Diary — Recipes from Your Pantry &amp; Guided Cooking</title>');
   });
 });

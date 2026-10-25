@@ -12,14 +12,16 @@ import { BillingReturn } from './components/BillingReturn';
 import { LandingPage } from './components/LandingPage';
 
 function App() {
+  const initialView = new URLSearchParams(window.location.search).get('view');
+  const linkedView = Object.values(AppView).includes(initialView as AppView) ? initialView as AppView : null;
   const [billingReturn, setBillingReturn] = useState(() => {
     const match = window.location.pathname.match(/^\/billing\/(success|cancel|manage)\/?$/);
     return match ? match[1] as 'success' | 'cancel' | 'manage' : null;
   });
-  const [currentView, setCurrentView] = useState<AppView>(AppView.COMMUNITY);
+  const [currentView, setCurrentView] = useState<AppView>(linkedView ?? AppView.COMMUNITY);
   const [importRecipe, setImportRecipe] = useState<Recipe | undefined>(undefined);
   const [userId, setUserId] = useState<string | undefined>(undefined);
-  const [showLanding, setShowLanding] = useState(true);
+  const [showLanding, setShowLanding] = useState(!linkedView);
 
   useEffect(() => subscribeToAuthState((user) => {
       setUserId(user?.id);

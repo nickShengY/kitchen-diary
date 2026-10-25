@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /billing/
+
+Sitemap: https://kitchendiary.robopioneer.ca/sitemap.xml
