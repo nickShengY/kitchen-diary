@@ -1,3 +1,4 @@
+import { findPantryStarter } from '../content/pantry-starters.mjs';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Check,
@@ -116,6 +117,7 @@ const IngredientChip: React.FC<{ id: string; tone: 'have' | 'missing' }> = ({ id
 
 export const PantryKitchen: React.FC<PantryKitchenProps> = ({ userId, onCookThis }) => {
   const [pantry, setPantryState] = useState(EMPTY_PANTRY);
+  const [starter, setStarter] = useState(() => findPantryStarter(new URLSearchParams(window.location.search).get('starter')));
   const [search, setSearch] = useState('');
   const [group, setGroup] = useState(GROUPS[0].id);
   const [showEverything, setShowEverything] = useState(false);
@@ -338,6 +340,15 @@ export const PantryKitchen: React.FC<PantryKitchenProps> = ({ userId, onCookThis
       </div>
 
       <div className="space-y-6 px-4 pt-4">
+        {starter && <section className="toon-card rounded-3xl p-5" aria-label="Try an ingredient example">
+          <h2 className="font-display text-lg">Try {starter.title}</h2>
+          <p className="mt-2 text-sm">Explore {starter.dish} and other matches. Add these ingredients and cookware to your current pantry, then review what is missing.</p>
+          <p className="mt-2 text-xs">Cookware: {starter.cookware.map(nameOf).join(', ')}. Common staples are assumed by the matcher.</p>
+          <div className="mt-4 flex gap-3"><button className="rounded-xl bg-toon-primary p-3 font-bold text-white" onClick={() => {
+            setPantry(current => ({ ...current, ingredients: [...new Set([...current.ingredients, ...starter.ingredients])], cookware: [...new Set([...current.cookware, ...starter.cookware])], mode: 'flexible' }));
+            setStarter(undefined); setToast('Example added. Review your recipe matches below.');
+          }}>Add example to my pantry</button><button className="p-3 underline" onClick={() => setStarter(undefined)}>Skip</button></div>
+        </section>}
         {/* ------------------------------------------------ tonight's menu */}
         <section
           aria-labelledby="menu-heading"
