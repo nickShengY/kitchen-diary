@@ -2,7 +2,7 @@ import { beforeEach, describe, it, expect, vi } from 'vitest';
 import { screen, waitFor, within } from '@testing-library/react';
 import { renderWithProviders } from '../utils/test-utils';
 import { PantryKitchen } from '../../components/PantryKitchen';
-import { loadPantry } from '../../services/pantryStore';
+import { EMPTY_PANTRY, savePantry, loadPantry } from '../../services/pantryStore';
 
 describe('PantryKitchen', () => {
   const onCookThis = vi.fn();
@@ -10,8 +10,26 @@ describe('PantryKitchen', () => {
   beforeEach(() => {
     onCookThis.mockClear();
     window.localStorage.clear();
+    window.history.replaceState(null, '', '/');
     // jsdom has no layout engine, so scrollIntoView is not implemented.
     Element.prototype.scrollIntoView = vi.fn();
+  });
+
+  it('asks before adding a linked example and preserves existing ingredients', async () => {
+    savePantry({ ...EMPTY_PANTRY, ingredients: ['rice'] });
+    window.history.replaceState(null, '', '/?view=KITCHEN&starter=eggs-tomatoes');
+    const { user } = renderWithProviders(<PantryKitchen onCookThis={onCookThis} />);
+    expect(loadPantry().ingredients).toEqual(['rice']);
+    await user.click(screen.getByRole('button', { name: 'Add example to my pantry' }));
+    await waitFor(() => expect(loadPantry().ingredients).toEqual(expect.arrayContaining(['rice', 'egg', 'tomato'])));
+    expect(loadPantry().cookware).toContain('skillet');
+    expect(loadPantry().mode).toBe('flexible');
+  });
+
+  it('ignores an unknown linked starter', () => {
+    window.history.replaceState(null, '', '/?view=KITCHEN&starter=unknown');
+    renderWithProviders(<PantryKitchen onCookThis={onCookThis} />);
+    expect(screen.queryByRole('button', { name: 'Add example to my pantry' })).not.toBeInTheDocument();
   });
 
   it('renders the pantry, cookware, and mode sections', () => {

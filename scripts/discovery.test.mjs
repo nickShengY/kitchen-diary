@@ -44,3 +44,12 @@ test('all local static guide links resolve to files or supported application rou
   }
  }
 });
+
+test('worked examples expose real dish details and actionable pantry links', async () => {
+ const html = await read('public/pantry-examples.html');
+ assert.match(html, /Tomato Scrambled Eggs/);
+ assert.match(html, /Core ingredients still missing/);
+ assert.match(html, /view=KITCHEN&amp;starter=eggs-tomatoes/);
+ assert.match(await read('public/sitemap.xml'), /pantry-examples.html/);
+ assert.match(await read('index.html'), /href="\/pantry-examples.html"/);
+});
